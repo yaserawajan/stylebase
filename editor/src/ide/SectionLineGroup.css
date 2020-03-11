@@ -1,0 +1,17 @@
+.section-line-group {
+    padding: 0 15px 0 15px;
+}
+
+.section-line-group__children {
+    padding: 0 15px;
+}
+
+.section-line-group__title {
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.section-line-group + .section-line-group {
+    margin-top: 15px;
+}

@@ -1,0 +1,53 @@
+html {
+    height: 100%;
+    width: 100%;
+    
+}
+
+html {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    -webkit-box-sizing: inherit;
+    -moz-box-sizing: inherit;
+    box-sizing: inherit;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,700,700i&display=swap');
+
+body {
+    overscroll-behavior: none;
+    overflow: auto;
+    font-family: 'Roboto';
+    
+    /* height: 100%; */
+    background-color: #ffffff;
+    background-image: url("https://www.transparenttextures.com/patterns/60-lines.png");
+/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+}
+
+.interactive {
+    cursor: pointer;
+    
+}
+
+.rotatable {
+    transform-origin: 50% 50%;
+    -webkit-transition: all 0.15s ease-in;
+  	-moz-transition: all 0.15s ease-in;
+  	-o-transition: all 0.15s ease-in;
+    transition: all 0.15s ease-in ;
+}
+
+.rotate-0 {
+    transform: none;
+}
+
+.rotate-90-cw {
+    transform: rotate(90deg);
+}
+
+
