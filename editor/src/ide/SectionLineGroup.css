@@ -2,11 +2,12 @@
     padding: 0 15px 0 15px;
 }
 
-.section-line-group__children {
+.section-line-group > .children {
     padding: 0 15px;
+    
 }
 
-.section-line-group__title {
+.section-line-group > .title {
     font-size: 14px;
     font-weight: 400;
     margin-bottom: 5px;

@@ -7,11 +7,15 @@ import { SidePanelHandle } from "./SidePanelHandle";
 import { IconLA } from "./IconLA";
 import { SidePanelSection } from "./SidePanelSection";
 import { ArtifactTitle } from "./ArtifactTitle";
-import { CanvasToolbar } from "./CanvasToolbar";
+import { Toolbar } from "./Toolbar";
 import { CanvasFooter } from "./CanvasFooter"
 import { ZoomControl } from "./ZoomControl";
 import { SectionLine } from "./SectionLine";
 import { SectionLineGroup } from "./SectionLineGroup";
+import { SectionTree } from "./SectionTree";
+import { DropDownList } from "./DropDownList";
+import { Section } from "./Section";
+import { Command } from "./Command";
 
 const navBarCss:React.CSSProperties = {
     position: "fixed",
@@ -61,7 +65,10 @@ export const IdeApp:React.SFC<{}> = ({}) => {
             <SidePanel appearFrom="left" key="lsp" isOpen={state.leftToggled} closedWidth={0} openWidth={240} top={100}>
                 
                 <SidePanelSection name="parameters" title="Parameters" isToggled={state.panelSections["parameters"]} onToggle={handleSectionToggle}>
-                    
+                    <SectionTree>
+                        <SectionLine>style</SectionLine>
+                        <SectionLine>className</SectionLine>
+                    </SectionTree>
                 </SidePanelSection>
 
                 <SidePanelSection 
@@ -69,22 +76,25 @@ export const IdeApp:React.SFC<{}> = ({}) => {
                     title="Visual States" 
                     isToggled={state.panelSections["states"]} 
                     onToggle={handleSectionToggle}>
-                    Edit controls
+                    
                 </SidePanelSection>
 
                 <SidePanelSection name="children" title="Children" isToggled={state.panelSections["children"]} onToggle={handleSectionToggle}>
+                    
                     <SectionLineGroup title="Padding">
                         <SectionLine>Top</SectionLine>
                         <SectionLine>Right</SectionLine>
                         <SectionLine>Bottom</SectionLine>
                         <SectionLine>Left</SectionLine>
                     </SectionLineGroup>
+                    
                     <SectionLineGroup title="Margins">
                         <SectionLine>Top</SectionLine>
                         <SectionLine>Right</SectionLine>
                         <SectionLine>Bottom</SectionLine>
                         <SectionLine>Left</SectionLine>
                     </SectionLineGroup>
+
                 </SidePanelSection>
             </SidePanel>
 
@@ -109,9 +119,25 @@ export const IdeApp:React.SFC<{}> = ({}) => {
 
             <NavBar key="nb" style={navBarCss} />
 
-            <CanvasToolbar key="ct" top={50} left={240} right={state.rightToggled? 240: 0} thickness={50}>
+            <Toolbar key="ct" top={50} left={240} right={state.rightToggled? 240: 0} thickness={50}>
                 
-            </CanvasToolbar>
+                    <DropDownList
+                        style={{ minWidth: 120, maxWidth: 200 }} 
+                        isToggled={false} 
+                        label="Ineractive State" value="toggled" />
+                
+                <Section>
+                    <Command label="pointer" icon="mouse-pointer" />
+                    <Command label="Components" icon="shapes" />
+                </Section>
+                <Section>
+                    <Command label="Undo" icon="undo" />
+                    <Command label="Redo" icon="redo" />
+                    <Command label="Cut" icon="cut" />
+                    <Command label="Copy" icon="copy" />
+                    <Command label="Paste" icon="paste" />
+                </Section>
+            </Toolbar>
 
             <Canvas key="canvas" 
                 zoom={state.zoom}

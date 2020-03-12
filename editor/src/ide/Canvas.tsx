@@ -32,7 +32,7 @@ export const Canvas:React.SFC<Props> = ({ top, right, bottom, left, zoom }) => {
     const sync = () => {
         //console.log(zoom);
         const x = window.scrollX / zoom;
-        const y = window.scrollY / zoom;// + 206);// + 206) / zoom;// / zoom;
+        const y = window.scrollY / zoom;
 
         hRulerTop.current.scroll(x);
         //hRulerBottom.current.scroll(window.scrollX);
@@ -86,17 +86,17 @@ export const Canvas:React.SFC<Props> = ({ top, right, bottom, left, zoom }) => {
                  }} />
             
             <div key="tr" style={{ ...xRulerCss, top, right, left: left + 40 + 30, height: thickness, borderTop: "40px solid #333333" }}>
-                <Ruler zoom={zoom} ref={hRulerTop} type="horizontal" />
+                <Ruler textColor="#999" zoom={zoom} ref={hRulerTop} type="horizontal" />
             </div>
             <div key="br" style={{ ...xRulerCss, bottom, right, left: left + 40 + 30, height: 30 }}>
                 
             </div>
 
             <div key="lr" style={{ ...yRulerCss, top, left, bottom, width: thickness, borderTop, borderBottom, borderLeft: hBorder }}>
-                <Ruler zoom={zoom} ref={vRulerLeft} type="vertical" />
+                <Ruler textColor="#999" zoom={zoom} ref={vRulerLeft} type="vertical" />
             </div>
             <div key="rr" style={{ ...yRulerCss, top, right, bottom, width: thickness, borderTop, borderBottom, borderLeft: hBorder , transform: "scale(-1, 1)"}}>
-                <Ruler zoom={zoom} ref={vRulerRight} type="vertical" />
+                <Ruler textColor="#999" zoom={zoom} ref={vRulerRight} type="vertical" />
             </div>
             <div key="body" style={{ display: "block", zoom }}>
                 <div style={{ width: 100, height: 100, backgroundColor: "green", color: "white" }}>

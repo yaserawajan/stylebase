@@ -18,8 +18,7 @@ const cssClose:React.CSSProperties = {
 const cssOpen:React.CSSProperties = {
     overflowX: "hidden",
     overflowY: "scroll",
-    margin: -1,
-    padding: 1
+    
 }
 
 interface Props {

@@ -1,0 +1,94 @@
+.toolbar {
+    padding: 5px 0 5px 5px;
+    background-color: #444;
+    
+    position: fixed;
+
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    
+    border-bottom: 1px solid #555;
+}
+
+.toolbar > .section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.toolbar > .section + .section {
+    border-left: 1px solid #555;
+
+}
+
+.control {
+    position: relative;
+}
+
+.toolbar .control-header {
+    display: flex;
+    flex-direction: column;
+    height: 40px;
+    /* padding-top:5px; */
+    align-items: center;
+}
+
+.toolbar .control-label {
+    font-size: 10px;
+    position: absolute;
+    
+    text-align: center;
+    top:-2px;
+    left:0;
+    right:0;
+    font-weight: 300;
+    color: #aaa;
+}
+
+.toolbar .control-input {
+    font-size: 14px;
+    font-weight: 400;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    line-height: 40px;
+    width: 100%;
+}
+
+.toolbar .control-input-value {
+    color: white;
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.toolbar .control-icon {
+    width: 20px;
+    color: #ccc;
+    line-height: 40px;
+    text-align:center;
+}
+
+.toolbar .command {
+    height: 30px;
+    position: relative;
+    background-color: #555;
+    border-bottom: 1px solid #666;
+}
+
+.toolbar .command + .command {
+    margin-left: 1px;
+}
+
+.toolbar .command-text {
+    display: none;
+}
+
+.toolbar .command-icon {
+    text-align: center;
+    color: #eee;
+    width: 30px;
+    font-size: 18px;
+    line-height: 30px;
+}

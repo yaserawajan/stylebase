@@ -8,16 +8,14 @@ interface Props {
 export const SectionLineGroup:React.SFC<Props> = (props) => {
 
     return (
-
         <div className="section-line-group">
-            <div className="section-line-group__title">
+            <div className="title">
                 {props.title}
             </div>
-            <div className="section-line-group__children">
+            <div className="children">
                 {props.children}
             </div>
         </div>
-
     );
 
 }

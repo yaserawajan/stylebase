@@ -26,7 +26,7 @@ const headerCss:React.CSSProperties = {
 const titleCss:React.CSSProperties = {
     //lineHeight: "100%",
     fontSize: "14px",
-    paddingLeft: 5,
+    //paddingLeft: 5,
     fontWeight: 400,
     display: "flex",
     flexDirection: "column"
