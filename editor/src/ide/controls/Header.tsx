@@ -1,13 +1,13 @@
 import * as React from "react";
 
 interface Props {
-    
+    label?: string
 }
 
-export const PanelSection:React.SFC<Props> = (props) => {
+export const Header:React.SFC<Props> = (props) => {
 
     return (
-        <div className="panel-section">
+        <div className="header">
             {props.children}
         </div>
     );

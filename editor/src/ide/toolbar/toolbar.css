@@ -1,33 +1,51 @@
 .toolbar {
-    padding: 5px 0 5px 5px;
     background-color: #444;
-    
     position: fixed;
-
     height: 40px;
     display: flex;
     flex-direction: row;
-    
+    justify-content: space-between;
+    align-items: stretch;
+    border-top: #444;
     border-bottom: 1px solid #555;
 }
 
-.toolbar > .section {
+.toolbar > .left {
+    padding: 5px 10px;
+    display: flex;
+    order: 1;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.toolbar > .right {
+    padding: 5px 5px;
+    display: flex;
+    order: 2;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.toolbar .section {
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 0 10px;
 }
 
-.toolbar > .section + .section {
-    border-left: 1px solid #555;
+.toolbar .section + .section {
+    border-left: 1px dotted #555;
 
 }
 
 .control {
+    
     position: relative;
 }
 
 .toolbar .control-header {
+    
     display: flex;
     flex-direction: column;
     height: 40px;
@@ -53,7 +71,8 @@
     color: white;
     display: flex;
     flex-direction: row;
-    line-height: 40px;
+    align-items: center;
+    line-height: 30px;
     width: 100%;
 }
 
@@ -71,10 +90,20 @@
 }
 
 .toolbar .command {
-    height: 30px;
+    height: 36px;
     position: relative;
     background-color: #555;
-    border-bottom: 1px solid #666;
+    border-bottom: 1px solid #777;
+}
+
+.toolbar .command:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.toolbar .command:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 .toolbar .command + .command {
@@ -88,7 +117,8 @@
 .toolbar .command-icon {
     text-align: center;
     color: #eee;
-    width: 30px;
-    font-size: 18px;
-    line-height: 30px;
+    width: 36px;
+    font-size: 20px;
+    /* box-shadow: inset 0px 8px 0px #7878782b; */
+    line-height: 36px;
 }

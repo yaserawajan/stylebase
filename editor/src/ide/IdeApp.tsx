@@ -1,142 +1,189 @@
 import * as React from "react";
 
-import { NavBar } from "./NavBar";
-import { Canvas } from "./Canvas";
-import { SidePanel } from "./SidePanel";
-import { SidePanelHandle } from "./SidePanelHandle";
-import { IconLA } from "./IconLA";
-import { SidePanelSection } from "./SidePanelSection";
+import { NavBar } from "./navbar/NavBar";
+import { Canvas } from "./canvas/Canvas";
+import { Panel } from "./panel/Panel";
 import { ArtifactTitle } from "./ArtifactTitle";
-import { Toolbar } from "./Toolbar";
-import { CanvasFooter } from "./CanvasFooter"
-import { ZoomControl } from "./ZoomControl";
+import { Toolbar } from "./toolbar/Toolbar";
+import { Footer } from "./Footer"
+import { ZoomControl } from "./canvas/ZoomControl";
 import { SectionLine } from "./SectionLine";
 import { SectionLineGroup } from "./SectionLineGroup";
 import { SectionTree } from "./SectionTree";
-import { DropDownList } from "./DropDownList";
-import { Section } from "./Section";
-import { Command } from "./Command";
+import { DropDownList } from "./controls/DropDownList";
+import { Section } from "./controls/Section";
+import { Command } from "./controls/Command";
+import { Menu } from "./controls/Menu";
+import { TabSelector } from "./controls/TabSelector";
+import { Tab } from "./controls/Tab";
+import { Header } from "./controls/Header";
 
 const navBarCss:React.CSSProperties = {
     position: "fixed",
     top: 0,
-    left:50,
-    right:50
+    left:0,
+    right:0
 };
 
 type ToggleMap = {
     [k:string]: boolean
 } 
 
+
+
 type State = {
     leftToggled: boolean,
-    rightToggled: boolean,
     panelSections: ToggleMap,
+    selectedPanel: string,
     zoom: number
-}
+} 
 
 export const IdeApp:React.SFC<{}> = ({}) => {
     
     const [state, setState] = React.useState<State>({
         leftToggled: true,
-        rightToggled: false,
         zoom: 1,
-        panelSections: {}
+        panelSections: {},
+        selectedPanel: "props"
     });
 
     const handleLeftClick = () => {
-        setState({ ...state, leftToggled: !state.leftToggled });
+        setState((state) => ({ ...state, leftToggled: !state.leftToggled }));
     }
 
-    const handleRightClick = () => {
-        setState({ ...state, rightToggled: !state.rightToggled });
+    const handleRightPanelChange = (selectedPanel: string) => {
+        setState((state) => ({ ...state, selectedPanel }));
     }
 
     const handleSectionToggle = (name: string) => {
-        setState({ ...state, panelSections: { ...state.panelSections, [name]: !state.panelSections[name] }})
+        setState((state) => ({ ...state, panelSections: { ...state.panelSections, [name]: !state.panelSections[name] }}))
     }
 
     const handleZoomChange = (newValue: number) => {
-        setState({ ...state, zoom: newValue });
+        setState((state) => ({ ...state, zoom: newValue }));
     }
 
     return (
         <>
-            <SidePanel appearFrom="left" key="lsp" isOpen={state.leftToggled} closedWidth={0} openWidth={240} top={100}>
+            <NavBar key="nb" style={navBarCss}>
+                <div className="left">
+                    <Section>
+                        <Command key="lh" 
+                            name="lp-toggle"
+                            label="Toggle Left Panel"
+                            icon="bars"
+                            isToggled={state.leftToggled}
+                            onClick={handleLeftClick} />
+                    </Section>
+                    <Section>
+                        <span style={{marginLeft:10 }}>S T Y L E B A S E</span>
+                    </Section>
+                </div>
+
+                <div className="right">
+                    <Section />
+                    <Section>
+                        <TabSelector value={state.selectedPanel} onChange={handleRightPanelChange} allowNoSelection={true}>
+                            <Tab name="props" icon="microchip" />
+                            <Tab name="ce" icon="sitemap" />
+                            <Tab name="user" icon="user" />
+                        </TabSelector>
+                    </Section>
+                </div>
+            </NavBar>
+
+
+            <Panel appearFrom="left" key="lsp" isOpen={state.leftToggled} width={240} top={100}>
                 
-                <SidePanelSection name="parameters" title="Parameters" isToggled={state.panelSections["parameters"]} onToggle={handleSectionToggle}>
-                    <SectionTree>
-                        <SectionLine>style</SectionLine>
-                        <SectionLine>className</SectionLine>
-                    </SectionTree>
-                </SidePanelSection>
+                <Section>
+                    <Menu name="parameters" 
+                        title="Parameters" 
+                        isToggled={state.panelSections["parameters"]} 
+                        onToggle={handleSectionToggle}>
 
-                <SidePanelSection 
-                    name="states" 
-                    title="Visual States" 
-                    isToggled={state.panelSections["states"]} 
-                    onToggle={handleSectionToggle}>
+                        <SectionTree>
+                            <SectionLine>style</SectionLine>
+                            <SectionLine>className</SectionLine>
+                        </SectionTree>
+                    </Menu>
+                </Section>
+
+                <Section>
+                    <Menu name="states" 
+                        title="Visual States" 
+                        isToggled={state.panelSections["states"]} 
+                        onToggle={handleSectionToggle}>
+                        
+                    </Menu>
+                </Section>
+
+                <Section>
+                    <Menu name="dataSample" 
+                        title="Data Sample" 
+                        subtitle="None"
+                        isToggled={state.panelSections["dataSample"]} 
+                        onToggle={handleSectionToggle}>
+                        
+                    </Menu>
+                </Section>
+
+                
+            </Panel>
+
+            <Panel title="Properties" appearFrom="right" key="rsp" isOpen={state.selectedPanel == "props"} width={240} top={50}>
+                <Header />
+                <Section>
                     
-                </SidePanelSection>
+                    <Menu name="children" 
+                        title="Children" 
+                        subtitle="None"
+                        isToggled={state.panelSections["children"]} onToggle={handleSectionToggle}>
+                        
+                        <SectionLineGroup title="Padding">
+                            <SectionLine>Top</SectionLine>
+                            <SectionLine>Right</SectionLine>
+                            <SectionLine>Bottom</SectionLine>
+                            <SectionLine>Left</SectionLine>
+                        </SectionLineGroup>
+                        
+                        <SectionLineGroup title="Margins">
+                            <SectionLine>Top</SectionLine>
+                            <SectionLine>Right</SectionLine>
+                            <SectionLine>Bottom</SectionLine>
+                            <SectionLine>Left</SectionLine>
+                        </SectionLineGroup>
 
-                <SidePanelSection name="children" title="Children" isToggled={state.panelSections["children"]} onToggle={handleSectionToggle}>
-                    
-                    <SectionLineGroup title="Padding">
-                        <SectionLine>Top</SectionLine>
-                        <SectionLine>Right</SectionLine>
-                        <SectionLine>Bottom</SectionLine>
-                        <SectionLine>Left</SectionLine>
-                    </SectionLineGroup>
-                    
-                    <SectionLineGroup title="Margins">
-                        <SectionLine>Top</SectionLine>
-                        <SectionLine>Right</SectionLine>
-                        <SectionLine>Bottom</SectionLine>
-                        <SectionLine>Left</SectionLine>
-                    </SectionLineGroup>
-
-                </SidePanelSection>
-            </SidePanel>
-
-            <SidePanel appearFrom="right" key="rsp" isOpen={state.rightToggled} closedWidth={0} openWidth={240} top={50} />
+                    </Menu>
+                </Section>
+            </Panel>
+            
+            <Panel title="Children Explorer" appearFrom="right" key="ce-panel" isOpen={state.selectedPanel == "ce"} width={240} top={50}></Panel>
+            
+            <Panel title="Editor Preferences" appearFrom="right" key="settings-panel" isOpen={state.selectedPanel == "settings"} width={240} top={50}></Panel>
             
             <ArtifactTitle style={{ position: "fixed", left: 0, top: 50, width: 240 }}  />
 
 
-            <SidePanelHandle key="lh" 
-                style={{ top: 0, left: 0 }}
-                isToggled={state.leftToggled}
-                onToggle={handleLeftClick}>
-                <IconLA icon="bars" />
-            </SidePanelHandle>
-
-            <SidePanelHandle key="rh" 
-                style={{ top: 0, right: 0 }}
-                isToggled={state.rightToggled}
-                onToggle={handleRightClick}>
-                <IconLA icon="sliders-h" />
-            </SidePanelHandle>
-
-            <NavBar key="nb" style={navBarCss} />
-
-            <Toolbar key="ct" top={50} left={240} right={state.rightToggled? 240: 0} thickness={50}>
-                
+            <Toolbar key="ct" top={50} left={240} right={state.selectedPanel? 240: 0} thickness={50}>
+                <div className="left">
                     <DropDownList
                         style={{ minWidth: 120, maxWidth: 200 }} 
                         isToggled={false} 
-                        label="Ineractive State" value="toggled" />
-                
-                <Section>
-                    <Command label="pointer" icon="mouse-pointer" />
-                    <Command label="Components" icon="shapes" />
-                </Section>
-                <Section>
-                    <Command label="Undo" icon="undo" />
-                    <Command label="Redo" icon="redo" />
-                    <Command label="Cut" icon="cut" />
-                    <Command label="Copy" icon="copy" />
-                    <Command label="Paste" icon="paste" />
-                </Section>
+                        label="State Tags" value="toggled" />
+                </div>
+                <div className="right">
+                    <Section>
+                        <Command name="pointer" label="pointer" icon="mouse-pointer" />
+                        <Command name="shapes" label="Components" icon="shapes" />
+                    </Section>
+                    <Section>
+                        <Command name="undo" label="Undo" icon="undo" />
+                        <Command name="redo" label="Redo" icon="redo" />
+                        <Command name="cut" label="Cut" icon="cut" />
+                        <Command name="copy" label="Copy" icon="copy" />
+                        <Command name="paste" label="Paste" icon="paste" />
+                    </Section>
+                </div>
             </Toolbar>
 
             <Canvas key="canvas" 
@@ -144,11 +191,11 @@ export const IdeApp:React.SFC<{}> = ({}) => {
                 top={100} 
                 left={state.leftToggled? 240: 0} 
                 bottom={40} 
-                right={state.rightToggled? 240: 0} />
+                right={state.selectedPanel? 240: 0} />
 
-            <CanvasFooter key="cf" bottom={0} left={state.leftToggled? 240: 0} right={state.rightToggled? 240: 0} thickness={40}>
+            <Footer key="cf" bottom={0} left={state.leftToggled? 240: 0} right={state.selectedPanel? 240: 0} thickness={40}>
                 <ZoomControl value={state.zoom} onChange={handleZoomChange} style={{  }} />
-            </CanvasFooter>
+            </Footer>
         </>
     );
 }

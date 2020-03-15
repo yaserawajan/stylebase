@@ -1,0 +1,77 @@
+.navbar {
+    background-color: #ccc;
+    height: 50px;
+    padding: 0 0 0 0;
+    line-height: 50px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.navbar > .left {
+    padding: 0;
+    display: flex;
+    order: 1;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.navbar > .right {
+    padding: 0;
+    display: flex;
+    order: 2;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.navbar .section {
+    display: flex;
+    flex-direction: row;
+}
+
+.navbar .section + .section {
+    
+    
+    border-left: 1px solid #eee;
+}
+
+.navbar .command {
+    width: 50px;
+    height: 50px;
+    text-align: center; 
+    line-height: 50px;
+    background-color: #ccc;
+    border-bottom: 1px solid #eee;
+    
+}
+
+.navbar .command.toggled {
+    background-color: #eee;
+    border-bottom: 1px solid white;
+}
+
+.navbar .command-text {
+    display: none;
+}
+
+.navbar .tab-selector {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #555; 
+    height: 49px;
+}
+
+.navbar .tab {
+    width: 50px;
+    height: 49px;
+    text-align: center;
+    line-height: 50px;
+    background-color: #ccc;
+}
+
+.navbar .tab.selected {
+    border-bottom: 2px solid #555;
+    color: #555;
+}

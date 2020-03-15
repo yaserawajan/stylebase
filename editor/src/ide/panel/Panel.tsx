@@ -1,15 +1,7 @@
 import * as React from "react";
-
-const css:React.CSSProperties = {
-    position: "fixed",
-    backgroundColor: "#eee",
-    //borderStyle: "solid",
-    //borderColor: "white",
-    //borderTop: "1px solid white",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "start"
-}
+import "./panel.css";
+import { Side } from "../models";
+import { classes } from "../../utils";
 
 const cssClose:React.CSSProperties = {
     overflow: "hidden"
@@ -22,38 +14,45 @@ const cssOpen:React.CSSProperties = {
 }
 
 interface Props {
-    closedWidth: number
-    openWidth: number
+    title?: string
+    width: number
     top: number
     isOpen: boolean
-    appearFrom: "left" | "right"
+    appearFrom: Side
 }
 
-export const SidePanel:React.SFC<Props> = (props) => {
+export const Panel:React.SFC<Props> = (props) => {
 
     const computedCss = props.appearFrom == "left"
         ? {
-            ...css,
+            
             top: props.top,
             left: 0,
             bottom: 0,
             //border: "0 1px 0 0",
             ...(props.isOpen? cssOpen : cssClose),
-            width: props.isOpen? props.openWidth: props.closedWidth
+            width: props.isOpen? props.width: 0
         }
         : {
-            ...css,
+            
             top: props.top,
             right: 0,
             bottom: 0,
             //border: "0 1px 0 0",
             ...(props.isOpen? cssOpen : cssClose),
-            width: props.isOpen? props.openWidth: props.closedWidth
+            width: props.isOpen? props.width: 0
         };
     return (
         
-        <div style={computedCss}>
-            {props.isOpen? props.children : null}
+        <div 
+            className={classes("panel", props.appearFrom)} 
+            style={computedCss}>
+
+            {props.isOpen
+                ? <>
+                    {props.title && <div className="title">{props.title}</div>}
+                    {props.children}
+                </> : null}
         </div>
 
     );

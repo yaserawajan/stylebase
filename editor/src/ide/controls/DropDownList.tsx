@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IconLA } from "./IconLA";
+import { IconLA } from "../IconLA";
 
 interface Props {
     style?: React.CSSProperties

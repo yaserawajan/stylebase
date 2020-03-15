@@ -21,7 +21,7 @@ interface Props {
     right: number
 }
 
-export const CanvasFooter:React.SFC<Props> = (props) => {
+export const Footer:React.SFC<Props> = (props) => {
 
     return (
 
