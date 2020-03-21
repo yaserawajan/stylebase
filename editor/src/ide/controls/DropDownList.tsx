@@ -1,8 +1,10 @@
 import * as React from "react";
 import { IconLA } from "../IconLA";
+import { classes } from "../../utils";
 
 interface Props {
     style?: React.CSSProperties
+    className?: string
     label: string
     isToggled: boolean
     onToggle?: (name:string) => void
@@ -13,7 +15,7 @@ interface Props {
 export const DropDownList:React.SFC<Props> = (props) => {
 
     return (
-        <div style={props.style} className="control">
+        <div style={props.style} className={classes("control", props.className)} >
             <div className="control-header">
                 <div className="control-label">
                     {props.label}

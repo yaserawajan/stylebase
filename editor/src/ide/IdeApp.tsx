@@ -17,6 +17,13 @@ import { Menu } from "./controls/Menu";
 import { TabSelector } from "./controls/TabSelector";
 import { Tab } from "./controls/Tab";
 import { Header } from "./controls/Header";
+import { Title } from "./controls/Title";
+import { OptionSelector } from "./state/option/OptionSelector";
+import { useSelector } from "react-redux";
+import { IdeState } from "./state/ideState";
+import { Toggler } from "./state/toggle/Toggler";
+
+
 
 const navBarCss:React.CSSProperties = {
     position: "fixed",
@@ -32,33 +39,20 @@ type ToggleMap = {
 
 
 type State = {
-    leftToggled: boolean,
-    panelSections: ToggleMap,
-    selectedPanel: string,
+    
     zoom: number
 } 
 
 export const IdeApp:React.SFC<{}> = ({}) => {
     
     const [state, setState] = React.useState<State>({
-        leftToggled: true,
         zoom: 1,
-        panelSections: {},
-        selectedPanel: "props"
     });
+    
+    const showLeftPanel = useSelector<IdeState,boolean>(s => s.toggles["leftSidePanel"])
+    const selectedRightPanel = useSelector<IdeState,string>(s => s.options["rightSidePanel"]);
 
-    const handleLeftClick = () => {
-        setState((state) => ({ ...state, leftToggled: !state.leftToggled }));
-    }
-
-    const handleRightPanelChange = (selectedPanel: string) => {
-        setState((state) => ({ ...state, selectedPanel }));
-    }
-
-    const handleSectionToggle = (name: string) => {
-        setState((state) => ({ ...state, panelSections: { ...state.panelSections, [name]: !state.panelSections[name] }}))
-    }
-
+    
     const handleZoomChange = (newValue: number) => {
         setState((state) => ({ ...state, zoom: newValue }));
     }
@@ -68,77 +62,129 @@ export const IdeApp:React.SFC<{}> = ({}) => {
             <NavBar key="nb" style={navBarCss}>
                 <div className="left">
                     <Section>
-                        <Command key="lh" 
-                            name="lp-toggle"
-                            label="Toggle Left Panel"
-                            icon="bars"
-                            isToggled={state.leftToggled}
-                            onClick={handleLeftClick} />
+                        <Toggler subject="leftSidePanel">
+                            {({ toggle, isToggled }) =>
+                                <Command key="lh" 
+                                    name="lp-toggle"
+                                    label="Toggle Left Panel"
+                                    icon="bars"
+                                    isToggled={isToggled}
+                                    onClick={toggle} />
+                            }
+                        </Toggler>
                     </Section>
                     <Section>
-                        <span style={{marginLeft:10 }}>S T Y L E B A S E</span>
+                        <span style={{ marginLeft: 10 }}>S T Y L E B A S E</span>
                     </Section>
                 </div>
 
                 <div className="right">
                     <Section />
                     <Section>
-                        <TabSelector value={state.selectedPanel} onChange={handleRightPanelChange} allowNoSelection={true}>
-                            <Tab name="props" icon="microchip" />
-                            <Tab name="ce" icon="sitemap" />
-                            <Tab name="user" icon="user" />
-                        </TabSelector>
+                        <OptionSelector subject="rightSidePanel" allowNone={true}>
+                            {({ value, setValue }) => 
+                                <TabSelector value={value} onChange={setValue}>
+                                    <Tab name="props" icon="microchip" />
+                                    <Tab name="ce" icon="sitemap"  />
+                                </TabSelector>
+                            }
+                        </OptionSelector>
+                    </Section>
+                    <Section>
+                        <Command label="User" name="user" icon="user" />
                     </Section>
                 </div>
             </NavBar>
 
 
-            <Panel appearFrom="left" key="lsp" isOpen={state.leftToggled} width={240} top={100}>
+            <Panel appearFrom="left" key="lsp" isOpen={showLeftPanel} width={240} top={100}>
+
+                <Title>Component Specs</Title>
                 
-                <Section>
-                    <Menu name="parameters" 
-                        title="Parameters" 
-                        isToggled={state.panelSections["parameters"]} 
-                        onToggle={handleSectionToggle}>
+                <Toggler subject="parameters">
+                    {({ toggle, isToggled }) =>
+                        <Menu name="parameters" 
+                            title="Parameters" 
+                            isToggled={isToggled} 
+                            onToggle={toggle}>
+                            <SectionTree>
+                                <SectionLine>style</SectionLine>
+                                <SectionLine>className</SectionLine>
+                            </SectionTree>
+                        </Menu>
+                    }
+                </Toggler>
+            
+                <Toggler subject="states">
+                    {({ toggle, isToggled }) =>
+                        <Menu name="states" 
+                            title="Visual States" 
+                            isToggled={isToggled} 
+                            onToggle={toggle}>
+                        </Menu>
+                    }
+                </Toggler>
+            
+                <Toggler subject="dataSamples">
+                    {({ toggle, isToggled }) =>
+                        <Menu name="dataSample" 
+                            title="Data Sample" 
+                            isToggled={isToggled} 
+                            onToggle={toggle}>
+                            
+                        </Menu>
+                    }
+                    
+                </Toggler>
 
-                        <SectionTree>
-                            <SectionLine>style</SectionLine>
-                            <SectionLine>className</SectionLine>
-                        </SectionTree>
-                    </Menu>
-                </Section>
+                <Toggler subject="componentLib">
+                    {({ toggle, isToggled }) =>
+                        <Menu name="componentLib"
+                            title="Component Library"
+                            isToggled={isToggled}
+                            onToggle={toggle}>
+                            
+                        </Menu>
+                    }
+                </Toggler>
 
-                <Section>
-                    <Menu name="states" 
-                        title="Visual States" 
-                        isToggled={state.panelSections["states"]} 
-                        onToggle={handleSectionToggle}>
-                        
-                    </Menu>
-                </Section>
-
-                <Section>
-                    <Menu name="dataSample" 
-                        title="Data Sample" 
-                        subtitle="None"
-                        isToggled={state.panelSections["dataSample"]} 
-                        onToggle={handleSectionToggle}>
-                        
-                    </Menu>
-                </Section>
-
-                
             </Panel>
 
-            <Panel title="Properties" appearFrom="right" key="rsp" isOpen={state.selectedPanel == "props"} width={240} top={50}>
-                <Header />
-                <Section>
+            <Panel appearFrom="right" key="rsp" isOpen={selectedRightPanel == "props"} width={240} top={50}>
+                <Title>Box Editor</Title>
+                <Header>
                     
-                    <Menu name="children" 
-                        title="Children" 
-                        subtitle="None"
-                        isToggled={state.panelSections["children"]} onToggle={handleSectionToggle}>
-                        
+                    <div className="row pv2 ph2">
+                        <DropDownList
+                            className="stretch" 
+                            isToggled={false} 
+                            label="Element" 
+                            value="title" />
+                        <OptionSelector subject="editMode">
+                            {({ value, setValue }) => 
+                                <TabSelector style={{marginLeft: 20 }} value={value} onChange={setValue}>
+                                    <Tab name="edit" icon="edit" />
+                                    <Tab name="create" icon="plus" />
+                                </TabSelector>
+                            }
+                        </OptionSelector>
+                    </div>
+                    
+                    <div className="ph2">
+                        <OptionSelector subject="propsTab">
+                            {({ value, setValue }) => 
+                                <TabSelector value={value} onChange={setValue}>
+                                    <Tab name="allProps" label="Properties" />
+                                    <Tab name="typographyProps" label="Typography" />
+                                    <Tab name="skinProps" label="Colours" />
+                                </TabSelector>
+                            }
+                        </OptionSelector>
+                    </div>
+                </Header>
+                
+                <div className="scroll-area">
+                    <div className="p3">
                         <SectionLineGroup title="Padding">
                             <SectionLine>Top</SectionLine>
                             <SectionLine>Right</SectionLine>
@@ -152,19 +198,21 @@ export const IdeApp:React.SFC<{}> = ({}) => {
                             <SectionLine>Bottom</SectionLine>
                             <SectionLine>Left</SectionLine>
                         </SectionLineGroup>
-
-                    </Menu>
-                </Section>
+                    </div>
+                    
+                </div>
             </Panel>
             
-            <Panel title="Children Explorer" appearFrom="right" key="ce-panel" isOpen={state.selectedPanel == "ce"} width={240} top={50}></Panel>
+            <Panel appearFrom="right" key="explorer-panel" isOpen={selectedRightPanel == "ce"} width={240} top={50}>
             
-            <Panel title="Editor Preferences" appearFrom="right" key="settings-panel" isOpen={state.selectedPanel == "settings"} width={240} top={50}></Panel>
+            
+            </Panel>
+            
             
             <ArtifactTitle style={{ position: "fixed", left: 0, top: 50, width: 240 }}  />
 
 
-            <Toolbar key="ct" top={50} left={240} right={state.selectedPanel? 240: 0} thickness={50}>
+            <Toolbar key="ct" top={50} left={240} right={selectedRightPanel? 240: 0} thickness={50}>
                 <div className="left">
                     <DropDownList
                         style={{ minWidth: 120, maxWidth: 200 }} 
@@ -183,17 +231,20 @@ export const IdeApp:React.SFC<{}> = ({}) => {
                         <Command name="copy" label="Copy" icon="copy" />
                         <Command name="paste" label="Paste" icon="paste" />
                     </Section>
+                    <Section>
+                        <Command name="delete" label="Delete" icon="trash" />
+                    </Section>
                 </div>
             </Toolbar>
 
             <Canvas key="canvas" 
                 zoom={state.zoom}
                 top={100} 
-                left={state.leftToggled? 240: 0} 
+                left={showLeftPanel? 240: 0} 
                 bottom={40} 
-                right={state.selectedPanel? 240: 0} />
+                right={selectedRightPanel? 240: 0} />
 
-            <Footer key="cf" bottom={0} left={state.leftToggled? 240: 0} right={state.selectedPanel? 240: 0} thickness={40}>
+            <Footer key="cf" bottom={0} left={showLeftPanel? 240: 0} right={selectedRightPanel? 240: 0} thickness={40}>
                 <ZoomControl value={state.zoom} onChange={handleZoomChange} style={{  }} />
             </Footer>
         </>

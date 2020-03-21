@@ -39,7 +39,7 @@
 
 }
 
-.control {
+.toolbar .control {
     
     position: relative;
 }
@@ -90,13 +90,14 @@
 }
 
 .toolbar .command {
-    height: 36px;
+    height: 30px;
     position: relative;
     background-color: #555;
-    border-bottom: 1px solid #777;
+    border-bottom: 2px solid #7878782b; 
+    /* border-bottom: 1px solid #777; */
 }
-
-.toolbar .command:first-child {
+/* 
+ .toolbar .command:first-child {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
@@ -104,10 +105,11 @@
 .toolbar .command:last-child {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-}
+}  */
 
 .toolbar .command + .command {
-    margin-left: 1px;
+    margin-left: 2px; 
+    /* border-left: 1px solid #444; */
 }
 
 .toolbar .command-text {
@@ -117,8 +119,9 @@
 .toolbar .command-icon {
     text-align: center;
     color: #eee;
-    width: 36px;
-    font-size: 20px;
-    /* box-shadow: inset 0px 8px 0px #7878782b; */
-    line-height: 36px;
+    width: 30px;
+    font-size: 18px;
+    
+    /* box-shadow: inset 0px -2px 0px #7878782b;  */
+    line-height: 30px;
 }

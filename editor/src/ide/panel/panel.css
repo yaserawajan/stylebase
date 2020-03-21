@@ -4,42 +4,47 @@
     display: flex;
     flex-direction: column;
     justify-content: start;
-    
+    align-items: stretch;
+    overflow: auto;
 }
 
 .panel > .title {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
-    line-height: 39px;
-    height: 40px;
-    color: #333;
-    background-color: #ccc;
+    line-height: 29px;
+    height: 30px;
+    letter-spacing: 1px;
+    color: #eee;
+    background-color: #555;
     padding: 0 10px;
-    border-bottom: 1px solid #eee;
+    /* border-top: 1px solid white; */
+    border-bottom: 1px solid white;
     text-align: left;
 }
 
 .panel > .header {
     background-color: #ddd;
-    border-bottom: 1px solid white;
-    height:50px;
+    border-bottom: 1px solid #999;
+}
+
+.panel > .scroll-area {
+    
+    background-color: #fff;
+    overflow-y: scroll;
+    flex: 1 1 auto;
 }
 
 .panel, .panel * {
     user-select: none;
 }
 
-.panel > .section {
-    border-bottom: 1px solid white;
-}
-
-
-.panel > .section + .section {
-    
-}
 
 .panel .menu {
     
+}
+
+.panel > * + * {
+    border-bottom: 1px solid white;;
 }
 
 .panel .menu-header {
@@ -58,6 +63,7 @@
     
     padding: 12px 20px 12px 0;
     border-left: 10px solid #ddd;
+    
 }
 
 .panel.right .menu-header {
@@ -100,3 +106,99 @@
     /* border-left: 10px solid #eee */
 }
 
+
+
+.panel .control {
+    
+    position: relative;
+}
+
+.panel .control-header {
+    
+    display: flex;
+    flex-direction: column;
+    height: 40px;
+    /* padding-top:5px; */
+    align-items: center;
+}
+
+.panel .control-label {
+    font-size: 10px;
+    position: absolute;
+    
+    text-align: center;
+    top:-1px;
+    left:0;
+    right:0;
+    font-weight: 300;
+    color: #333;
+}
+
+.panel .control-input {
+    font-size: 14px;
+    font-weight: 400;
+    /* color: white; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    line-height: 30px;
+    width: 100%;
+}
+
+.panel .control-input-value {
+    /* color: #333; */
+    flex: 1 1 auto;
+    text-align: center;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+}
+
+.panel .control-icon {
+    width: 20px;
+    /* color: #ccc; */
+    line-height: 40px;
+    text-align:center;
+}
+
+
+.panel .tab-selector {
+    display: flex;
+    flex-direction: row;  
+    border-bottom: 1px solid transparent;
+}
+
+.panel .tab {
+    display: flex;
+    flex-direction: row;
+    line-height: 30px;
+    padding: 0;
+    /* padding: 0 10px; */
+    color: #777;
+    font-weight: 400;
+    border-bottom: 2px solid transparent;
+}
+
+.panel .tab + .tab {
+    margin-left: 10px; 
+}
+
+.panel .tab-text {
+    font-size: 12px;
+
+}
+
+.panel .tab-icon {
+    font-size: 18px;
+    width: 30px;
+    text-align: center;
+    /* color: #555; */
+}
+
+.panel .tab-icon + .tab-text {
+    margin-left: 2px;
+}
+
+.panel .tab.selected {
+    border-bottom: 2px solid #555;
+    color: initial;
+}

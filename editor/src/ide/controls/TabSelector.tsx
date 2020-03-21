@@ -2,9 +2,10 @@ import * as React from "react";
 import TabSelectorContext from "./TabSelectorContext";
 
 interface Props {
+    style?: React.CSSProperties
     value?: string
     onChange?: (value:string) => void
-    allowNoSelection: boolean
+    
 }
 
 export const TabSelector:React.SFC<Props> = (props) => {
@@ -20,7 +21,7 @@ export const TabSelector:React.SFC<Props> = (props) => {
                 selectTab: handleSelect
             }}>
 
-            <div className="tab-selector">
+            <div className="tab-selector" style={props.style}>
                 {props.children}
             </div>
 

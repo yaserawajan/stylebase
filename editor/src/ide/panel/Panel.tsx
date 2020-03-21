@@ -14,7 +14,7 @@ const cssOpen:React.CSSProperties = {
 }
 
 interface Props {
-    title?: string
+    
     width: number
     top: number
     isOpen: boolean
@@ -49,10 +49,8 @@ export const Panel:React.SFC<Props> = (props) => {
             style={computedCss}>
 
             {props.isOpen
-                ? <>
-                    {props.title && <div className="title">{props.title}</div>}
-                    {props.children}
-                </> : null}
+                ? props.children
+                : null}
         </div>
 
     );

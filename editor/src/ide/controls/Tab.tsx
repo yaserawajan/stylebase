@@ -19,8 +19,8 @@ export const Tab:React.SFC<Props> = (props) => {
 
     return (
         <div className={classes("tab", value == props.name? "selected": null)} onClick={handleClick}>
-            <div className="tab-icon"><IconLA icon={props.icon} /></div>
-            <div className="tab-text">{props.label}</div>
+            {props.icon && <div className="tab-icon"><IconLA icon={props.icon} /></div>}
+            {props.label && <div className="tab-text">{props.label}</div>}
         </div>
     );
 }
