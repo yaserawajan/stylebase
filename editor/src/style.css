@@ -22,8 +22,8 @@ body {
     overscroll-behavior: none;
     overflow: auto;
     font-family: 'Roboto';
-    
-    /* height: 100%; */
+    padding: 0;
+    height: 100%; 
     background-color: #ffffff;
     background-image: url("https://www.transparenttextures.com/patterns/60-lines.png");
 /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
@@ -73,3 +73,6 @@ body {
 .ph2 { padding-left: 10px; padding-right: 10px; }
 .ph3 { padding-left: 15px; padding-right: 15px; }
 .ph4 { padding-left: 20px; padding-right: 20px; }
+
+.pt1 { padding-top: 5px }
+.pt2 { padding-top: 10px }

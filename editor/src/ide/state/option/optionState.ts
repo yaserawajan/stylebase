@@ -1,7 +1,8 @@
 export type OptionChangedAction = {
     type: "OPTION_SELECTED",
     subject: string,
-    value: string
+    value: string,
+    allowNone: boolean
 }
 
 export type OptionState = {
@@ -10,19 +11,26 @@ export type OptionState = {
 
 export const optionInit:OptionState = {}
 
-export const optionChanged = (subject: string, value: string):OptionChangedAction => ({
+export const optionChanged = (subject: string, value: string, allowNone: boolean):OptionChangedAction => ({
     type: "OPTION_SELECTED",
     subject, 
-    value
+    value,
+    allowNone
 });
 
 export const optionReducer = 
     (state:OptionState, action:OptionChangedAction) => {
 
         if (action.type == "OPTION_SELECTED") {
+            
+            const value = (state[action.subject] == action.value &&  
+                action.allowNone) 
+                ? ""
+                : action.value;
+
             return {
                 ...state, 
-                [action.subject]: action.value
+                [action.subject]: value
             };
         }
 

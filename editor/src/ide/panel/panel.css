@@ -6,6 +6,7 @@
     justify-content: start;
     align-items: stretch;
     overflow: auto;
+    z-index: 1000;
 }
 
 .panel > .title {
@@ -18,13 +19,17 @@
     background-color: #555;
     padding: 0 10px;
     /* border-top: 1px solid white; */
-    border-bottom: 1px solid white;
+    /* border-bottom: 1px solid #aaa; */
     text-align: left;
 }
 
 .panel > .header {
     background-color: #ddd;
-    border-bottom: 1px solid #999;
+    /* border-bottom: 1px solid #999; */
+}
+
+.panel > .header + .header {
+    /* border-top: 1px solid #eee; */
 }
 
 .panel > .scroll-area {
@@ -170,7 +175,7 @@
 .panel .tab {
     display: flex;
     flex-direction: row;
-    line-height: 30px;
+    line-height: 40px;
     padding: 0;
     /* padding: 0 10px; */
     color: #777;

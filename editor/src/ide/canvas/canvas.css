@@ -1,0 +1,28 @@
+.canvas {
+
+}
+
+.canvas-x-ruler {
+    position: fixed;
+    background-color: #333333;
+    z-index: 1000;
+    border-top: 40px solid #333333;
+    height: 70px;
+}
+
+.canvas-y-ruler {
+    position: fixed;
+    display: block;
+    width: 70px;
+    z-index: 1000;
+    border-top: 70px solid #333333;
+    border-bottom: 30px solid #333333;
+    border-left: 40px solid #333333;
+}
+
+.canvas-footer {
+    position: fixed;
+    background-color: #333333;
+    z-index: 1000;
+    height: 30px;
+}

@@ -18,13 +18,10 @@ export const OptionSelector:React.SFC<Props> = (props) => {
 
     const selectedValue = useSelector<IdeState,string>(s => s.options[props.subject]);
     const dispatch = useDispatch();
-    const setValue = React.useCallback((value) => {
-        dispatch(optionChanged(props.subject, 
-            (props.allowNone && selectedValue == value)
-                ? ""
-                : value));
-    }, [selectedValue]);
-
+    const setValue = (value:string) => {
+        dispatch(optionChanged(props.subject, value, props.allowNone));
+    }
+    
     return props.children({ setValue, value: selectedValue });
 }
 

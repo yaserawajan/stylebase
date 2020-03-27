@@ -14,8 +14,8 @@ export const Tab:React.SFC<Props> = (props) => {
     const { selectTab, value } = React.useContext(TabSelectorContext);
 
     const handleClick = React.useCallback(() => {
-        selectTab(value == props.name? "": props.name);
-    }, [ value ]);
+        selectTab(props.name);
+    }, []);
 
     return (
         <div className={classes("tab", value == props.name? "selected": null)} onClick={handleClick}>

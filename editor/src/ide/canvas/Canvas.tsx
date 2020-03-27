@@ -1,66 +1,52 @@
 import * as React from "react";
 import Ruler from "@scena/react-ruler";
-import { BodyStyler } from "./BodyStyler";
+import "./canvas.css";
+import { DocumentView } from "./DocumentView";
+import { ElementRectMap } from "./types";
+import RectContext from "./RectContext";
  
-const xRulerCss:React.CSSProperties = {
-    position: "fixed",
-    backgroundColor: "#333333"
-};
-
-const yRulerCss:React.CSSProperties = {
-    position: "fixed",
-    display: "block", 
-    width: "30px"
-    
-};
-
 interface Props {
     top: number
     left: number
     bottom: number
     right: number
     zoom: number
+    contents: JSX.Element
+
+    onHover?: (elementName?: string) => void
 }
 
-export const Canvas:React.SFC<Props> = ({ top, right, bottom, left, zoom }) => {
-    //<Ruler ref={hRulerBottom} type="horizontal" />
+export const Canvas:React.SFC<Props> = ({ top, right, bottom, left, zoom, children, contents, onHover }) => {
+    
+    const [ rects, setRects ] = React.useState<ElementRectMap>({});
     const hRulerTop = React.useRef<Ruler>(null);
-    //const hRulerBottom = React.useRef<Ruler>(null);
     const vRulerLeft = React.useRef<Ruler>(null);
     const vRulerRight = React.useRef<Ruler>(null);
 
     const sync = () => {
-        //console.log(zoom);
         const x = window.scrollX / zoom;
         const y = window.scrollY / zoom;
-
         hRulerTop.current.scroll(x);
-        //hRulerBottom.current.scroll(window.scrollX);
         vRulerLeft.current.scroll(y);
         vRulerRight.current.scroll(y);
     }
 
-    const handleScroll = (e:Event) => {
-
-        requestAnimationFrame(sync);
-    }
-
+    const handleScroll = () => requestAnimationFrame(sync);
+    
     const handleResize = () => {
         hRulerTop.current.resize();
-        //hRulerBottom.current.resize();
         vRulerLeft.current.resize();
         vRulerRight.current.resize();
+    }
+
+    const handleRectChange = (rectMap: ElementRectMap) => {
+        setRects(state => ({ ...state, ...rectMap }));
     }
 
     React.useEffect(() => {
 
         sync();
         handleResize();
-        
-    }, [right, left, zoom]);
-
-    React.useEffect(() => {
-
         window.addEventListener("resize", handleResize);
         window.addEventListener("scroll", handleScroll);
 
@@ -68,61 +54,54 @@ export const Canvas:React.SFC<Props> = ({ top, right, bottom, left, zoom }) => {
             window.removeEventListener("resize", handleResize);
             window.removeEventListener("scroll", handleScroll);
         };
-    }, [right, left, zoom]);
 
-    const thickness = 30 + 40;
-    const borderTop = `${30 + 40}px solid #333333`;
-    const borderBottom = `${30}px solid #333333`;
-    const hBorder = `${40}px solid #333333`;
+    }, [right, left, zoom]);
+    
     return (
         <>
-            <BodyStyler 
-                key="bs"
-                style={{ 
-                    paddingTop: `${ 30 + 40 + top }px`, 
-                    paddingLeft: `${ 30 + 40 + left }px`,
-                    paddingBottom: `${ 30 + bottom }px`, 
-                    paddingRight: `${ 30 + 40 + right }px`,
-                 }} />
-            
-            <div key="tr" style={{ ...xRulerCss, top, right, left: left + 40 + 30, height: thickness, borderTop: "40px solid #333333" }}>
+            <div key="tr" className="canvas-x-ruler" style={{ top, right, left: left + 40 + 30 }}>
                 <Ruler textColor="#999" zoom={zoom} ref={hRulerTop} type="horizontal" />
             </div>
-            <div key="br" style={{ ...xRulerCss, bottom, right, left: left + 40 + 30, height: 30 }}>
-                
-            </div>
-
-            <div key="lr" style={{ ...yRulerCss, top, left, bottom, width: thickness, borderTop, borderBottom, borderLeft: hBorder }}>
+            <div key="br" className="canvas-footer" style={{ bottom, right, left: left + 40 + 30 }} />
+            <div key="lr" className="canvas-y-ruler" style={{ top, left, bottom }}>
                 <Ruler textColor="#999" zoom={zoom} ref={vRulerLeft} type="vertical" />
             </div>
-            <div key="rr" style={{ ...yRulerCss, top, right, bottom, width: thickness, borderTop, borderBottom, borderLeft: hBorder , transform: "scale(-1, 1)"}}>
+            <div key="rr" className="canvas-y-ruler" style={{ top, right, bottom, transform: "scale(-1, 1)" }}>
                 <Ruler textColor="#999" zoom={zoom} ref={vRulerRight} type="vertical" />
             </div>
-            <div key="body" style={{ display: "block", zoom }}>
-                <div style={{ width: 100, height: 100, backgroundColor: "green", color: "white" }}>
-                    1
+
+            <div key="body" 
+                style={{ 
+                        position: "absolute", 
+                        overflow: "visible", 
+                        zIndex: 100, 
+                        top: 40 + 30 + top,
+                        display: "block",
+                        left: 40 + 30 + left 
+                    }}>
+
+                <div key="outlines" style={{ position: "relative"  }}>
+                    <RectContext.Provider value={{ 
+                            rectMap: rects, 
+                            topShift: 0, // -(40 + 30 + top), 
+                            leftShift: 0, // -(40 + 30 + left) 
+                        }}>
+                        {children}
+                    </RectContext.Provider>
                 </div>
-                <div style={{ width: 100, height: 100, backgroundColor: "darkred", color: "white" }}>
-                    2
-                </div>
-                <div style={{ width: 100, height: 100, backgroundColor: "blue", color: "white" }}>
-                    3
-                </div>
-                <div style={{ width: 100, height: 100, backgroundColor: "darkred", color: "white" }}>
-                    4
-                </div>
-                <div style={{ width: 100, height: 100, backgroundColor: "green", color: "white" }}>
-                    5
-                </div>
-                <div style={{ width: 100, height: 100, backgroundColor: "darkred", color: "white" }}>
-                    6
-                </div>
-                <div style={{ width: 100, height: 100, backgroundColor: "green", color: "white" }}>
-                    7
-                </div>
-                <div style={{ width: 100, height: 100, backgroundColor: "darkred", color: "white" }}>
-                    8
-                </div>
+
+                <DocumentView 
+                    key="root"
+                    zoom={zoom}
+                    style={{
+                        paddingBottom: (30 + bottom) / zoom, 
+                        paddingRight: (30 + 40 + right) / zoom,
+                    }}
+                    onHover={onHover}
+                    onRectChange={handleRectChange}>
+                    {contents}
+                </DocumentView>
+
             </div>
         </>
     );

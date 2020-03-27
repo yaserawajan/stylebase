@@ -19,10 +19,14 @@ import { Tab } from "./controls/Tab";
 import { Header } from "./controls/Header";
 import { Title } from "./controls/Title";
 import { OptionSelector } from "./state/option/OptionSelector";
-import { useSelector } from "react-redux";
-import { IdeState } from "./state/ideState";
+import { useSelector, useDispatch } from "react-redux";
+import { IdeState, getZoom, zoomChanged, hoverChanged } from "./state/ideState";
 import { Toggler } from "./state/toggle/Toggler";
+import { DocumentView } from "./canvas/DocumentView";
+import { OutLine } from "./canvas/OutLine";
 
+
+//  <ArtifactTitle style={{ position: "fixed", left: 0, top: 50, width: 240 }}  />
 
 
 const navBarCss:React.CSSProperties = {
@@ -32,30 +36,29 @@ const navBarCss:React.CSSProperties = {
     right:0
 };
 
-type ToggleMap = {
-    [k:string]: boolean
-} 
-
-
-
-type State = {
-    
-    zoom: number
-} 
-
 export const IdeApp:React.SFC<{}> = ({}) => {
     
-    const [state, setState] = React.useState<State>({
-        zoom: 1,
-    });
-    
+    const hoveredElement = useSelector<IdeState,string | undefined>(s => s.hoveredElement);
+    const zoom = useSelector<IdeState,number>(getZoom);
     const showLeftPanel = useSelector<IdeState,boolean>(s => s.toggles["leftSidePanel"])
     const selectedRightPanel = useSelector<IdeState,string>(s => s.options["rightSidePanel"]);
+    const dispatch = useDispatch();
 
+    const handleHoverChange = (element?: string) => dispatch(hoverChanged(element));
+
+    const handleZoomChange = (value: number) => dispatch(zoomChanged(value));
     
-    const handleZoomChange = (newValue: number) => {
-        setState((state) => ({ ...state, zoom: newValue }));
-    }
+    const sampleDoc = (
+        <div data-doc-element="root">
+            <div data-doc-element="e1" style={{ padding: 30 }}>This is a test box</div>
+            <div data-doc-element="e2" style={{ padding: 30 }}>This is a test box</div>
+            <div data-doc-element="e3" style={{ padding: 30 }}>This is a test box</div>
+            <div data-doc-element="e4" style={{ padding: 30 }}>
+                <span>This is a test box where text is in an unnamed span</span>
+                <div data-doc-element="e4-1" style={{ padding: 30 }}>This is a test box inside a parent</div>
+            </div>
+        </div>
+    );
 
     return (
         <>
@@ -81,7 +84,7 @@ export const IdeApp:React.SFC<{}> = ({}) => {
                 <div className="right">
                     <Section />
                     <Section>
-                        <OptionSelector subject="rightSidePanel" allowNone={true}>
+                        <OptionSelector subject="rightSidePanel" allowNone>
                             {({ value, setValue }) => 
                                 <TabSelector value={value} onChange={setValue}>
                                     <Tab name="props" icon="microchip" />
@@ -97,7 +100,7 @@ export const IdeApp:React.SFC<{}> = ({}) => {
             </NavBar>
 
 
-            <Panel appearFrom="left" key="lsp" isOpen={showLeftPanel} width={240} top={100}>
+            <Panel appearFrom="left" key="lsp" isOpen={showLeftPanel} width={240} top={50}>
 
                 <Title>Component Specs</Title>
                 
@@ -154,7 +157,7 @@ export const IdeApp:React.SFC<{}> = ({}) => {
                 <Title>Box Editor</Title>
                 <Header>
                     
-                    <div className="row pv2 ph2">
+                    <div className="row pt2 ph2">
                         <DropDownList
                             className="stretch" 
                             isToggled={false} 
@@ -169,7 +172,8 @@ export const IdeApp:React.SFC<{}> = ({}) => {
                             }
                         </OptionSelector>
                     </div>
-                    
+                </Header>
+                <Header>
                     <div className="ph2">
                         <OptionSelector subject="propsTab">
                             {({ value, setValue }) => 
@@ -209,10 +213,8 @@ export const IdeApp:React.SFC<{}> = ({}) => {
             </Panel>
             
             
-            <ArtifactTitle style={{ position: "fixed", left: 0, top: 50, width: 240 }}  />
 
-
-            <Toolbar key="ct" top={50} left={240} right={selectedRightPanel? 240: 0} thickness={50}>
+            <Toolbar key="ct" top={50} left={showLeftPanel? 240: 0} right={selectedRightPanel? 240: 0} thickness={50}>
                 <div className="left">
                     <DropDownList
                         style={{ minWidth: 120, maxWidth: 200 }} 
@@ -238,14 +240,20 @@ export const IdeApp:React.SFC<{}> = ({}) => {
             </Toolbar>
 
             <Canvas key="canvas" 
-                zoom={state.zoom}
+                contents={sampleDoc}
+                zoom={zoom}
                 top={100} 
                 left={showLeftPanel? 240: 0} 
                 bottom={40} 
-                right={selectedRightPanel? 240: 0} />
+                right={selectedRightPanel? 240: 0}
+                onHover={handleHoverChange}>
+                
+                {hoveredElement && <OutLine key="hover" element={hoveredElement} />}
+
+            </Canvas>
 
             <Footer key="cf" bottom={0} left={showLeftPanel? 240: 0} right={selectedRightPanel? 240: 0} thickness={40}>
-                <ZoomControl value={state.zoom} onChange={handleZoomChange} style={{  }} />
+                <ZoomControl value={zoom} onChange={handleZoomChange} />
             </Footer>
         </>
     );

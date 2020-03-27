@@ -11,7 +11,8 @@ const css:React.CSSProperties = {
     fontSize: 10,
     fontWeight: 300,
     padding: "0 0 0 10px",
-    borderTop: "1px solid #555"
+    borderTop: "1px solid #555",
+    zIndex: 1000
 }
 
 interface Props {

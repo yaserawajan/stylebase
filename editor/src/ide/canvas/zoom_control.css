@@ -1,0 +1,24 @@
+.zoom-control {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    color: #eee;
+    width: auto
+}
+
+.zoom-control .slider {
+    flex: 1 1 auto;
+}
+
+.zoom-control .value {
+    width: 40px;
+}
+
+.zoom-control .plus {
+    padding: 0 0 0 5px;
+}
+
+.zoom-control .minus {
+    padding: 0 5px 0 0;
+}
+
