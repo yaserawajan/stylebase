@@ -4,14 +4,15 @@
     height: 40px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    
     align-items: stretch;
     border-top: #444;
     border-bottom: 1px solid #555;
     z-index: 1000;
+    padding: 5px 10px;
 }
 
-.toolbar > .left {
+/* .toolbar > .left {
     padding: 5px 10px;
     display: flex;
     order: 1;
@@ -26,16 +27,16 @@
     flex-wrap: nowrap;
     flex-direction: row;
     justify-content: flex-start;
-}
+} */
 
-.toolbar .section {
+.toolbar > .section {
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 0 10px;
 }
 
-.toolbar .section + .section {
+.toolbar > .section + .section {
     border-left: 1px dotted #555;
 
 }

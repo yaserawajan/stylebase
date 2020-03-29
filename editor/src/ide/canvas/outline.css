@@ -1,7 +1,8 @@
 
-.outline {
+.outline > * {
     position: absolute;
     z-index: 999;
     pointer-events: none;
-    border: 2px dashed gray;
 }
+
+

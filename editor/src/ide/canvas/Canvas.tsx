@@ -6,17 +6,26 @@ import { ElementRectMap } from "./types";
 import RectContext from "./RectContext";
  
 interface Props {
+    documentMargins: number
     top: number
     left: number
     bottom: number
     right: number
     zoom: number
     contents: JSX.Element
-
-    onHover?: (elementName?: string) => void
+    onHover?: (elementName?: string, x?: number, y?: number) => void
+    onClick?: (elementName?: string, x?: number, y?: number) => void
 }
 
-export const Canvas:React.SFC<Props> = ({ top, right, bottom, left, zoom, children, contents, onHover }) => {
+export const Canvas:React.SFC<Props> = ({ 
+        top, right, bottom, left, 
+        zoom, 
+        children, 
+        contents, 
+        documentMargins, 
+        onHover, 
+        onClick 
+    }) => {
     
     const [ rects, setRects ] = React.useState<ElementRectMap>({});
     const hRulerTop = React.useRef<Ruler>(null);
@@ -26,9 +35,9 @@ export const Canvas:React.SFC<Props> = ({ top, right, bottom, left, zoom, childr
     const sync = () => {
         const x = window.scrollX / zoom;
         const y = window.scrollY / zoom;
-        hRulerTop.current.scroll(x);
-        vRulerLeft.current.scroll(y);
-        vRulerRight.current.scroll(y);
+        hRulerTop.current.scroll(x - documentMargins);
+        vRulerLeft.current.scroll(y - documentMargins);
+        vRulerRight.current.scroll(y - documentMargins);
     }
 
     const handleScroll = () => requestAnimationFrame(sync);
@@ -70,6 +79,13 @@ export const Canvas:React.SFC<Props> = ({ top, right, bottom, left, zoom, childr
                 <Ruler textColor="#999" zoom={zoom} ref={vRulerRight} type="vertical" />
             </div>
 
+            <div key="background" className="canvas-background" style={{
+                top: 40 + 30 + top,
+                left: 40 + 30 + left, 
+                bottom: 30 + bottom,
+                right: 30 + 40 + right
+            }} />
+
             <div key="body" 
                 style={{ 
                         position: "absolute", 
@@ -81,27 +97,24 @@ export const Canvas:React.SFC<Props> = ({ top, right, bottom, left, zoom, childr
                     }}>
 
                 <div key="outlines" style={{ position: "relative"  }}>
-                    <RectContext.Provider value={{ 
-                            rectMap: rects, 
-                            topShift: 0, // -(40 + 30 + top), 
-                            leftShift: 0, // -(40 + 30 + left) 
-                        }}>
+                    <RectContext.Provider value={{ rectMap: rects }}>
                         {children}
                     </RectContext.Provider>
                 </div>
 
                 <DocumentView 
                     key="root"
+                    contents={contents}
+                    margins={documentMargins}
                     zoom={zoom}
                     style={{
                         paddingBottom: (30 + bottom) / zoom, 
                         paddingRight: (30 + 40 + right) / zoom,
                     }}
                     onHover={onHover}
-                    onRectChange={handleRectChange}>
-                    {contents}
-                </DocumentView>
-
+                    onClick={onClick}
+                    onRectChange={handleRectChange} />
+                
             </div>
         </>
     );

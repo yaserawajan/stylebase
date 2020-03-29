@@ -6,11 +6,10 @@
     border-bottom: 1px solid #eee;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     z-index: 1000;
 }
 
-.navbar > .left {
+/* .navbar > .left {
     padding: 0;
     display: flex;
     order: 1;
@@ -25,7 +24,7 @@
     flex-wrap: nowrap;
     flex-direction: row;
     justify-content: flex-start;
-}
+} */
 
 .navbar .section {
     display: flex;

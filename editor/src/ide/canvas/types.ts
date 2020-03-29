@@ -1,14 +1,13 @@
-// export type ElementRect = {
-//     top: number
-//     left: number
-//     width: number
-//     height: number
-// }
 
-export type ElementRectMap = { [element:string]: DOMRect }
+export type ElementRect = {
+    display: DOMRect,
+    actual: DOMRect 
+}
+
+export type ElementRectMap = { 
+    [element:string]: ElementRect
+}
 
 export type RectContext = {
     rectMap: ElementRectMap
-    topShift: number
-    leftShift: number
 }

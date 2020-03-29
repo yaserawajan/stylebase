@@ -1,9 +1,11 @@
+import "./ide_app.css";
+
 import * as React from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import { NavBar } from "./navbar/NavBar";
 import { Canvas } from "./canvas/Canvas";
 import { Panel } from "./panel/Panel";
-import { ArtifactTitle } from "./ArtifactTitle";
 import { Toolbar } from "./toolbar/Toolbar";
 import { Footer } from "./Footer"
 import { ZoomControl } from "./canvas/ZoomControl";
@@ -19,14 +21,9 @@ import { Tab } from "./controls/Tab";
 import { Header } from "./controls/Header";
 import { Title } from "./controls/Title";
 import { OptionSelector } from "./state/option/OptionSelector";
-import { useSelector, useDispatch } from "react-redux";
 import { IdeState, getZoom, zoomChanged, hoverChanged } from "./state/ideState";
 import { Toggler } from "./state/toggle/Toggler";
-import { DocumentView } from "./canvas/DocumentView";
 import { OutLine } from "./canvas/OutLine";
-
-
-//  <ArtifactTitle style={{ position: "fixed", left: 0, top: 50, width: 240 }}  />
 
 
 const navBarCss:React.CSSProperties = {
@@ -63,7 +60,7 @@ export const IdeApp:React.SFC<{}> = ({}) => {
     return (
         <>
             <NavBar key="nb" style={navBarCss}>
-                <div className="left">
+                
                     <Section>
                         <Toggler subject="leftSidePanel">
                             {({ toggle, isToggled }) =>
@@ -79,9 +76,9 @@ export const IdeApp:React.SFC<{}> = ({}) => {
                     <Section>
                         <span style={{ marginLeft: 10 }}>S T Y L E B A S E</span>
                     </Section>
-                </div>
+                            
+                    <div className="stretch" />
 
-                <div className="right">
                     <Section />
                     <Section>
                         <OptionSelector subject="rightSidePanel" allowNone>
@@ -96,7 +93,7 @@ export const IdeApp:React.SFC<{}> = ({}) => {
                     <Section>
                         <Command label="User" name="user" icon="user" />
                     </Section>
-                </div>
+                
             </NavBar>
 
 
@@ -215,17 +212,19 @@ export const IdeApp:React.SFC<{}> = ({}) => {
             
 
             <Toolbar key="ct" top={50} left={showLeftPanel? 240: 0} right={selectedRightPanel? 240: 0} thickness={50}>
-                <div className="left">
+                
                     <DropDownList
                         style={{ minWidth: 120, maxWidth: 200 }} 
                         isToggled={false} 
                         label="State Tags" value="toggled" />
-                </div>
-                <div className="right">
+
+                    <div className="stretch" />
+                
                     <Section>
                         <Command name="pointer" label="pointer" icon="mouse-pointer" />
                         <Command name="shapes" label="Components" icon="shapes" />
                     </Section>
+
                     <Section>
                         <Command name="undo" label="Undo" icon="undo" />
                         <Command name="redo" label="Redo" icon="redo" />
@@ -233,13 +232,15 @@ export const IdeApp:React.SFC<{}> = ({}) => {
                         <Command name="copy" label="Copy" icon="copy" />
                         <Command name="paste" label="Paste" icon="paste" />
                     </Section>
+
                     <Section>
                         <Command name="delete" label="Delete" icon="trash" />
                     </Section>
-                </div>
+                
             </Toolbar>
 
             <Canvas key="canvas" 
+                documentMargins={50}
                 contents={sampleDoc}
                 zoom={zoom}
                 top={100} 
@@ -248,7 +249,16 @@ export const IdeApp:React.SFC<{}> = ({}) => {
                 right={selectedRightPanel? 240: 0}
                 onHover={handleHoverChange}>
                 
-                {hoveredElement && <OutLine key="hover" element={hoveredElement} />}
+                {hoveredElement && 
+                    <OutLine key="hover" element={hoveredElement}>
+                        {({ element, actual, display }) => (
+                            <div className="overlay-hover" style={{ top: display.top, left: display.left, height: display.height, width: display.width }}>
+                                <span key="title" className="title">{element}</span>
+                                <span key="dimensions" className="dimensions">{actual.width} x {actual.height}</span>
+                            </div>
+                        )}
+                    </OutLine>
+                }
 
             </Canvas>
 

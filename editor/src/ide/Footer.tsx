@@ -15,7 +15,7 @@ const css:React.CSSProperties = {
     zIndex: 1000
 }
 
-interface Props {
+interface Props { 
     bottom: number
     left: number
     thickness: number
