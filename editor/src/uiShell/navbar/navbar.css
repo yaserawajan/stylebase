@@ -71,6 +71,10 @@
     background-color: #ccc;
 }
 
+.navbar .tab-text {
+    display: none;
+}
+
 .navbar .tab.selected {
     border-bottom: 2px solid #555;
     color: #555;

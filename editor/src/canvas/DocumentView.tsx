@@ -42,12 +42,19 @@ export const DocumentView:React.SFC<Props> = (props) => {
         if (props.onHover) props.onHover(undefined);
     }
 
+    let lastMouseDown:Element = null;
+
     const handleMouseDown = (e: React.MouseEvent) => {
         const elementName = getNamedElement(ref.current, e.target as HTMLElement, rootName);
+        lastMouseDown = e.target as any;
     }
 
     const handleMouseUp = (e: React.MouseEvent) => {
         const elementName = getNamedElement(ref.current, e.target as HTMLElement, rootName);
+        if (lastMouseDown === e.target && props.onClick) {
+            props.onClick(elementName);
+        }
+        lastMouseDown = null;
     }
 
     const handleMutations = (mutations:PartialMutationRecord[]) => {

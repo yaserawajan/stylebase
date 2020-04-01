@@ -4,6 +4,7 @@ import "./canvas.css";
 import { DocumentView } from "./DocumentView";
 import { ElementRectMap } from "./types";
 import RectContext from "./RectContext";
+import { ZoomControl } from "./ZoomControl";
  
 interface Props {
     documentMargins: number
@@ -15,11 +16,13 @@ interface Props {
     contents: JSX.Element
     onHover?: (elementName?: string, x?: number, y?: number) => void
     onClick?: (elementName?: string, x?: number, y?: number) => void
+    onZoomChange?: (newValue: number) => void
 }
 
 export const Canvas:React.SFC<Props> = ({ 
         top, right, bottom, left, 
         zoom, 
+        onZoomChange,
         children, 
         contents, 
         documentMargins, 
@@ -71,7 +74,9 @@ export const Canvas:React.SFC<Props> = ({
             <div key="tr" className="canvas-x-ruler" style={{ top, right, left: left + 40 + 30 }}>
                 <Ruler textColor="#999" zoom={zoom} ref={hRulerTop} type="horizontal" />
             </div>
-            <div key="br" className="canvas-footer" style={{ bottom, right, left: left + 40 + 30 }} />
+            <div key="br" className="canvas-footer" style={{ bottom, right, left: left + 40 + 30 }}>
+                <ZoomControl value={zoom} onChange={onZoomChange} />
+            </div>
             <div key="lr" className="canvas-y-ruler" style={{ top, left, bottom }}>
                 <Ruler textColor="#999" zoom={zoom} ref={vRulerLeft} type="vertical" />
             </div>

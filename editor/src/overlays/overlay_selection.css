@@ -1,0 +1,57 @@
+.overlay-selection {
+    /* transition: all 0.3s; */
+    border: 2px solid rgba(0, 100, 0, 0.05);
+    /* background-color:rgba(0, 0, 0, 0.02); */
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
+    
+}
+
+.overlay-selection .corner {
+    position: absolute;
+    border-style: solid;
+    border-color:  green;
+    width: 10px;
+    height: 10px;
+}
+
+.overlay-selection .top-left { border-width: 1px 0 0 1px; top: -4px; left: -4px }
+.overlay-selection .top-right { border-width: 1px 1px 0 0; top: -4px; right: -4px }
+.overlay-selection .bottom-left { border-width: 0 0 1px 1px; bottom: -4px; left: -4px }
+.overlay-selection .bottom-right { border-width: 0 1px 1px 0; bottom: -4px; right: -4px }
+
+.overlay-selection .title {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: -20px;
+    left: 0;
+    font-size: 10px;
+    color: green;
+}
+
+.overlay-selection .width {
+    position: absolute;
+    margin-top: 10px;
+    top: 100%;
+    left: 0;
+    right: 0;
+    
+    text-align: center;
+    
+    font-size: 10px;
+    color: green;
+}
+
+.overlay-selection .height {
+    position: absolute;
+    left: 100%;
+    margin-left: 20px;
+    top: 0;
+    text-align: center;
+    font-size: 10px;
+    color: green;
+    transform-origin: top left;
+    transform: rotate(90deg);
+}

@@ -19,7 +19,7 @@ export const optionChanged = (subject: string, value: string, allowNone: boolean
 });
 
 export const optionReducer = 
-    (state:OptionState, action:OptionChangedAction) => {
+    (state:OptionState, action:OptionChangedAction):OptionState => {
 
         if (action.type == "OPTION_SELECTED") {
             
@@ -36,3 +36,7 @@ export const optionReducer =
 
         return state;
     }
+
+
+
+ 

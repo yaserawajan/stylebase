@@ -1,7 +1,7 @@
 import * as React from "react";
-import { IconLA } from "../IconLA";
+import { IconLA } from "../uiShell/IconLA";
 import "./zoom_control.css"
-import { classes } from "../../utils";
+import { classes } from "../utils";
 
 interface Props {
     style?: React.CSSProperties

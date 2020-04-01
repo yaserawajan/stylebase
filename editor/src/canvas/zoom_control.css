@@ -3,7 +3,10 @@
     flex-direction: row;
     justify-content: start;
     color: #eee;
-    width: auto
+    width: auto;
+    line-height: 30px;
+    font-size: 10px;
+    font-weight: 300;
 }
 
 .zoom-control .slider {
