@@ -2,9 +2,10 @@ import * as React from "react";
 import Ruler from "@scena/react-ruler";
 import "./canvas.css";
 import { DocumentView } from "./DocumentView";
-import { ElementRectMap } from "./types";
+import { ElementRectMap, ElementRect } from "./types";
 import RectContext from "./RectContext";
 import { ZoomControl } from "./ZoomControl";
+import { ElementId } from "./viewElementIdentification";
  
 interface Props {
     documentMargins: number
@@ -14,9 +15,16 @@ interface Props {
     right: number
     zoom: number
     contents: JSX.Element
-    onHover?: (elementName?: string, x?: number, y?: number) => void
-    onClick?: (elementName?: string, x?: number, y?: number) => void
+    idProps: string[]
+    idAsString: (idMap:ElementId) => string
+    onHover?: (elementInfo?: ElementId, x?: number, y?: number) => void
+    onClick?: (elementInfo?: ElementId, x?: number, y?: number) => void
     onZoomChange?: (newValue: number) => void
+}
+
+interface State {
+    rects: ElementRectMap
+    rerenderSequence: number
 }
 
 export const Canvas:React.SFC<Props> = ({ 
@@ -25,15 +33,18 @@ export const Canvas:React.SFC<Props> = ({
         onZoomChange,
         children, 
         contents, 
+        idProps,
+        idAsString,
         documentMargins, 
         onHover, 
         onClick 
     }) => {
     
-    const [ rects, setRects ] = React.useState<ElementRectMap>({});
+    const [ state, setState ] = React.useState<State>({ rerenderSequence: 0, rects: {} });
     const hRulerTop = React.useRef<Ruler>(null);
     const vRulerLeft = React.useRef<Ruler>(null);
     const vRulerRight = React.useRef<Ruler>(null);
+
 
     const sync = () => {
         const x = window.scrollX / zoom;
@@ -49,10 +60,21 @@ export const Canvas:React.SFC<Props> = ({
         hRulerTop.current.resize();
         vRulerLeft.current.resize();
         vRulerRight.current.resize();
+        setState(stateOld => ({ ...stateOld, rerenderSequence: stateOld.rerenderSequence + 1 }));
     }
 
-    const handleRectChange = (rectMap: ElementRectMap) => {
-        setRects(state => ({ ...state, ...rectMap }));
+    const handleRectChange = (rects: ElementRect[]) => {
+        let rectMap:ElementRectMap = {};
+        rects.forEach(r => {
+            rectMap[idAsString(r.info)] = r;
+        })
+        setState(stateOld => ({ 
+            ...stateOld, 
+            rects: { 
+                ...stateOld.rects, 
+                ...rectMap 
+            }
+        }));
     }
 
     React.useEffect(() => {
@@ -68,7 +90,7 @@ export const Canvas:React.SFC<Props> = ({
         };
 
     }, [right, left, zoom]);
-    
+
     return (
         <>
             <div key="tr" className="canvas-x-ruler" style={{ top, right, left: left + 40 + 30 }}>
@@ -102,7 +124,7 @@ export const Canvas:React.SFC<Props> = ({
                     }}>
 
                 <div key="outlines" style={{ position: "relative"  }}>
-                    <RectContext.Provider value={{ rectMap: rects }}>
+                    <RectContext.Provider value={{ rectMap: state.rects }}>
                         {children}
                     </RectContext.Provider>
                 </div>
@@ -110,8 +132,10 @@ export const Canvas:React.SFC<Props> = ({
                 <DocumentView 
                     key="root"
                     contents={contents}
+                    idProps={idProps}
                     margins={documentMargins}
                     zoom={zoom}
+                    rerenderSequence={state.rerenderSequence}
                     style={{
                         paddingBottom: (30 + bottom) / zoom, 
                         paddingRight: (30 + 40 + right) / zoom,

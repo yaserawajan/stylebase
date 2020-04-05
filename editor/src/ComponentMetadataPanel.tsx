@@ -5,7 +5,7 @@ import { Menu } from "./uiShell/controls/Menu";
 
 interface Props {
     style: React.CSSProperties
-}
+} 
 
 export const ComponentMetadataPanel:React.SFC<Props> = (props) => {
 

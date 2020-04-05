@@ -1,6 +1,6 @@
 .overlay-selection {
     /* transition: all 0.3s; */
-    border: 2px solid rgba(0, 100, 0, 0.05);
+    border: 2px solid rgba(0, 0, 100, 0.05);
     /* background-color:rgba(0, 0, 0, 0.02); */
     display: flex;
     justify-content: stretch;
@@ -11,15 +11,15 @@
 .overlay-selection .corner {
     position: absolute;
     border-style: solid;
-    border-color:  green;
+    border-color:  #555;
     width: 10px;
     height: 10px;
 }
 
-.overlay-selection .top-left { border-width: 1px 0 0 1px; top: -4px; left: -4px }
-.overlay-selection .top-right { border-width: 1px 1px 0 0; top: -4px; right: -4px }
-.overlay-selection .bottom-left { border-width: 0 0 1px 1px; bottom: -4px; left: -4px }
-.overlay-selection .bottom-right { border-width: 0 1px 1px 0; bottom: -4px; right: -4px }
+.overlay-selection .top-left { border-width: 2px 0 0 2px; top: -5px; left: -5px }
+.overlay-selection .top-right { border-width: 2px 2px 0 0; top: -5px; right: -5px }
+.overlay-selection .bottom-left { border-width: 0 0 2px 2px; bottom: -5px; left: -5px }
+.overlay-selection .bottom-right { border-width: 0 2px 2px 0; bottom: -5px; right: -5px }
 
 .overlay-selection .title {
     position: absolute;
@@ -28,7 +28,7 @@
     top: -20px;
     left: 0;
     font-size: 10px;
-    color: green;
+    color: #555;
 }
 
 .overlay-selection .width {
@@ -41,7 +41,7 @@
     text-align: center;
     
     font-size: 10px;
-    color: green;
+    color: #555;
 }
 
 .overlay-selection .height {
@@ -51,7 +51,7 @@
     top: 0;
     text-align: center;
     font-size: 10px;
-    color: green;
+    color: #555;
     transform-origin: top left;
     transform: rotate(90deg);
 }

@@ -174,12 +174,3 @@ export const createEditorReducer =
     }
 }
  
-export const DOC_EDITOR = "editor";
-
-export const selectEditorState = <TDoc,TSelection>(s:any) =>  s[DOC_EDITOR] as DocEditorState<TDoc,TSelection>;
-
-export const useDocSelectionState = <TSelection>() => 
-    useSelector<any, TSelection>(s => 
-        selectEditorState<any,TSelection>(s).present.selection);
-
-

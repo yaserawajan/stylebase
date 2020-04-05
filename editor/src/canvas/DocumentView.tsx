@@ -1,28 +1,36 @@
 import * as React from "react";
-import { ElementRectMap } from "./types";
+import { ElementRect } from "./types";
 import "./document_view.css";
 import { DocumentMargin } from "./DocumentMargin";
-
-const NAME_ATTRIBUTE = "data-doc-element";
+import { DocumentViewElement } from "./DocumentViewElement";
+import { ElementId, elementIdFromJsx, elementIdFromDom, isElementIdEmpty } from "./viewElementIdentification";
 
 interface Props {
+    rerenderSequence: number
     contents: JSX.Element
+    idProps: string[]
     margins: number
     style: React.CSSProperties
     zoom: number
-    onRectChange?: (rects: ElementRectMap) => void
-    onHover?: (elementName?: string, x?: number, y?: number) => void
-    onClick?: (elementName?: string, x?: number, y?: number) => void
+    onRectChange?: (rects: ElementRect[]) => void
+    onHover?: (elementName?: ElementId, x?: number, y?: number) => void
+    onClick?: (elementName?: ElementId, x?: number, y?: number) => void
 }
  
 type PartialMutationRecord = {
     target: Node
 }
 
-const getNamedElement = (root: HTMLElement, targetDom: HTMLElement, rootName: string): string | undefined => {
+const resolveElementId = (root: HTMLElement, 
+    targetDom: HTMLElement, 
+    rootName: ElementId, 
+    idProps: string[]): { [k:string]:any } => {
+
     if (root === targetDom) return rootName;
-    const elementName = targetDom.getAttribute(NAME_ATTRIBUTE);
-    return elementName || getNamedElement(root, targetDom.parentElement, rootName);
+    const elementId = elementIdFromDom(targetDom, idProps);
+    return isElementIdEmpty(elementId)
+        ? resolveElementId(root, targetDom.parentElement, rootName, idProps)
+        : elementId;
 }
 
 export const DocumentView:React.SFC<Props> = (props) => {
@@ -30,27 +38,28 @@ export const DocumentView:React.SFC<Props> = (props) => {
     const ref = React.useRef<HTMLDivElement>();
     const boxRef = React.useRef<HTMLDivElement>();
 
-    const rootName = props.contents? props.contents.props[NAME_ATTRIBUTE] : "";
+    const rootName:ElementId = props.contents? elementIdFromJsx(props.contents, props.idProps): { };
 
     const handleMouseOver = (e: React.MouseEvent) => {
-        const elementName = getNamedElement(ref.current, e.target as HTMLElement, rootName);
+        const elementName = resolveElementId(ref.current, e.target as HTMLElement, rootName, props.idProps);
+        
         if (props.onHover) props.onHover(elementName);
     }
 
     const handleMouseOut = (e: React.MouseEvent) => {
         //const elementName = getNamedElement(ref.current, e.target as HTMLElement, rootName);
-        if (props.onHover) props.onHover(undefined);
+        if (props.onHover) props.onHover({});
     }
 
     let lastMouseDown:Element = null;
 
     const handleMouseDown = (e: React.MouseEvent) => {
-        const elementName = getNamedElement(ref.current, e.target as HTMLElement, rootName);
+        const elementName = resolveElementId(ref.current, e.target as HTMLElement, rootName, props.idProps);
         lastMouseDown = e.target as any;
     }
 
     const handleMouseUp = (e: React.MouseEvent) => {
-        const elementName = getNamedElement(ref.current, e.target as HTMLElement, rootName);
+        const elementName = resolveElementId(ref.current, e.target as HTMLElement, rootName, props.idProps);
         if (lastMouseDown === e.target && props.onClick) {
             props.onClick(elementName);
         }
@@ -61,48 +70,47 @@ export const DocumentView:React.SFC<Props> = (props) => {
         const marginRect = ref.current.getBoundingClientRect();
         const borderRect = boxRef.current.getBoundingClientRect();
         const rects = mutations
-            .filter(m => 
-                ("getAttribute" in m.target) && 
-                !!(m.target as Element).getAttribute(NAME_ATTRIBUTE))
-            .map(m => { 
-                const r = (m.target as Element).getBoundingClientRect();
+            .map(m => ({
+                m,
+                elementId: ("getAttribute" in m.target)? elementIdFromDom(m.target, props.idProps): {}
+            }))
+            .filter(pair => !isElementIdEmpty(pair.elementId))
+            .map<ElementRect>(pair => { 
+                const r = (pair.m.target as Element).getBoundingClientRect();
                 return {
-                    value: {
-                        display: {
-                            ...r,
-                            width: r.width, 
-                            height: r.height,
-                            top: r.top - marginRect.top,
-                            left: r.left - marginRect.left
-                        },
-                        actual: {
-                            ...r,
-                            width: r.width / props.zoom, 
-                            height: r.height / props.zoom,
-                            top: (r.top - borderRect.top) / props.zoom,
-                            left: (r.left - borderRect.left) / props.zoom,
-                            bottom: r.bottom / props.zoom,
-                            right: r.right / props.zoom
-                        }
-                    }, 
-                    key: (m.target as Element).getAttribute(NAME_ATTRIBUTE)
+                    
+                    display: {
+                        ...r,
+                        width: r.width, 
+                        height: r.height,
+                        top: r.top - marginRect.top,
+                        left: r.left - marginRect.left
+                    },
+
+                    actual: {
+                        ...r,
+                        width: r.width / props.zoom, 
+                        height: r.height / props.zoom,
+                        top: (r.top - borderRect.top) / props.zoom,
+                        left: (r.left - borderRect.left) / props.zoom,
+                        bottom: r.bottom / props.zoom,
+                        right: r.right / props.zoom
+                    },
+                    
+                    info: pair.elementId
                 }
             });
 
-        let rectMap:ElementRectMap = { };
-        rects.forEach(pair => { 
-            rectMap[pair.key] = pair.value;
-        }); 
-
-        if (props.onRectChange) props.onRectChange(rectMap);
+        
+        if (props.onRectChange) props.onRectChange(rects);
     }
 
-
+    // refresh rectangles on mount and zoom changes
     React.useEffect(() => {
         let all:PartialMutationRecord[] = [];
-        ref.current.querySelectorAll("[data-doc-element]").forEach(n => all.push({ target: n }));
+        ref.current.querySelectorAll("*").forEach(n => all.push({ target: n }));
         handleMutations(all);
-    }, [props.zoom]);
+    }, [props.zoom, props.rerenderSequence]);
 
     React.useEffect(() => {
         let mo = new MutationObserver(handleMutations);
@@ -130,7 +138,7 @@ export const DocumentView:React.SFC<Props> = (props) => {
             onMouseUp={handleMouseUp}>
             <DocumentMargin margin={props.margins}>
                 <div className="document-view" ref={boxRef}>
-                    {props.contents}
+                    <DocumentViewElement contents={props.contents} idProps={props.idProps} /> 
                 </div>
             </DocumentMargin>
         </div>

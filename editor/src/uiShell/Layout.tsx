@@ -19,7 +19,7 @@ const navBarCss:React.CSSProperties = {
 };
 
 
-interface ViewLayerSpecs {
+export interface ViewLayerSpecs {
     top?: number
     right?: number
     bottom?: number
@@ -30,7 +30,7 @@ interface ViewLayerSpecs {
     position: "absolute" | "fixed" | "relative"
 }
 
-type PanelSpecs = {
+export type PanelSpecs = {
     [panelName:string]: {
         icon: string,
         label: string
@@ -61,32 +61,33 @@ export const Layout:React.SFC<Props> = (props) => {
     return (
         <>
             <NavBar key="nb" style={navBarCss}>
-                <Section>
+                <Section key="lp">
                     <TabSelector value={props.activeLeftPanel} onChange={props.onLeftPanelSelection}>
                         {props.leftPanels.map(panelName => (
                             props.panelSpecs[panelName] && 
-                                <Tab name={panelName} 
+                                <Tab key={panelName} 
+                                    name={panelName} 
                                     label={props.panelSpecs[panelName].label}
                                     icon={props.panelSpecs[panelName].icon} />
                         ))}
                     </TabSelector>
                 </Section>
-                <Section>
+                <Section key="logo">
                     {props.renderLogo()}
                 </Section>
                 <div className="stretch" />
-                <Section />
-                <Section>
+                <Section key="sep" />
+                <Section key="rp">
                     <TabSelector value={props.activeRightPanel} onChange={props.onRightPanelSelection}>
                         {props.rightPanels.map(panelName => (
                             props.panelSpecs[panelName] && 
-                                <Tab name={panelName} 
+                                <Tab key={panelName} name={panelName} 
                                     label={props.panelSpecs[panelName].label}
                                     icon={props.panelSpecs[panelName].icon} />
                         ))}
                     </TabSelector>
                 </Section>
-                <Section>
+                <Section key="user">
                     <Command label="User" name="user" icon="user" />
                 </Section>
             </NavBar>
