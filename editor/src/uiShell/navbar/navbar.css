@@ -1,4 +1,7 @@
 .navbar {
+
+    font-size: 50px;
+    color: #333;
     background-color: #ccc;
     height: 50px;
     padding: 0 0 0 0;
@@ -9,73 +12,45 @@
     z-index: 1000;
 }
 
-/* .navbar > .left {
-    padding: 0;
-    display: flex;
-    order: 1;
-    flex-direction: row;
-    justify-content: flex-start;
+.navbar, .navbar * {
+    user-select: none;
 }
 
-.navbar > .right {
-    padding: 0;
-    display: flex;
-    order: 2;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    justify-content: flex-start;
-} */
-
-.navbar .section {
-    display: flex;
-    flex-direction: row;
-}
-
-.navbar .section + .section {
-    
-    
-    border-left: 1px solid #eee;
-}
-
-.navbar .command {
-    width: 50px;
-    height: 50px;
-    text-align: center; 
-    line-height: 50px;
-    background-color: #ccc;
-    border-bottom: 1px solid #eee;
-    
-}
-
-.navbar .command.toggled {
+.navbar .divider {
+    flex: 0 0 1px;
     background-color: #eee;
-    border-bottom: 1px solid white;
-}
-
-.navbar .command-text {
-    display: none;
-}
-
-.navbar .tab-selector {
-    display: flex;
-    flex-direction: row;
-    border-bottom: 1px solid #555; 
-    height: 49px;
 }
 
 .navbar .tab {
-    width: 50px;
-    height: 49px;
     text-align: center;
-    line-height: 50px;
-    background-color: #ccc;
+    height: 49px;
+    border-bottom: 2px #ccc;
 }
 
-.navbar .tab-text {
+.navbar .tab .command-text {
     display: none;
 }
 
 .navbar .tab.selected {
     border-bottom: 2px solid #555;
     color: #555;
+    height: 49px;
 }
+
+.navbar .tab.selected .command {
+    color: #555;
+    height: 49px;
+    padding-right: 0.3em;
+    padding-left: 0.2em;
+}
+
+.navbar .tab.selected .command-icon {
+    display: flex;
+    width: 0.6em;
+}
+
+.navbar .tab.selected .command-text {
+    display: flex;
+    font-weight: 300;
+}
+

@@ -9,7 +9,7 @@ export const Title:React.SFC<Props> = (props) => {
     return (
 
         <div className="title">
-            {props.children}
+            <span>{props.children}</span>
         </div>
 
     );

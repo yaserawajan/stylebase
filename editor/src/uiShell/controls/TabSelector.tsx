@@ -11,7 +11,7 @@ interface Props {
 export const TabSelector:React.SFC<Props> = (props) => {
 
     const handleSelect = (value: string) => {
-        if (props.onChange) props.onChange(value);
+        if (props.onChange) props.onChange(value); 
     }
 
     return (
@@ -21,9 +21,9 @@ export const TabSelector:React.SFC<Props> = (props) => {
                 selectTab: handleSelect
             }}>
 
-            <div className="tab-selector" style={props.style}>
-                {props.children}
-            </div>
+            
+            {props.children}
+            
 
         </TabSelectorContext.Provider>
     );

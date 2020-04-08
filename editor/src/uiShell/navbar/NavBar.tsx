@@ -1,6 +1,6 @@
-import * as React from "react";
 import "./navbar.css";
-import { classes } from "../../utils";
+import * as React from "react";
+import { classes } from "../utils";
 
 interface Props {
     style?: React.CSSProperties

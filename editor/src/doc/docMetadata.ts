@@ -7,12 +7,14 @@ export type AnyDataType = {
 
 export type MapDataType = {
     type: "map"
-
+    properties: {
+        [propName: string]: PropMetadata
+    }
 }
 
 export type ArrayDataType = {
     type: "array"
-
+    itemType: PropMetadata
 }
 
 export type LengthDataType = {

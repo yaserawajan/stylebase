@@ -1,129 +1,60 @@
 .toolbar {
     background-color: #444;
     position: fixed;
-    height: 40px;
+    height: 50px;
+    font-size: 50px;
+    line-height: 50px;
     display: flex;
     flex-direction: row;
-    
-    align-items: stretch;
+    color: #eee;
     border-top: #444;
-    border-bottom: 1px solid #555;
+    border-right: 1px solid #555;
+    border-bottom: 0;
     z-index: 1000;
-    padding: 5px 10px;
-}
-
-/* .toolbar > .left {
-    padding: 5px 10px;
-    display: flex;
-    order: 1;
-    flex-direction: row;
-    justify-content: flex-start;
-}
-
-.toolbar > .right {
-    padding: 5px 5px;
-    display: flex;
-    order: 2;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    justify-content: flex-start;
-} */
-
-.toolbar > .section {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0 10px;
-}
-
-.toolbar > .section + .section {
-    border-left: 1px dotted #555;
-
-}
-
-.toolbar .control {
     
-    position: relative;
 }
 
-.toolbar .control-header {
+.toolbar .section {
+    display: inherit;
+    flex-direction: inherit;
+}
+
+.toolbar .section + .section {
+    border-left: 1px solid #555;
+}
+
+.toolbar .command-icon {
     
-    display: flex;
-    flex-direction: column;
-    height: 40px;
-    /* padding-top:5px; */
-    align-items: center;
-}
-
-.toolbar .control-label {
-    font-size: 10px;
-    position: absolute;
-    
-    text-align: center;
-    top:-2px;
-    left:0;
-    right:0;
-    font-weight: 300;
-    color: #aaa;
-}
-
-.toolbar .control-input {
-    font-size: 14px;
-    font-weight: 400;
-    color: white;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    line-height: 30px;
-    width: 100%;
-}
-
-.toolbar .control-input-value {
-    color: white;
-    flex: 1 1 auto;
-    text-align: center;
-}
-
-.toolbar .control-icon {
-    width: 20px;
-    color: #ccc;
-    line-height: 40px;
-    text-align:center;
-}
-
-.toolbar .command {
-    height: 30px;
     position: relative;
     background-color: #555;
-    border-bottom: 2px solid #7878782b; 
-    /* border-bottom: 1px solid #777; */
-}
-/* 
- .toolbar .command:first-child {
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    width: 0.7em;
+    height: 0.7em;
+    line-height: 0.7em;
+    margin: 0.15em 0;
+    border-top: 1px solid #666;
+    border-bottom: 1px solid #666;
+} 
+ 
+.toolbar .command-icon > i {
+    font-size: 0.35em;
 }
 
-.toolbar .command:last-child {
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-}  */
+.toolbar > .section .command:first-child .command-icon {
+    border-top-left-radius: 0.1em;
+    border-bottom-left-radius: 0.1em;
+    margin-left: 0.15em;
+}
 
-.toolbar .command + .command {
-    margin-left: 2px; 
-    /* border-left: 1px solid #444; */
+.toolbar > .section .command:last-child .command-icon {
+    border-top-right-radius: 0.1em;
+    border-bottom-right-radius: 0.1em;
+    margin-right: 0.15em;
+}  
+
+.toolbar .command + .command > .command-icon {
+    border-left: 1px solid #444;
 }
 
 .toolbar .command-text {
     display: none;
-}
-
-.toolbar .command-icon {
-    text-align: center;
-    color: #eee;
-    width: 30px;
-    font-size: 18px;
-    
-    /* box-shadow: inset 0px -2px 0px #7878782b;  */
-    line-height: 30px;
 }

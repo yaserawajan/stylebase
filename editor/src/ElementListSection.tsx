@@ -5,11 +5,11 @@ interface Props {
 
 }
 
-export const ElementInsertSection:React.SFC<Props> = (props) => {
+export const ElementListSection:React.SFC<Props> = (props) => {
 
     return (
         <div className="l3 row">
-            <Title>Insert </Title>
+            <Title>Element(s)</Title>
             
         </div>
     );

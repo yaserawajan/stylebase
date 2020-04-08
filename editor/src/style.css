@@ -1,10 +1,6 @@
 html {
     height: 100%;
     width: 100%;
-    
-}
-
-html {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -24,7 +20,6 @@ body {
     font-family: 'Roboto';
     padding: 0;
     height: 100%; 
-    
 }
 
 .interactive {
@@ -53,6 +48,11 @@ body {
     flex-direction: row;
 }
 
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
 .stretch {
     flex: 1 1 auto;
 }
@@ -74,3 +74,96 @@ body {
 
 .pt1 { padding-top: 5px }
 .pt2 { padding-top: 10px }
+
+.font-xs { font-size: 0.2em;}
+.font-s { font-size: 0.24em; }
+.font-m { font-size: 0.3em; }
+.font-l { font-size: 0.4em }
+
+.text-center { text-align: center }
+
+.title {
+    padding: 0 0.2em;
+}
+
+.title > span {
+    font-size: 0.35em;
+    display:block;
+}
+
+.control {
+    position: relative
+
+}
+
+.control-label {
+    position: absolute;
+    line-height: 0.4em;
+    left: 0;
+    top: 0;
+    width: 100%;
+    font-weight: 300;
+    opacity: 0.8;
+    text-align: center;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+}
+
+
+.control-label > span {
+    font-size: 0.2em;
+    display:block;
+}
+
+.control-input-value {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* padding: 0 0.2em; */
+}
+
+.control-input-value > span {
+    font-size: 0.3em;
+    display:block;
+}
+
+.control-icon {
+    margin: 0.2em 0.1em;
+    line-height: 0.6em;
+    width: 0.6em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.control-icon > i {
+    font-size: 0.3em;
+}
+
+.command {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    flex-wrap: nowrap;
+}
+
+.command-icon {
+    width: 1em;
+    height: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.command-icon > i {
+    font-size: 0.4em;
+}
+
+.command-text {
+    font-size: 0.3em;
+}
+
+.tab {
+    display: flex;
+    flex-direction: row;
+}

@@ -1,14 +1,14 @@
 import * as React from "react";
 import TabSelectorContext from "./TabSelectorContext";
 import { IconLA } from "../IconLA";
-import { classes } from "../../utils";
+import { classes } from "../utils";
 
 interface Props {
     name: string
-    label?: string
-    icon?: string
+    className? : string
 }
-
+// <Tab key="create" name="create" icon="plus" />
+//                     <Tab key="edit" name="edit" icon="edit" />
 export const Tab:React.SFC<Props> = (props) => {
 
     const { selectTab, value } = React.useContext(TabSelectorContext);
@@ -18,9 +18,8 @@ export const Tab:React.SFC<Props> = (props) => {
     }, []);
 
     return (
-        <div className={classes("tab", value == props.name? "selected": null)} onClick={handleClick}>
-            {props.icon && <div className="tab-icon"><IconLA icon={props.icon} /></div>}
-            {props.label && <div className="tab-text">{props.label}</div>}
+        <div className={classes(props.className, "tab", value == props.name? "selected": null)} onClick={handleClick}>
+            {props.children}
         </div>
     );
 }

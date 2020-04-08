@@ -1,0 +1,21 @@
+
+.wheel {
+    overflow: hidden;
+    position: relative;
+}
+
+.wheel-sheet {
+    display: flex;
+    position: relative;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    overflow: visible;
+    transition: all 0.2s ease-in-out;
+}
+
+.wheel-item { 
+    flex: 0 0 100%;
+}
+
+.wheel-sheet.x > .wheel-item { flex-direction: row; }
+.wheel-sheet.y > .wheel-item { flex-direction: column; }

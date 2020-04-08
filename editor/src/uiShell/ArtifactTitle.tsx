@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./ArtifactTitle.css";
 import { IconLA } from "./IconLA";
-import { classes } from "../utils";
+import { classes } from "./utils";
 
 
 interface Props {

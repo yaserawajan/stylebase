@@ -2,14 +2,14 @@ import * as React from "react";
 import { Title } from "./uiShell/controls/Title";
 
 interface Props {
+    
+} 
 
-}
-
-export const ElementInsertSection:React.SFC<Props> = (props) => {
+export const ComponentMetadataSection:React.SFC<Props> = (props) => {
 
     return (
-        <div className="l3 row">
-            <Title>Insert </Title>
+        <div className="l2 row">
+            <Title>Data Specs</Title>
             
         </div>
     );
