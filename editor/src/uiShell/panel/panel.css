@@ -7,6 +7,7 @@
     align-items: stretch;
     overflow: auto;
     z-index: 1000;
+    border-left: 1px solid #666;
 }
 
 .panel, .panel * {

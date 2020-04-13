@@ -1,5 +1,5 @@
 import { OptionState, OptionChangedAction, optionReducer, optionChanged } from "./optionState";
-import { ToggleState, ToggledAction, toggleReducer, toggled } from "./toggleState";
+import { ToggleState, ToggledAction, toggleReducer } from "./toggleState";
 import { useSelector, useDispatch } from "react-redux";
  
 export type ZoomChangedAction = {
@@ -32,38 +32,42 @@ export type IdeState = {
     hoveredElement?: string
 }
 
-const stateInit:IdeState = {
-    zoom: 1,
-    panels: { },
-    toggles: { },
-    
-} 
+
 
 export const getZoom = (state:IdeState) => state.zoom;
 
-export const ideReducer = (state:IdeState = stateInit, action: IdeAction):IdeState => {
 
-    if (action.type == "ZOOM_CHANGED") {
-        return {
-            ...state, 
-            zoom: action.value
+
+export const createIdeReducer = (initialPanelState: OptionState) => {
+
+    const stateInit:IdeState = {
+        zoom: 1,
+        panels: initialPanelState,
+        toggles: { },
+    } 
+
+    return (state:IdeState = stateInit, action: IdeAction):IdeState => {
+
+        if (action.type == "ZOOM_CHANGED") {
+            return {
+                ...state, 
+                zoom: action.value
+            }
         }
-    }
 
-    if (action.type == "HOVER_CHANGED") {
-        return {
-            ...state, 
-            hoveredElement: action.element
+        if (action.type == "HOVER_CHANGED") {
+            return {
+                ...state, 
+                hoveredElement: action.element
+            }
         }
+
+        return { 
+            ...state,
+            toggles: toggleReducer(state.toggles, action as any),
+            panels: optionReducer(state.panels, action as any)
+        };
     }
-
-    return { 
-        ...state,
-        toggles: toggleReducer(state.toggles, action as any),
-        panels: optionReducer(state.panels, action as any)
-    };
-
-
 }
 
 

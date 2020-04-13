@@ -1,3 +1,15 @@
+::-webkit-input-placeholder { /* Edge */
+    font-weight: 300;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    font-weight: 300;
+}
+
+::placeholder {
+    font-weight: 300;
+}
+
 html {
     height: 100%;
     width: 100%;
@@ -14,12 +26,28 @@ html {
 
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,700,700i&display=swap');
 
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-size: 0.3em; /* 1 */
+  line-height: inherit; /* 1 */
+  margin: 0; /* 2 */
+}
+
 body {
     overscroll-behavior: none;
     overflow: auto;
     font-family: 'Roboto';
     padding: 0;
     height: 100%; 
+}
+
+input {
+    min-width: 0;
+    size: unset;
 }
 
 .interactive {
@@ -46,6 +74,7 @@ body {
 .row {
     display: flex;
     flex-direction: row;
+    width: 100%;
 }
 
 .column {
@@ -55,6 +84,7 @@ body {
 
 .stretch {
     flex: 1 1 auto;
+    max-width: 100%;
 }
 
 .p1 { padding: 5px; }
@@ -81,6 +111,16 @@ body {
 .font-l { font-size: 0.4em }
 
 .text-center { text-align: center }
+
+.bg-dotted {
+    background-image: -webkit-repeating-radial-gradient(center center, rgba(0,0,0,.1), rgba(0,0,0,.1) 1px, transparent 1px, transparent 100%);
+    background-image: -moz-repeating-radial-gradient(center center, rgba(0,0,0,.1), rgba(0,0,0,.1) 1px, transparent 1px, transparent 100%);
+    background-image: -ms-repeating-radial-gradient(center center, rgba(0,0,0,.1), rgba(0,0,0,.1) 1px, transparent 1px, transparent 100%);
+    background-image: repeating-radial-gradient(center center, rgba(0,0,0,.1), rgba(0,0,0,.1) 1px, transparent 1px, transparent 100%);
+    -webkit-background-size: 3px 3px;
+    -moz-background-size: 3px 3px;
+    background-size: 3px 3px;
+}
 
 .title {
     padding: 0 0.2em;

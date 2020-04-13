@@ -3,11 +3,7 @@ import { DocEditorState } from "./docEditorState";
 
 export const DOC_EDITOR = "editor";
 
-const noOp = <T>(t: T) => t;
-
 const selectEditorState = <TDoc,TSelection>(s:any) =>  s[DOC_EDITOR] as DocEditorState<TDoc,TSelection>;
-
-
 
 export const selectActiveSelection = <TSelection>(s:any) => selectEditorState<any,TSelection>(s).present.selection;
 

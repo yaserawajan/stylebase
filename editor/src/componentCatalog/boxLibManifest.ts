@@ -1,8 +1,26 @@
-import { Box } from "./box/Box"
-import { TextInput } from "./textInput/TextInput";
-import { ComponentLibManifest } from "../doc/docMetadata";
+import { Box } from "./box/Box";
+import { ComponentLibManifest } from "../doc/docLibModels";
+import { PropMapMetadata } from "../doc/docMetadata";
+import { cssProps } from "./cssProps";
+
+const boxProps:PropMapMetadata = {
+    style: cssProps,
+    className: {
+        required: false,
+        type: "array",
+        itemType: {
+            type: "text"
+        }
+    }
+}
 
 
 export const boxLibManifest:ComponentLibManifest = {
-    componentTypes: { Box, TextInput }
+    components: { 
+        Box: {
+            definition: Box,
+            propTypes: boxProps,
+            defaultProps: { }
+        }  
+    }
 } 

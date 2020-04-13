@@ -1,16 +1,12 @@
-import { PropMetadata, PropValues, ElementDesc, PropsMap } from "./docMetadata"
+import { PropMetadata, PropValues, ElementDesc, PropsMap, ComponentUri } from "./docMetadata"
+import { EntitySet } from "../entitySet/entitySetModels"
 
 export type DocSelection = {
     component: string
     elements: string[]
 }
 
-export type EntitySet<T> = {
-    all: string[]
-    byName: {
-        [name: string]: T
-    }
-}
+
 
 export type ElementProps = {
     [name:string]: any
@@ -37,8 +33,9 @@ export type DocState = {
 export type ElementAddAction = {
     type: "ELEMENT_ADD",
     containerElement: string,
-    element: string,
-    component: string,
+    afterElement?: string,
+    newId: string,
+    component: ComponentUri,
     props: ElementProps 
 }
 

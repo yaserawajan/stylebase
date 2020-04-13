@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
+import { XYCoord } from "react-dnd";
 
 import { ViewLayerSpecs } from "./uiShell/Layout";
 import { Canvas } from "./canvas/Canvas";
@@ -11,7 +12,9 @@ import { selectionChanged } from "./docEditor/docEditorState";
 import { useZoomState, useHoverState } from "./uiState/ideState";
 import { useDocSelectionState } from "./docEditor/docEditorSelectors";
 import { DocSelection } from "./doc/docState";
-import { DocLibCollection, useDocJsxCompiler } from "./doc/docRenderUtils";
+import { useDocJsxCompiler } from "./doc/docRenderUtils";
+import { DocLibCollection } from "./doc/docLibModels";
+
 
 const EDITOR_ID = "editorId";
 const infoProps = [EDITOR_ID];
@@ -38,6 +41,14 @@ export const AppDocumentView:React.SFC<Props> = ({ rect, libCollection }) => {
         setHoveredElement(idFromElementInfo(element));
     }
 
+    const handleDragHover = (elementId: ElementId, item: any, offset: XYCoord) => {
+        console.log(elementId);
+    }
+
+    const handleDragDrop = (elementId: ElementId, item: any, offset: XYCoord) => {
+
+    }
+
     return (
         <Canvas 
             key="canvas" 
@@ -52,7 +63,9 @@ export const AppDocumentView:React.SFC<Props> = ({ rect, libCollection }) => {
             right={rect.right}
             onZoomChange={setZoom}
             onHover={handleElementHover}
-            onClick={handleElementClick}>
+            onClick={handleElementClick}
+            onDragHover={handleDragHover}
+            onDragDrop={handleDragDrop}>
         
             {hoveredElement && (selection.elements.indexOf(hoveredElement) == -1) && 
                 <OutLine key="hover" element={hoveredElement}>

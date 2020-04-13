@@ -33,20 +33,9 @@ const findElement = (parent:HTMLElement, name: string):HTMLElement => {
 export const Wheel:React.SFC<Props> = (props) => {
 
     const ref = React.useRef<HTMLDivElement>(null);
-
-    const scroll = React.useCallback(() => {
-        const el = findElement(ref.current, props.value);
-        el.scrollIntoView();
-    }, [props.value]);
     
-    
-
     React.useEffect(() => {
-        //setTimeout(scroll, 0);
-        
         const el = findElement(ref.current, props.value);
-        
-        console.log(el.offsetLeft);
         ref.current.style.left = `${-el.offsetLeft}px`;
     }, [props.value, props.children]);
 

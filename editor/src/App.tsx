@@ -5,20 +5,20 @@ import { Section } from "./uiShell/controls/Section";
 import { Command } from "./uiShell/controls/Command";
 import { ComponentEditorPanel } from "./ComponentEditorPanel";
 import { useActivePanelState } from "./uiState/ideState";
-import { SelectedElementField } from "./SelectedElementField";
 import { AppDocumentView } from "./AppDocumentView";
-import { DocLibCollection } from "./doc/docRenderUtils";
+import { useDocLibState, selectLibCollection } from "./doc/docLibSelectors";
 
 
 interface Props {
-    libCollection: DocLibCollection
+    
 }   
-//
+
 export const App:React.SFC<Props> = (props) => {
 
     const [leftPanel, setLeftPanel] = useActivePanelState("left");
     const [rightPanel, setRightPanel] = useActivePanelState("right");
-    
+    const libCollection = useDocLibState(selectLibCollection);
+
     return (
         <Layout 
             activeLeftPanel={leftPanel}
@@ -26,20 +26,12 @@ export const App:React.SFC<Props> = (props) => {
             leftPanels={[ "docNavigator"]}
             rightPanels={[ "componentEditor" ]}
             panelSpecs={{
-                "docNavigator": {
-                    icon: "bars",
-                    label: "Document Navigator"
-                },
-                
-                "componentEditor": {
-                    icon: "microchip",
-                    label: "Component Editor"
-                }
+                "docNavigator": { icon: "bars", label: "Document Navigator" },
+                "componentEditor": { icon: "microchip", label: "Component Editor" }
             }}
             renderPanel={(panelName, rect) => {
                 switch (panelName) {
                     case "docNavigator": return <div style={rect} />;
-                    
                     case "componentEditor": return <ComponentEditorPanel component="Component1" style={rect} />;
                     default: return <div style={rect} />;
                 }
@@ -48,7 +40,6 @@ export const App:React.SFC<Props> = (props) => {
             renderToolbarElements={
                 () => (
                     <>
-                        
                         <div key="d1" className="stretch" />
                         <div key="d2" className="divider" />
                         <Section>
@@ -57,16 +48,13 @@ export const App:React.SFC<Props> = (props) => {
                             <Command key="cut" name="cut" label="Cut" icon="cut" />
                             <Command key="copy" name="copy" label="Copy" icon="copy" />
                             <Command key="paste" name="paste" label="Paste" icon="paste" />
-                        
                             <Command key="delete" name="delete" label="Delete" icon="trash" />
                         </Section>
                     </>
                 )}
 
             renderView={(_, rect) => 
-                <AppDocumentView 
-                    libCollection={props.libCollection} 
-                    rect={rect} />}
+                <AppDocumentView libCollection={libCollection} rect={rect} />}
 
             onLeftPanelSelection={setLeftPanel}
             onRightPanelSelection={setRightPanel} />

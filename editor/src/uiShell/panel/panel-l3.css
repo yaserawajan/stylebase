@@ -1,0 +1,30 @@
+.panel .l3 {
+    line-height: 40px;
+    font-size: 40px;
+    min-height: 40px;
+    background-color: #ddd;
+    border-bottom: 1px solid white;
+    
+}
+
+.panel .l3 > .title {
+    font-weight: 400;
+}
+
+.panel .l3 > .search-field {
+    
+}
+
+.panel .l3 > .search-field > input {
+    
+}
+
+.panel .l3 > .search-field-icon {
+    height: 1em;
+    flex: 0 0 1em;
+}
+
+.panel .l3 > .search-field-icon > i {
+    font-size: 0.3em;
+    color: white;
+}

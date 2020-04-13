@@ -1,11 +1,12 @@
 import * as React from "react";
-import { ComponentLibManifest, ComponentUri } from "./docMetadata";
+import { ComponentUri } from "./docMetadata";
 import { withPropsEditorMerger } from "./withEditorPropsMerger";
 import { DocEditorState } from "../docEditor/docEditorState";
 import { DocState, DocSelection, ComponentState } from "./docState";
-import { useDocEditorState, selectDocState } from "../docEditor/docEditorSelectors";
+import { useDocEditorState } from "../docEditor/docEditorSelectors";
+import { DocLibCollection } from "./docLibModels";
 
-export type DocLibCollection = {[k:string]:ComponentLibManifest}
+
 
 const selectFromState = (s:DocEditorState<DocState,DocSelection>) => {
     const selection = s.present.selection;
@@ -20,7 +21,7 @@ const selectFromState = (s:DocEditorState<DocState,DocSelection>) => {
 const createComponentType = (libs: DocLibCollection, uri: ComponentUri) => {
     const lib = libs[uri.lib];
     if (!lib) return null;
-    const type = lib.componentTypes[uri.component];
+    const type = lib.components[uri.component].definition;
     if (!type) return null;
     return withPropsEditorMerger()(type);
 }

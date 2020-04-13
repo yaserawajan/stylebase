@@ -1,5 +1,7 @@
 import * as React from "react";
 import { useDocElementProps } from "./docStateSelectors";
+import { useDrop } from "react-dnd";
+import { ElementAddAction, DocAction } from "./docState";
 
 export interface PropMergerOptions {
     
@@ -15,6 +17,8 @@ export const withPropsEditorMerger =
         React.forwardRef((props: TWrappedProps & AdditionalProps, ref) => {
             const { editorId, ...rest } = props ;
             const { children, ...otherProps } = useDocElementProps(editorId) as TWrappedProps;
+            
             const W = Wrapped as any;
+
             return (<W ref={ref} { ...otherProps } { ...rest } />);
         });

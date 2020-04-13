@@ -8,8 +8,8 @@
     flex-direction: row;
     color: #eee;
     border-top: #444;
-    border-right: 1px solid #555;
-    border-bottom: 0;
+    
+    border-bottom: 1px solid #666;
     z-index: 1000;
     
 }

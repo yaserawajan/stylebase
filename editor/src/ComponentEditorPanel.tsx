@@ -32,20 +32,20 @@ export const ComponentEditorPanel:React.SFC<Props> = (props) => {
                 </Title>
                 <div className="stretch" />
                 <TabSelector key="tabs" value={componentEditMode} onChange={setComponentEditMode}>
-                    <Tab key="design" name="componentDesign">
+                    <Tab key="design" name="design">
                         <Command label="Design Editor" icon="palette" name="toggleDesign" />
                     </Tab>
-                    <Tab key="metadata" name="componentMetadata">
+                    <Tab key="metadata" name="metadata">
                         <Command label="Metadata Editor" icon="list" name="toggleMetadata" />
                     </Tab>
                 </TabSelector>
             </div>
             
             <Wheel key="componentEditMode" value={componentEditMode}>
-                <WheelItem key="design" name="componentDesign">
+                <WheelItem key="design" name="design">
                     <ComponentViewEditorSection />
                 </WheelItem>
-                <WheelItem key="metadata" name="componentMetadata">
+                <WheelItem key="metadata" name="metadata">
                     <ComponentMetadataSection />
                 </WheelItem>
             </Wheel>

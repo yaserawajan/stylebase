@@ -1,12 +1,14 @@
 import * as React from "react";
 import "./panel.css";
-import "./panel-contents.css";
+import "./panel-l1.css";
+import "./panel-l2.css";
+import "./panel-l3.css";
+import "./panel-body.css";
 import { classes } from "../utils";
 
 const cssOpen:React.CSSProperties = {
     overflowX: "hidden",
     overflowY: "scroll",
-    
 } 
 
 interface Props {

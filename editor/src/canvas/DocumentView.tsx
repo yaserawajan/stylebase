@@ -4,6 +4,7 @@ import "./document_view.css";
 import { DocumentMargin } from "./DocumentMargin";
 import { DocumentViewElement } from "./DocumentViewElement";
 import { ElementId, elementIdFromJsx, elementIdFromDom, isElementIdEmpty } from "./viewElementIdentification";
+import { XYCoord } from "react-dnd";
 
 interface Props {
     rerenderSequence: number
@@ -13,6 +14,8 @@ interface Props {
     style: React.CSSProperties
     zoom: number
     onRectChange?: (rects: ElementRect[]) => void
+    onDragHover: (elementId: ElementId, item: any, pos: XYCoord) => void
+    onDragDrop: (elementId: ElementId, item: any, pos: XYCoord) => void
     onHover?: (elementName?: ElementId, x?: number, y?: number) => void
     onClick?: (elementName?: ElementId, x?: number, y?: number) => void
 }
@@ -138,7 +141,14 @@ export const DocumentView:React.SFC<Props> = (props) => {
             onMouseUp={handleMouseUp}>
             <DocumentMargin margin={props.margins}>
                 <div className="document-view" ref={boxRef}>
-                    <DocumentViewElement contents={props.contents} idProps={props.idProps} /> 
+
+                    {props.children}
+                    
+                    <DocumentViewElement 
+                        contents={props.contents} 
+                        idProps={props.idProps} 
+                        onDragHover={props.onDragHover}
+                        onDragDrop={props.onDragDrop} /> 
                 </div>
             </DocumentMargin>
         </div>

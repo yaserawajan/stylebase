@@ -6,6 +6,7 @@ import { ElementRectMap, ElementRect } from "./types";
 import RectContext from "./RectContext";
 import { ZoomControl } from "./ZoomControl";
 import { ElementId } from "./viewElementIdentification";
+import { XYCoord } from "react-dnd";
  
 interface Props {
     documentMargins: number
@@ -20,6 +21,8 @@ interface Props {
     onHover?: (elementInfo?: ElementId, x?: number, y?: number) => void
     onClick?: (elementInfo?: ElementId, x?: number, y?: number) => void
     onZoomChange?: (newValue: number) => void
+    onDragHover: (elementId: ElementId, item: any, pos: XYCoord) => void
+    onDragDrop: (elementId: ElementId, item: any, pos: XYCoord) => void
 }
 
 interface State {
@@ -37,7 +40,9 @@ export const Canvas:React.SFC<Props> = ({
         idAsString,
         documentMargins, 
         onHover, 
-        onClick 
+        onClick,
+        onDragHover,
+        onDragDrop 
     }) => {
     
     const [ state, setState ] = React.useState<State>({ rerenderSequence: 0, rects: {} });
@@ -91,19 +96,20 @@ export const Canvas:React.SFC<Props> = ({
 
     }, [right, left, zoom]);
 
+    const unit = Math.floor(50 / (zoom * 5)) * 5;
     return (
         <>
             <div key="tr" className="canvas-x-ruler" style={{ top, right, left: left + 40 + 30 }}>
-                <Ruler textColor="#999" zoom={zoom} ref={hRulerTop} type="horizontal" />
+                <Ruler textColor="#999" unit={unit} zoom={zoom} ref={hRulerTop} type="horizontal" />
             </div>
             <div key="br" className="canvas-footer" style={{ bottom, right, left: left + 40 + 30 }}>
                 <ZoomControl value={zoom} onChange={onZoomChange} />
             </div>
             <div key="lr" className="canvas-y-ruler" style={{ top, left, bottom }}>
-                <Ruler textColor="#999" zoom={zoom} ref={vRulerLeft} type="vertical" />
+                <Ruler textColor="#999" unit={unit} zoom={zoom} ref={vRulerLeft} type="vertical" />
             </div>
             <div key="rr" className="canvas-y-ruler" style={{ top, right, bottom, transform: "scale(-1, 1)" }}>
-                <Ruler textColor="#999" zoom={zoom} ref={vRulerRight} type="vertical" />
+                <Ruler textColor="#999" unit={unit} zoom={zoom} ref={vRulerRight} type="vertical" />
             </div>
 
             <div key="background" className="canvas-background" style={{
@@ -142,7 +148,9 @@ export const Canvas:React.SFC<Props> = ({
                     }}
                     onHover={onHover}
                     onClick={onClick}
-                    onRectChange={handleRectChange} />
+                    onRectChange={handleRectChange}
+                    onDragHover={onDragHover}
+                    onDragDrop={onDragDrop} />
                 
             </div>
         </>

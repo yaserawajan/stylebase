@@ -5,10 +5,14 @@ export type AnyDataType = {
 
 }
 
+export type MapPropDesc = PropMetadata & {
+    required?: boolean
+}
+
 export type MapDataType = {
     type: "map"
     properties: {
-        [propName: string]: PropMetadata
+        [propName: string]: MapPropDesc
     }
 }
 
@@ -69,7 +73,7 @@ export type PropMetadata =
     ElementRefDataType;
 
 export type PropMapMetadata = {
-    [propName:string]: PropMetadata
+    [propName:string]: MapPropDesc
 }
 
 export type ComponentStateMapMetadata = {
@@ -108,7 +112,3 @@ export type ComponentUri = {
     version?: string
 }
 
-export type ComponentLibManifest = {
-
-    componentTypes: { [name:string]: React.ComponentType<any> }
-}

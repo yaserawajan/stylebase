@@ -5,8 +5,10 @@ import * as React from "react";
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import * as ReactDOM from "react-dom";
+import { DndProvider } from "react-dnd";
+import Html5Backend from "react-dnd-html5-backend";
 
-import { ideReducer, IDE } from "./uiState/ideState";
+import { createIdeReducer, IDE } from "./uiState/ideState";
 import { createEditorReducer } from "./docEditor/docEditorState";
 import { DocState, DocSelection, DocAction } from "./doc/docState";
 import { App } from "./App";
@@ -16,11 +18,22 @@ import { docUpdateReducer } from "./doc/docUpdateReducer";
 import { DOC_EDITOR } from "./docEditor/docEditorSelectors";
 import { boxLibManifest } from "./componentCatalog/boxLibManifest";
 import { importDocState } from "./doc/docImportUtils";
-import { DocLibCollection } from "./doc/docRenderUtils";
+import { DOC_LIB, createDocLibReducer } from "./doc/docLibReducer";
+import { boxLibEditorManifest } from "./componentCatalog/boxLibEditorManifest";
 
 
 const store = createStore(combineReducers({
-    [IDE]: ideReducer,
+
+    [DOC_LIB]: createDocLibReducer(
+        { "boxes": boxLibManifest },
+        { "boxes": boxLibEditorManifest }),
+    
+    [IDE]: createIdeReducer({
+        "right": "componentEditor",
+        "componentEditMode": "design",
+        "editMode": "elements"
+    }),
+    
     [DOC_EDITOR]: createEditorReducer<DocState,DocAction,DocSelection>({
         defaultDoc: () => importDocState(createDefaultTemplate()),
         defaultSelection: defaultSelector,
@@ -29,11 +42,11 @@ const store = createStore(combineReducers({
 })); 
  
 
-const libs:DocLibCollection = {
-    "boxes": boxLibManifest
-}
+
 
 ReactDOM.render(
     <Provider store={store}>
-        <App libCollection={libs} />
+        <DndProvider backend={Html5Backend}>
+            <App />
+        </DndProvider>
     </Provider>, document.getElementById("root"));

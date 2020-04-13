@@ -1,0 +1,11 @@
+.panel-body {
+    overflow-y: scroll;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-body .section {
+    
+}
+    
