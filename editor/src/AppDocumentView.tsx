@@ -1,94 +1,77 @@
 import * as React from "react";
-import { useDispatch } from "react-redux";
-import { XYCoord } from "react-dnd";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
 import { ViewLayerSpecs } from "./uiShell/Layout";
-import { Canvas } from "./canvas/Canvas";
+import { Viewport } from "./canvas/Viewport";
 import { ElementId } from "./canvas/viewElementIdentification";
-import { OutLine } from "./canvas/OutLine";
-import { OverlaySelection } from "./overlays/OverlaySelection";
-import { OverlayHover } from "./overlays/OverlayHover";
-import { selectionChanged } from "./docEditor/docEditorState";
-import { useZoomState, useHoverState } from "./uiState/ideState";
-import { useDocSelectionState } from "./docEditor/docEditorSelectors";
-import { DocSelection } from "./doc/docState";
-import { useDocJsxCompiler } from "./doc/docRenderUtils";
-import { DocLibCollection } from "./doc/docLibModels";
+import { selectionChanged, DocEditorState } from "./docEditor/docEditorState";
+import { useZoomState, useHoverState, selectIde } from "./uiState/ideState";
+import { useDocSelectionState, useDocEditorState } from "./docEditor/docEditorHooks";
+import { DocSelection, DocState } from "./doc/docModels";
+import { AppElement } from "./AppElement";
+import { useComponentFactory } from "./doc/docLibHooks";
+import { AppOutlines } from "./AppOutlines";
 
-
-const EDITOR_ID = "editorId";
-const infoProps = [EDITOR_ID];
-const idFromElementInfo = (info: ElementId) => info[EDITOR_ID];
 
 interface Props {
     rect: ViewLayerSpecs
-    libCollection: DocLibCollection
 }
+ 
+export const AppDocumentView:React.SFC<Props> = ({ rect }) => {
 
-export const AppDocumentView:React.SFC<Props> = ({ rect, libCollection }) => {
+    const { dragItem, dropLocation } = useSelector((s:any) => ({ 
+        dropLocation: selectIde(s).dropLocation,
+        dragItem: selectIde(s).draggedItem
+    }), shallowEqual);
 
-    const jsx = useDocJsxCompiler(libCollection);
     const [zoom, setZoom] = useZoomState();
     const [hoveredElement, setHoveredElement] = useHoverState();
     const selection = useDocSelectionState<DocSelection>();
+    const rootElement = useDocEditorState((editor: DocEditorState<DocState,DocSelection>) => {
+        const compName = editor.present.selection.component;
+        if (!compName) return undefined;
+        return editor.preview.components.byName[compName].rootElement;
+    });
+    const componentFactory = useComponentFactory();
     const dispatch = useDispatch();
 
     const handleElementClick = (element:ElementId) => {
-        dispatch(selectionChanged({ elements: [ idFromElementInfo(element) ]}));
-    }
-
-    const handleElementHover = (element:ElementId) => {
-        setHoveredElement(idFromElementInfo(element));
-    }
-
-    const handleDragHover = (elementId: ElementId, item: any, offset: XYCoord) => {
-        console.log(elementId);
-    }
-
-    const handleDragDrop = (elementId: ElementId, item: any, offset: XYCoord) => {
-
+        dispatch(selectionChanged({ elements: [ element ]}));
     }
 
     return (
-        <Canvas 
+        <Viewport 
             key="canvas" 
             documentMargins={50}
-            contents={jsx}
-            idProps={infoProps}
-            idAsString={idFromElementInfo}
             zoom={zoom}
             top={rect.top} 
             left={rect.left} 
             bottom={rect.bottom} 
             right={rect.right}
-            onZoomChange={setZoom}
-            onHover={handleElementHover}
-            onClick={handleElementClick}
-            onDragHover={handleDragHover}
-            onDragDrop={handleDragDrop}>
-        
-            {hoveredElement && (selection.elements.indexOf(hoveredElement) == -1) && 
-                <OutLine key="hover" element={hoveredElement}>
-                {({ elementId, actual, display }) => 
-                    <OverlayHover element={elementId} actualRect={actual} displayRect={display} />
-                }
-                </OutLine>
+            renderOutlines={() => (
+                <AppOutlines 
+                    hoveredElement={hoveredElement}
+                    dragItem={dragItem}
+                    dropLocation={dropLocation}
+                    rootElement={rootElement}
+                    selectedElements={selection.elements} 
+                    component={selection.component} />
+            )}
+            onZoomChange={setZoom}>
+
+            {rootElement
+
+                ? <AppElement 
+                    component={selection.component}
+                    elementId={rootElement} 
+                    componentFactory={componentFactory}
+                    onHover={setHoveredElement}
+                    onClick={handleElementClick} />
+
+                : <div>Nothing to display. You can select a component to view from the left pane</div>
             }
-
-            {selection.elements.length > 0
-                ? selection.elements.map(e => (
-                    <OutLine key={`sel-${e}`} element={e}>
-                    {({ elementId, actual, display }) => 
-                        <OverlaySelection 
-                            element={elementId} 
-                            actualRect={actual} 
-                            displayRect={display} />
-                    }
-                    </OutLine>
-                )) 
-                : null}
-
-        </Canvas>
+            
+        </Viewport>
     )
 
 }

@@ -1,8 +1,8 @@
 import * as React from "react";
 import { shallowEqual, useDispatch } from "react-redux";
 
-import { useDocEditorState } from "./docEditor/docEditorSelectors";
-import { DocSelection, DocState } from "./doc/docState";
+import { useDocEditorState } from "./docEditor/docEditorHooks";
+import { DocSelection, DocState } from "./doc/docModels";
 import { DropDownList } from "./uiShell/controls/DropDownList";
 import { DocEditorState, selectionChanged } from "./docEditor/docEditorState";
 

@@ -4,24 +4,22 @@ import "./outline.css";
 import { ElementRect } from "./types";
 
 interface Props {
+    style?: React.CSSProperties
     interactive?: boolean
     element: string
     children: (rect: ElementRect & { elementId: string }) => React.ReactNode
 }
 
-export const OutLine:React.SFC<Props> = ({ element, children, interactive }) => {
+export const OutLine:React.SFC<Props> = ({ element, children, interactive, style }) => {
 
     const { rectMap } = React.useContext(RectContext);
 
-    //console.log(rectMap);
     const { display, actual, info } = rectMap[element] || {};
-    
-    
+
     if (display === undefined) return null;
 
-    const style:React.CSSProperties = interactive? { } : { pointerEvents: "none" } ;
     return (
-        <div className="outline" style={style}>
+        <div className="outline" style={{ ...style, pointerEvents: interactive? undefined : "none" }}>
             {children({ display, actual, info, elementId: element })}
         </div>
     );

@@ -1,23 +1,28 @@
-import { useSelector } from "react-redux";
 
-import { selectDocState, selectActiveSelection } from "../docEditor/docEditorSelectors";
-import { DocState, ElementProps, DocSelection } from "./docState";
+import { selectPreviewState, selectActiveSelection, selectPresentState } from "../docEditor/docEditorSelectors";
+import { DocState, ElementDesc } from "./docModels";
 
 
-const noProps = {}
+const noElement = {}
 
-export const selectDocElementProps = (element:string) => 
-    (s:any) => {
-        const activeComponent = selectActiveSelection<DocSelection>(s).component;
-        if (!activeComponent) return noProps;
-        const c = selectDocState<DocState>(s).components.byName[activeComponent];
-        if (!c) return noProps;
-        const el = c.elements.byName[element];
-        if (!el) return noProps;
-        return el.props;
+export const selectDocElement = (component: string, id:string) => 
+    (s:any):Partial<ElementDesc & { isPreview: boolean }> => {
+
+        //const activeComponent = selectActiveSelection<DocSelection>(s).component;
+        //if (!activeComponent) return noElement;
+
+        const preview = selectPreviewState<DocState>(s);
+        const present = selectPresentState<DocState>(s);
+
+        const c = preview.components.byName[component];
+        if (!c) return noElement;
+        
+        const el = c.elements.byName[id];
+        if (el) return {
+            ...el,
+            isPreview: present.components.byName[component] === undefined
+        }
+
+        return noElement;
     }
 
-
-
-export const useDocElementProps = (element: string) => useSelector<any, ElementProps>(selectDocElementProps(element));
-    

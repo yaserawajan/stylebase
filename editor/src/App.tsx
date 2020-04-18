@@ -6,8 +6,6 @@ import { Command } from "./uiShell/controls/Command";
 import { ComponentEditorPanel } from "./ComponentEditorPanel";
 import { useActivePanelState } from "./uiState/ideState";
 import { AppDocumentView } from "./AppDocumentView";
-import { useDocLibState, selectLibCollection } from "./doc/docLibSelectors";
-
 
 interface Props {
     
@@ -16,14 +14,16 @@ interface Props {
 export const App:React.SFC<Props> = (props) => {
 
     const [leftPanel, setLeftPanel] = useActivePanelState("left");
+
     const [rightPanel, setRightPanel] = useActivePanelState("right");
-    const libCollection = useDocLibState(selectLibCollection);
+
+
 
     return (
         <Layout 
             activeLeftPanel={leftPanel}
             activeRightPanel={rightPanel}
-            leftPanels={[ "docNavigator"]}
+            leftPanels={[ "docNavigator" ]}
             rightPanels={[ "componentEditor" ]}
             panelSpecs={{
                 "docNavigator": { icon: "bars", label: "Document Navigator" },
@@ -53,8 +53,7 @@ export const App:React.SFC<Props> = (props) => {
                     </>
                 )}
 
-            renderView={(_, rect) => 
-                <AppDocumentView libCollection={libCollection} rect={rect} />}
+            renderView={(_, rect) => (<AppDocumentView key="adv" rect={rect} />)}
 
             onLeftPanelSelection={setLeftPanel}
             onRightPanelSelection={setRightPanel} />

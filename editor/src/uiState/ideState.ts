@@ -1,7 +1,33 @@
 import { OptionState, OptionChangedAction, optionReducer, optionChanged } from "./optionState";
 import { ToggleState, ToggledAction, toggleReducer } from "./toggleState";
 import { useSelector, useDispatch } from "react-redux";
+import { Draggable } from "../draggables";
  
+type DropLocation = {
+    actionType: string
+    elementId: string
+    component: string
+}
+
+export type DragBeginAction = {
+    type: "DRAG_BEGIN"
+    item: Draggable
+}
+
+export type DragHoverAction = {
+    type: "DRAG_HOVER"
+    location: DropLocation
+}
+
+export type DragEndAction = {
+    type: "DRAG_END"
+}
+
+export type DragDropAction = {
+    type: "DRAG_DROP"
+
+}
+
 export type ZoomChangedAction = {
     type: "ZOOM_CHANGED",
     value: number
@@ -11,6 +37,24 @@ export type HoverChangedAction = {
     type: "HOVER_CHANGED"
     element?: string
 }
+
+export const dragBegin = (item: Draggable):DragBeginAction => ({
+    type: "DRAG_BEGIN",
+    item
+})
+
+export const dragEnd = ():DragEndAction => ({
+    type: "DRAG_END"
+})
+
+export const dragHover = (location: DropLocation):DragHoverAction => ({
+    type: "DRAG_HOVER",
+    location
+})
+
+export const dragDrop = ():DragDropAction => ({
+    type: "DRAG_DROP"
+})
 
 export const zoomChanged = (value: number):ZoomChangedAction => ({
     type: "ZOOM_CHANGED",
@@ -22,10 +66,16 @@ export const hoverChanged = (element?: string):HoverChangedAction => ({
     element
 })
 
-export type IdeAction = ZoomChangedAction | HoverChangedAction | OptionChangedAction | ToggledAction
+export type IdeAction = 
+    DragBeginAction | DragEndAction | DragHoverAction | DragDropAction |
+    ZoomChangedAction | 
+    HoverChangedAction | 
+    OptionChangedAction | 
+    ToggledAction
 
 export type IdeState = {
-
+    draggedItem?: Draggable
+    dropLocation?: DropLocation
     panels: OptionState
     toggles: ToggleState
     zoom: number
@@ -47,6 +97,30 @@ export const createIdeReducer = (initialPanelState: OptionState) => {
     } 
 
     return (state:IdeState = stateInit, action: IdeAction):IdeState => {
+
+        if (action.type == "DRAG_BEGIN") {
+            return {
+                ...state,
+                draggedItem: action.item
+            }
+        }
+
+        if (action.type == "DRAG_END") {
+            const { draggedItem, dropLocation, ...rest } = state;
+            return rest;
+        }
+
+        if (action.type == "DRAG_HOVER") {
+            return {
+                ...state,
+                dropLocation: action.location
+            }
+        }
+
+        if (action.type == "DRAG_DROP") {
+            const { draggedItem, dropLocation, ...rest } = state;
+            return rest;
+        }
 
         if (action.type == "ZOOM_CHANGED") {
             return {
@@ -74,7 +148,7 @@ export const createIdeReducer = (initialPanelState: OptionState) => {
 
 export const IDE = "ide";
 
-const selectIde = (s:any):IdeState => s[IDE];
+export const selectIde = (s:any):IdeState => s[IDE];
 
 export const useActivePanelState = (subject: string, allowNone: boolean = true):[string,(v:string) => void] => {  
     const value = useSelector<any,string>(s => selectIde(s).panels[subject] || "");
@@ -94,6 +168,8 @@ export const useActivePanelState = (subject: string, allowNone: boolean = true):
 //     ];
 // } 
 
+
+
 export const useZoomState = ():[number, (v:number) => void] => {
     const value = useSelector<any,number>(s => selectIde(s).zoom);
     const dispatch = useDispatch();
@@ -111,3 +187,4 @@ export const useHoverState = ():[string|undefined, (v:string|undefined) => void]
         (element:string|undefined) => dispatch(hoverChanged(element))
     ];
 }
+

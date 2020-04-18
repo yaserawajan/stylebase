@@ -2,38 +2,18 @@ import * as React from "react";
 import { ElementRect } from "./types";
 import "./document_view.css";
 import { DocumentMargin } from "./DocumentMargin";
-import { DocumentViewElement } from "./DocumentViewElement";
-import { ElementId, elementIdFromJsx, elementIdFromDom, isElementIdEmpty } from "./viewElementIdentification";
-import { XYCoord } from "react-dnd";
+import { elementIdFromDom } from "./viewElementIdentification";
 
 interface Props {
     rerenderSequence: number
-    contents: JSX.Element
-    idProps: string[]
     margins: number
     style: React.CSSProperties
     zoom: number
     onRectChange?: (rects: ElementRect[]) => void
-    onDragHover: (elementId: ElementId, item: any, pos: XYCoord) => void
-    onDragDrop: (elementId: ElementId, item: any, pos: XYCoord) => void
-    onHover?: (elementName?: ElementId, x?: number, y?: number) => void
-    onClick?: (elementName?: ElementId, x?: number, y?: number) => void
 }
  
 type PartialMutationRecord = {
     target: Node
-}
-
-const resolveElementId = (root: HTMLElement, 
-    targetDom: HTMLElement, 
-    rootName: ElementId, 
-    idProps: string[]): { [k:string]:any } => {
-
-    if (root === targetDom) return rootName;
-    const elementId = elementIdFromDom(targetDom, idProps);
-    return isElementIdEmpty(elementId)
-        ? resolveElementId(root, targetDom.parentElement, rootName, idProps)
-        : elementId;
 }
 
 export const DocumentView:React.SFC<Props> = (props) => {
@@ -41,33 +21,6 @@ export const DocumentView:React.SFC<Props> = (props) => {
     const ref = React.useRef<HTMLDivElement>();
     const boxRef = React.useRef<HTMLDivElement>();
 
-    const rootName:ElementId = props.contents? elementIdFromJsx(props.contents, props.idProps): { };
-
-    const handleMouseOver = (e: React.MouseEvent) => {
-        const elementName = resolveElementId(ref.current, e.target as HTMLElement, rootName, props.idProps);
-        
-        if (props.onHover) props.onHover(elementName);
-    }
-
-    const handleMouseOut = (e: React.MouseEvent) => {
-        //const elementName = getNamedElement(ref.current, e.target as HTMLElement, rootName);
-        if (props.onHover) props.onHover({});
-    }
-
-    let lastMouseDown:Element = null;
-
-    const handleMouseDown = (e: React.MouseEvent) => {
-        const elementName = resolveElementId(ref.current, e.target as HTMLElement, rootName, props.idProps);
-        lastMouseDown = e.target as any;
-    }
-
-    const handleMouseUp = (e: React.MouseEvent) => {
-        const elementName = resolveElementId(ref.current, e.target as HTMLElement, rootName, props.idProps);
-        if (lastMouseDown === e.target && props.onClick) {
-            props.onClick(elementName);
-        }
-        lastMouseDown = null;
-    }
 
     const handleMutations = (mutations:PartialMutationRecord[]) => {
         const marginRect = ref.current.getBoundingClientRect();
@@ -75,9 +28,9 @@ export const DocumentView:React.SFC<Props> = (props) => {
         const rects = mutations
             .map(m => ({
                 m,
-                elementId: ("getAttribute" in m.target)? elementIdFromDom(m.target, props.idProps): {}
+                elementId: ("getAttribute" in m.target)? elementIdFromDom(m.target): undefined
             }))
-            .filter(pair => !isElementIdEmpty(pair.elementId))
+            .filter(pair => !!pair.elementId)
             .map<ElementRect>(pair => { 
                 const r = (pair.m.target as Element).getBoundingClientRect();
                 return {
@@ -104,7 +57,6 @@ export const DocumentView:React.SFC<Props> = (props) => {
                 }
             });
 
-        
         if (props.onRectChange) props.onRectChange(rects);
     }
 
@@ -121,8 +73,6 @@ export const DocumentView:React.SFC<Props> = (props) => {
         return () => mo.disconnect();
     }, []);
 
-    if (!rootName) return <div>Document contents must start with a named element</div>;
-
     return (
         <div 
             ref={ref}
@@ -134,21 +84,12 @@ export const DocumentView:React.SFC<Props> = (props) => {
                 position: "relative", 
                 top: 0, 
                 left: 0
-            }}
-            onMouseOver={handleMouseOver}
-            onMouseOut={handleMouseOut}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}>
+            }}>
             <DocumentMargin margin={props.margins}>
                 <div className="document-view" ref={boxRef}>
 
                     {props.children}
                     
-                    <DocumentViewElement 
-                        contents={props.contents} 
-                        idProps={props.idProps} 
-                        onDragHover={props.onDragHover}
-                        onDragDrop={props.onDragDrop} /> 
                 </div>
             </DocumentMargin>
         </div>

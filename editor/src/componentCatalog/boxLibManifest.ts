@@ -1,6 +1,6 @@
 import { Box } from "./box/Box";
 import { ComponentLibManifest } from "../doc/docLibModels";
-import { PropMapMetadata } from "../doc/docMetadata";
+import { PropMapMetadata } from "../doc/docModels";
 import { cssProps } from "./cssProps";
 
 const boxProps:PropMapMetadata = {

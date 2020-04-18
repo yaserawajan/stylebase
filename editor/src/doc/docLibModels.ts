@@ -1,4 +1,4 @@
-import { PropsMap, PropMapMetadata, ComponentUri } from "./docMetadata"
+import { PropsMap, PropMapMetadata, ComponentUri } from "./docModels"
 import { EntitySet } from "../entitySet/entitySetModels"
 
 

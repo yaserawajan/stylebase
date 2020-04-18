@@ -1,4 +1,4 @@
-import { PropMetadata } from "../doc/docMetadata";
+import { PropMetadata } from "../doc/docModels";
 
 
 

@@ -9,9 +9,9 @@ import { ElementInsertSection } from "./ElementInsertSection";
 import { ElementUpdateSection } from "./ElementUpdateSection";
 import { ElementListSection } from "./ElementListSection";
 import { shallowEqual, useDispatch } from "react-redux";
-import { useDocEditorState } from "./docEditor/docEditorSelectors";
+import { useDocEditorState } from "./docEditor/docEditorHooks";
 import { DocEditorState, selectionChanged } from "./docEditor/docEditorState";
-import { DocState, DocSelection } from "./doc/docState";
+import { DocState, DocSelection } from "./doc/docModels";
 
 interface Props {
     
@@ -59,7 +59,7 @@ export const ComponentViewEditorSection:React.SFC<Props> = (props) => {
             <Wheel className="stretch" orientation="x" value={editMode}>
                 
                 <WheelItem name="create" key="create">
-                    <ElementInsertSection elements={elements} component={component} />
+                    <ElementInsertSection />
                 </WheelItem>
 
                 <WheelItem name="edit" key="edit">

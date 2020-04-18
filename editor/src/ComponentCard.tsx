@@ -4,37 +4,20 @@ import * as React from "react";
 
 import { classes } from "./uiShell/utils";
 import { ErrorShield } from "./ErrorShield";
-import { useDrag } from "react-dnd";
-import { ElementAddAction } from "./doc/docState";
-import { ComponentUri } from "./doc/docMetadata";
+import { ComponentUri } from "./doc/docModels";
+import { useDraggableAsset } from "./uiState/useDraggableAsset";
 
 interface Props {
     style?: React.CSSProperties
     className?: string
     renderComponent: (componentUri: ComponentUri) => JSX.Element
     componentUri: ComponentUri
-      
 }
 
-let seq = 0;
+export const ComponentCard = (props:Props) => {
 
-export const ComponentCard:React.SFC<Props> = (props) => {
+    const drag = useDraggableAsset({ type: "component", uri: props.componentUri, props: { } });
 
-    const [{ }, drag] = useDrag({
-        
-        item: {
-            type: "ELEMENT_ADD",
-            component: props.componentUri,
-            props: { },
-            newId: (++seq).toString(),
-            
-
-        } as ElementAddAction,
-        end: (result:any, monitor) => {
-            
-        }
-    });
-    
     return (
         <div className={classes("component-card", props.className)} style={props.style}>
             <div key="label" className="title">{props.componentUri.component} @ {props.componentUri.lib}</div>

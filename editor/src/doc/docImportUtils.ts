@@ -1,6 +1,4 @@
-import { DocFormat } from "./docFormat";
-import { DocState } from "./docState";
-import { ComponentState } from "./docState";
+import { DocFormat, DocState, ComponentState } from "./docModels";
 
 
 
@@ -20,7 +18,8 @@ export const importDocState = (doc: DocFormat):DocState => {
             elements: {
                 all: Object.keys(c.elements),    
                 byName: c.elements
-            }
+            },
+            namedCounters: { }
         }
     }
 

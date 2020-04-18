@@ -1,5 +1,5 @@
 
-import { DocFormat } from "../docFormat";
+import { DocFormat } from "../docModels";
 
 const docInit:DocFormat = {
     imports: ["boxes"],

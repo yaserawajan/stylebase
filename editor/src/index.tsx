@@ -7,10 +7,11 @@ import { Provider } from "react-redux";
 import * as ReactDOM from "react-dom";
 import { DndProvider } from "react-dnd";
 import Html5Backend from "react-dnd-html5-backend";
+import { enableBatching } from "redux-batched-actions";
 
 import { createIdeReducer, IDE } from "./uiState/ideState";
 import { createEditorReducer } from "./docEditor/docEditorState";
-import { DocState, DocSelection, DocAction } from "./doc/docState";
+import { DocState, DocSelection, DocAction } from "./doc/docModels";
 import { App } from "./App";
 import { createDefaultTemplate } from "./doc/templates/defaultTemplate";
 import { defaultSelector } from "./doc/docDefaultSelector";
@@ -22,10 +23,10 @@ import { DOC_LIB, createDocLibReducer } from "./doc/docLibReducer";
 import { boxLibEditorManifest } from "./componentCatalog/boxLibEditorManifest";
 
 
-const store = createStore(combineReducers({
+const store = createStore(enableBatching(combineReducers({
 
     [DOC_LIB]: createDocLibReducer(
-        { "boxes": boxLibManifest },
+        { "boxes": boxLibManifest }, 
         { "boxes": boxLibEditorManifest }),
     
     [IDE]: createIdeReducer({
@@ -39,7 +40,7 @@ const store = createStore(combineReducers({
         defaultSelection: defaultSelector,
         updateReducer: docUpdateReducer
     }) 
-})); 
+}))); 
  
 
 

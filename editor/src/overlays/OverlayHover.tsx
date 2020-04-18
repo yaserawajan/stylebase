@@ -1,7 +1,6 @@
 import "./overlay_hover.css";
 
 import * as React from "react";
-import { IconLA } from "../uiShell/IconLA";
 
 interface Props {
     actualRect: DOMRect

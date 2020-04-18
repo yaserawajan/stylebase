@@ -1,11 +1,7 @@
 import * as React from "react";
-import { shallowEqual, useDispatch } from "react-redux";
 
-import { useDocEditorState } from "./docEditor/docEditorSelectors";
-import { DocSelection, DocState } from "./doc/docState";
 import { DropDownList } from "./uiShell/controls/DropDownList";
-import { DocEditorState, selectionChanged } from "./docEditor/docEditorState";
-import { ComponentUri } from "./doc/docMetadata";
+
 
 interface Props {
     className?: string

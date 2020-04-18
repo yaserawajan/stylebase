@@ -5,8 +5,6 @@ import { DocumentView } from "./DocumentView";
 import { ElementRectMap, ElementRect } from "./types";
 import RectContext from "./RectContext";
 import { ZoomControl } from "./ZoomControl";
-import { ElementId } from "./viewElementIdentification";
-import { XYCoord } from "react-dnd";
  
 interface Props {
     documentMargins: number
@@ -15,14 +13,8 @@ interface Props {
     bottom: number
     right: number
     zoom: number
-    contents: JSX.Element
-    idProps: string[]
-    idAsString: (idMap:ElementId) => string
-    onHover?: (elementInfo?: ElementId, x?: number, y?: number) => void
-    onClick?: (elementInfo?: ElementId, x?: number, y?: number) => void
+    renderOutlines: () => React.ReactNode
     onZoomChange?: (newValue: number) => void
-    onDragHover: (elementId: ElementId, item: any, pos: XYCoord) => void
-    onDragDrop: (elementId: ElementId, item: any, pos: XYCoord) => void
 }
 
 interface State {
@@ -30,19 +22,13 @@ interface State {
     rerenderSequence: number
 }
 
-export const Canvas:React.SFC<Props> = ({ 
+export const Viewport:React.SFC<Props> = ({ 
         top, right, bottom, left, 
         zoom, 
         onZoomChange,
         children, 
-        contents, 
-        idProps,
-        idAsString,
-        documentMargins, 
-        onHover, 
-        onClick,
-        onDragHover,
-        onDragDrop 
+        renderOutlines,
+        documentMargins
     }) => {
     
     const [ state, setState ] = React.useState<State>({ rerenderSequence: 0, rects: {} });
@@ -71,7 +57,7 @@ export const Canvas:React.SFC<Props> = ({
     const handleRectChange = (rects: ElementRect[]) => {
         let rectMap:ElementRectMap = {};
         rects.forEach(r => {
-            rectMap[idAsString(r.info)] = r;
+            rectMap[r.info] = r;
         })
         setState(stateOld => ({ 
             ...stateOld, 
@@ -130,15 +116,15 @@ export const Canvas:React.SFC<Props> = ({
                     }}>
 
                 <div key="outlines" style={{ position: "relative"  }}>
+                    
                     <RectContext.Provider value={{ rectMap: state.rects }}>
-                        {children}
+                        {renderOutlines()}
                     </RectContext.Provider>
+                    
                 </div>
 
                 <DocumentView 
                     key="root"
-                    contents={contents}
-                    idProps={idProps}
                     margins={documentMargins}
                     zoom={zoom}
                     rerenderSequence={state.rerenderSequence}
@@ -146,11 +132,11 @@ export const Canvas:React.SFC<Props> = ({
                         paddingBottom: (30 + bottom) / zoom, 
                         paddingRight: (30 + 40 + right) / zoom,
                     }}
-                    onHover={onHover}
-                    onClick={onClick}
-                    onRectChange={handleRectChange}
-                    onDragHover={onDragHover}
-                    onDragDrop={onDragDrop} />
+                    onRectChange={handleRectChange}>
+
+                    {children}
+
+                </DocumentView>
                 
             </div>
         </>

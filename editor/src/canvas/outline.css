@@ -1,5 +1,5 @@
 
-.outline > * {
+.outline, .outline > * {
     position: absolute;
     z-index: 999;
     

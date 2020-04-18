@@ -1,12 +1,10 @@
 
-import { useSelector } from "react-redux";
-
-export type DocOpenAction<TAction>  = {
+export type DocOpenAction  = {
     type: "DOC_EDITOR/OPEN"
     url: string
 }
 
-export type DocNewAction<TAction> = {
+export type DocNewAction = {
     type: "DOC_EDITOR/NEW"
 }
 
@@ -15,29 +13,43 @@ export type DocUpdatePreviewAction<TAction> = {
     preview: TAction
 }
 
-export type DocUpdateRevertAction<TAction> = {
+export const actionPreview = <TAction>(preview: TAction):DocUpdatePreviewAction<TAction> => ({
+    type: "DOC_EDITOR/PREVIEW",
+    preview
+})
+
+export type DocUpdateRevertAction = {
     type: "DOC_EDITOR/PREVIEW_REVERT"
 }
+
+export const actionRevert = ():DocUpdateRevertAction => ({
+    type: "DOC_EDITOR/PREVIEW_REVERT"
+})
 
 export type DocUpdateAction<TAction> = {
     type: "DOC_EDITOR/UPDATE",
     update: TAction
 }
 
-export type DocUndoAction<TAction> = {
+export const actionUpdate = <TAction>(update: TAction):DocUpdateAction<TAction> => ({
+    type: "DOC_EDITOR/UPDATE",
+    update
+})
+
+export type DocUndoAction = {
     type: "DOC_EDITOR/UNDO"
 }
 
-export type DocRedoAction<TAction> = {
+export type DocRedoAction = {
     type: "DOC_EDITOR/REDO"
 }
 
-export type DocSaveAction<TAction> = {
+export type DocSaveAction = {
     type: "DOC_EDITOR/SAVE",
     url: string
 }
 
-export type DocSaveAsAction<TAction> = {
+export type DocSaveAsAction = {
     type: "DOC_EDITOR/SAVE_AS",
     url: string
 }
@@ -48,15 +60,15 @@ export type DocUpdateSelectionAction<TAction, TSelection> = {
 }
 
 export type DocEditorAction<TAction,TSelection> =  
-    DocOpenAction<TAction> |
-    DocNewAction<TAction> |
+    DocOpenAction |
+    DocNewAction |
     DocUpdatePreviewAction<TAction> | 
-    DocUpdateRevertAction<TAction> |
+    DocUpdateRevertAction |
     DocUpdateAction<TAction> |
-    DocUndoAction<TAction> |
-    DocRedoAction<TAction> |
-    DocSaveAction<TAction> | 
-    DocSaveAsAction<TAction> |
+    DocUndoAction |
+    DocRedoAction |
+    DocSaveAction | 
+    DocSaveAsAction |
     DocUpdateSelectionAction<TAction,TSelection>;
 
 export const selectionChanged = <TSelection>(selection: Partial<TSelection>):DocUpdateSelectionAction<any,TSelection> => ({
@@ -116,14 +128,10 @@ export const createEditorReducer =
         }
 
         if (action.type == "DOC_EDITOR/PREVIEW") {
-            const { data, selection } = updateReducer(state.present, action.preview);
+            const { data } = updateReducer(state.present, action.preview);
             return {
                 ...state,
-                preview: data,
-                present: {
-                    ...state.present,
-                    selection
-                }
+                preview: data
             }
         }
 
