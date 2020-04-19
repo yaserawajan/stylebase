@@ -4,7 +4,7 @@ import * as React from "react";
 
 import { classes } from "./uiShell/utils";
 import { ErrorShield } from "./ErrorShield";
-import { ComponentUri } from "./doc/docModels";
+import { ComponentUri, PropsMap } from "./doc/docModels";
 import { useDraggableAsset } from "./uiState/useDraggableAsset";
 
 interface Props {
@@ -12,11 +12,12 @@ interface Props {
     className?: string
     renderComponent: (componentUri: ComponentUri) => JSX.Element
     componentUri: ComponentUri
+    defaultProps: PropsMap
 }
 
 export const ComponentCard = (props:Props) => {
 
-    const drag = useDraggableAsset({ type: "component", uri: props.componentUri, props: { } });
+    const drag = useDraggableAsset({ type: "component", uri: props.componentUri, props: props.defaultProps });
 
     return (
         <div className={classes("component-card", props.className)} style={props.style}>

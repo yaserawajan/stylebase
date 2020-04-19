@@ -40,7 +40,7 @@ export const Wheel:React.SFC<Props> = (props) => {
     }, [props.value, props.children]);
 
     return (
-        <div key="d" className={classes("wheel", props.orientation, props.className)} style={props.style}>
+        <div key="d" className={classes("wheel", props.className)} style={props.style}>
             <div ref={ref} className={classes("wheel-sheet", props.orientation)}>
                 <WheelItem name="" key="__default" />
                 {props.children}

@@ -1,6 +1,6 @@
 import * as React from "react";
 import Ruler from "@scena/react-ruler";
-import "./canvas.css";
+import "./viewport.css";
 import { DocumentView } from "./DocumentView";
 import { ElementRectMap, ElementRect } from "./types";
 import RectContext from "./RectContext";

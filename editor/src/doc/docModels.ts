@@ -55,8 +55,7 @@ export type TemplateDataType = {
 }
 
 export type ElementRefDataType = {
-    type: "element"
-    elementRef: string
+    type: "elementRef"
 }
 
 export type PropMetadata = 
@@ -174,20 +173,20 @@ type LocationAfter = {
     after?: string
 }
 
-export type Location = LocationBefore | LocationAfter;
+export type ElementLocation = LocationBefore | LocationAfter;
 
 export type ElementAddAction = {
     type: "ELEMENT_ADD"
     elementType: ComponentUri
     props: ElementProps 
-    location: Location
+    location: ElementLocation
 }
 
 export type ElementMoveAction = {
     type: "ELEMENT_MOVE"
     fromComponent: string
     fromElementId: string
-    location: Location
+    location: ElementLocation
 }
 
 export type ElementRemoveAction = {

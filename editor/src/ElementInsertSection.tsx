@@ -37,8 +37,10 @@ export const ElementInsertSection:React.SFC<Props> = (props) => {
                                 {Object.keys(lib.components).map(compName => {
 
                                     const component = (editorExt? editorExt.componentCards[compName]: undefined) || defaultRenderer;
+                                    const defaultProps = lib.components[compName].defaultProps;
                                     return <ComponentCard 
                                         key={compName} 
+                                        defaultProps={defaultProps}
                                         componentUri={{ lib: libName, component: compName }}
                                         renderComponent={component} />;
                                 })} 

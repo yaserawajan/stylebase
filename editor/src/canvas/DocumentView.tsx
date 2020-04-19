@@ -18,14 +18,17 @@ type PartialMutationRecord = {
 
 export const DocumentView:React.SFC<Props> = (props) => {
 
-    const ref = React.useRef<HTMLDivElement>();
+    const marginRef = React.useRef<HTMLDivElement>();
     const boxRef = React.useRef<HTMLDivElement>();
 
 
-    const handleMutations = (mutations:PartialMutationRecord[]) => {
-        const marginRect = ref.current.getBoundingClientRect();
+    const handleMutations = (/*mutations:PartialMutationRecord[]*/ ) => {
+        const marginRect = marginRef.current.getBoundingClientRect();
         const borderRect = boxRef.current.getBoundingClientRect();
-        const rects = mutations
+        //const rects = mutations
+        let all:PartialMutationRecord[] = [];
+        marginRef.current.querySelectorAll("*").forEach(n => all.push({ target: n }));
+        const rects = all
             .map(m => ({
                 m,
                 elementId: ("getAttribute" in m.target)? elementIdFromDom(m.target): undefined
@@ -62,20 +65,20 @@ export const DocumentView:React.SFC<Props> = (props) => {
 
     // refresh rectangles on mount and zoom changes
     React.useEffect(() => {
-        let all:PartialMutationRecord[] = [];
-        ref.current.querySelectorAll("*").forEach(n => all.push({ target: n }));
-        handleMutations(all);
+        //let all:PartialMutationRecord[] = [];
+        //marginRef.current.querySelectorAll("*").forEach(n => all.push({ target: n }));
+        handleMutations(/*all*/);
     }, [props.zoom, props.rerenderSequence]);
 
     React.useEffect(() => {
-        let mo = new MutationObserver(handleMutations);
-        mo.observe(ref.current, { childList: true, subtree: true });
+        let mo = new MutationObserver(() => setTimeout(handleMutations, 0));
+        mo.observe(marginRef.current, { childList: true, subtree: true });
         return () => mo.disconnect();
     }, []);
 
     return (
         <div 
-            ref={ref}
+            ref={marginRef}
             style={{ 
                 ...props.style,
                 display: "block", 

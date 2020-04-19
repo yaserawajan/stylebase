@@ -1,5 +1,5 @@
 import { DocSnapshot } from "../docEditor/docEditorState";
-import { DocState, DocSelection, DocAction, ComponentState, Location, ElementDesc, ComponentUri } from "./docModels";
+import { DocState, DocSelection, DocAction, ComponentState, ElementLocation, ElementDesc, ComponentUri } from "./docModels";
 import { entitySetUpdate, entitySetAdd } from "../entitySet/entitySetUtils";
 import { EntitySet } from "../entitySet/entitySetModels";
 
@@ -36,7 +36,7 @@ const insertAfter = (children:string[] = [], newId: string, anchor?: string):str
 
 const insertLast = (children:string[] = [], newId: string):string[] => [...children, newId];
 
-const insertChild = (children:string[] = [], newId: string, location: Location):string[] => {
+const insertChild = (children:string[] = [], newId: string, location: ElementLocation):string[] => {
     return ("before" in location)
     ? insertBefore(children, newId, location.before) 
     : (("after" in location)
@@ -46,7 +46,7 @@ const insertChild = (children:string[] = [], newId: string, location: Location):
 
 const removeFromArray = (children:string[], child:string) => children.filter(c => c != child);
 
-const addElement = (componentState: ComponentState, id: string, desc: ElementDesc, location: Location) => {
+const addElement = (componentState: ComponentState, id: string, desc: ElementDesc, location: ElementLocation) => {
     const containerState = componentState.elements.byName[location.containerElement];
     return {
         ...componentState,
@@ -138,15 +138,22 @@ export const docUpdateReducer = (state:DocSnapshot<DocState, DocSelection>, acti
 
     if (action.type == "ELEMENT_MOVE") {
         
+        const sameComponent = action.fromComponent == action.location.component
+
         const componentFromOld = state.data.components.byName[action.fromComponent]
+        const componentFrom = removeElement(componentFromOld, action.fromElementId);
+        
         const element = componentFromOld.elements.byName[action.fromElementId];
 
-        const componentToOld_ = state.data.components.byName[action.location.component];
-        const [ newId, componentToOld ] = (action.fromComponent == action.location.component)
+
+        const componentToOld_ = sameComponent
+            ? componentFrom
+            : state.data.components.byName[action.location.component];
+        const [ newId, componentToOld ] = sameComponent
             ? [ action.fromElementId, componentToOld_ ]
             : createId(componentToOld_, element.type);
         
-        const componentFrom = removeElement(componentFromOld, action.fromElementId);
+        
         const componentTo = addElement(componentToOld, newId, element, action.location);
         
         return {

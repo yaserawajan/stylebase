@@ -1,13 +1,18 @@
 import * as React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {  batchActions } from "redux-batched-actions";
 
-import { ComponentFactory, DocAction, ElementAddAction, Location, ElementMoveAction } from "./doc/docModels";
+import { ComponentFactory, DocAction, ElementAddAction, ElementLocation, ElementMoveAction, PropMetadata } from "./doc/docModels";
 import { useDocElementState } from "./doc/docHooks";
 import { ViewElement } from "./canvas/ViewElement";
 import { useDraggableAsset } from "./uiState/useDraggableAsset";
 import { useViewDropTarget } from "./uiState/useViewDropTarget";
-import { useDispatch } from "react-redux";
+
 import { dragEnd } from "./uiState/ideState";
 import { actionUpdate } from "./docEditor/docEditorState";
+import { useDocLibState } from "./doc/docLibHooks";
+import { optionChanged } from "./uiState/optionState";
+import { selectComponentMetadata } from "./doc/docLibSelectors";
 
 const combineRefs = (...refs:any[]) => (value:any) => {
     refs.forEach(ref => {
@@ -21,6 +26,7 @@ interface Props {
     component: string
     elementId: string
     parentElementId?: string
+    parentMetadata?: {[k:string]: PropMetadata }
     componentFactory: ComponentFactory
     onClick: (id:string) => void
     onHover: (id:string) => void
@@ -28,6 +34,9 @@ interface Props {
 
 export const AppElement = (props:Props) => {
     const element = useDocElementState(props.component, props.elementId);
+    
+    const metadata = useSelector(s => selectComponentMetadata(s, element.type));
+
     const dispatch = useDispatch();
 
     const drag = useDraggableAsset({
@@ -46,7 +55,7 @@ export const AppElement = (props:Props) => {
                 item.id == props.elementId && 
                 item.component == props.component) return undefined;
 
-            if (props.parentElementId) {
+            if (props.parentElementId && ("children" in props.parentMetadata)) {
 
                 const xMin = Math.floor(g.containerWidth * 0.1);
                 const yMin = Math.floor(g.containerHeight * 0.1);
@@ -58,7 +67,14 @@ export const AppElement = (props:Props) => {
             
             }
 
-            return "in";
+            // TODO Fix wheel layout bug when too many items are added 
+            // TODO React-DnD drag-drop latency
+            // TODO style hover drag action types
+            // TODO prevent drag-drop item in self or in child
+
+            if ("children" in metadata) return "in";
+
+            return undefined;
             
         },
         onDrop: ({ actionType, item }) => {
@@ -67,7 +83,7 @@ export const AppElement = (props:Props) => {
 
             if (!actionType) return;
 
-            let location:Location = null;
+            let location:ElementLocation = null;
             if (actionType == "before") {
                 location = { 
                     component: props.component, 
@@ -93,8 +109,8 @@ export const AppElement = (props:Props) => {
             if (item.type == "element") {
                 docAction = {
                     type: "ELEMENT_MOVE",
-                    fromComponent: props.component,
-                    fromElementId: props.elementId,
+                    fromComponent: item.component,
+                    fromElementId: item.id,
                     location
                 } as ElementMoveAction
             }
@@ -108,7 +124,7 @@ export const AppElement = (props:Props) => {
                 } as ElementAddAction
             }
 
-            dispatch(actionUpdate(docAction));
+            dispatch(batchActions([actionUpdate(docAction), optionChanged("editMode", "edit", false)]));
 
 
         }
@@ -117,7 +133,7 @@ export const AppElement = (props:Props) => {
     const { children = [], ...otherProps } = element.props;
     const C = props.componentFactory(element.type) as any;
     return (
-        <ViewElement 
+        <ViewElement  
             elementId={props.elementId} 
             mute={element.isPreview}
             onClick={props.onClick} 
@@ -133,6 +149,7 @@ export const AppElement = (props:Props) => {
                             onHover={props.onHover}
                             elementId={child} 
                             parentElementId={props.elementId}
+                            parentMetadata={metadata}
                             componentFactory={props.componentFactory} />
                     ))} />
             )}

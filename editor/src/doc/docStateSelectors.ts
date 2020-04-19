@@ -1,5 +1,5 @@
 
-import { selectPreviewState, selectActiveSelection, selectPresentState } from "../docEditor/docEditorSelectors";
+import { selectPreviewState, selectPresentState } from "../docEditor/docEditorSelectors";
 import { DocState, ElementDesc } from "./docModels";
 
 
@@ -8,11 +8,9 @@ const noElement = {}
 export const selectDocElement = (component: string, id:string) => 
     (s:any):Partial<ElementDesc & { isPreview: boolean }> => {
 
-        //const activeComponent = selectActiveSelection<DocSelection>(s).component;
-        //if (!activeComponent) return noElement;
-
         const preview = selectPreviewState<DocState>(s);
         const present = selectPresentState<DocState>(s);
+        //const metadata = 
 
         const c = preview.components.byName[component];
         if (!c) return noElement;

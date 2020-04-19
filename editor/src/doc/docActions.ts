@@ -1,9 +1,9 @@
-import { ElementAddAction, ElementUpdateAction, ElementMoveAction, ElementRemoveAction, ComponentUri, ElementProps, Location } from "./docModels"
+import { ElementAddAction, ElementUpdateAction, ElementMoveAction, ElementRemoveAction, ComponentUri, ElementProps, ElementLocation } from "./docModels"
 
 export const docElementAdd = (
     elementType: ComponentUri, 
     props: ElementProps, 
-    location: Location,
+    location: ElementLocation,
     ):ElementAddAction => ({
         type: "ELEMENT_ADD",
         elementType,
@@ -21,7 +21,7 @@ export const docElementUpdate = (component: string, elementId: string, props: El
 export const docElementMove = (
     fromComponent: string, 
     fromElementId: string, 
-    location: Location
+    location: ElementLocation
     ):ElementMoveAction => ({
         type: "ELEMENT_MOVE",
         fromComponent,

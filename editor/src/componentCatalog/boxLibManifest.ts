@@ -11,6 +11,13 @@ const boxProps:PropMapMetadata = {
         itemType: {
             type: "text"
         }
+    },
+    children: {
+        type: "array",
+        required: false,
+        itemType: {
+            type: "elementRef"
+        }
     }
 }
 
@@ -20,7 +27,13 @@ export const boxLibManifest:ComponentLibManifest = {
         Box: {
             definition: Box,
             propTypes: boxProps,
-            defaultProps: { }
+            defaultProps: { 
+                style: {
+                    width: 100,
+                    height: 30,
+                    backgroundColor: "white"
+                }
+            }
         }  
     }
 } 

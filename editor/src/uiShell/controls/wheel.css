@@ -2,6 +2,7 @@
 .wheel {
     overflow: hidden;
     position: relative;
+    /*display: flex;*/
 }
 
 .wheel-sheet {
@@ -9,13 +10,18 @@
     position: relative;
     flex-wrap: nowrap;
     align-items: stretch;
+    justify-content: flex-start;
+    
     overflow: visible;
     transition: all 0.2s ease-in-out;
+    width: 100%;
 }
 
 .wheel-item { 
-    flex: 0 0 100%;
+    flex: 0 0 100%; 
+    min-width: 0;
+    overflow: hidden;
 }
 
-.wheel-sheet.x > .wheel-item { flex-direction: row; }
-.wheel-sheet.y > .wheel-item { flex-direction: column; }
+.wheel-sheet.x { flex-direction: row; }
+.wheel-sheet.y { flex-direction: column; }

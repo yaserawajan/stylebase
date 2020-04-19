@@ -16,7 +16,7 @@ export const OutLine:React.SFC<Props> = ({ element, children, interactive, style
 
     const { display, actual, info } = rectMap[element] || {};
 
-    if (display === undefined) return null;
+    if (display === undefined) return <div />;
 
     return (
         <div className="outline" style={{ ...style, pointerEvents: interactive? undefined : "none" }}>
