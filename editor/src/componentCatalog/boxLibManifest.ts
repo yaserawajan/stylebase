@@ -7,10 +7,7 @@ const boxProps:PropMapMetadata = {
     style: cssProps,
     className: {
         required: false,
-        type: "array",
-        itemType: {
-            type: "text"
-        }
+        type: "text"
     },
     children: {
         type: "array",

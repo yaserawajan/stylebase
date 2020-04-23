@@ -1,4 +1,14 @@
-import { ElementAddAction, ElementUpdateAction, ElementMoveAction, ElementRemoveAction, ComponentUri, ElementProps, ElementLocation } from "./docModels"
+import { 
+    ElementAddAction, ElementUpdateAction, ElementMoveAction, ElementRemoveAction, DocActionSet,
+    ComponentUri, 
+    ElementProps, 
+    ElementLocation, 
+    DocAction } from "./docModels"
+
+export const docActionSet = (actions:DocAction[]):DocActionSet => ({
+    type: "ACTION_SET",
+    actions
+})
 
 export const docElementAdd = (
     elementType: ComponentUri, 

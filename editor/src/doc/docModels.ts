@@ -203,4 +203,19 @@ export type ElementUpdateAction = {
     props: ElementProps
 }
 
-export type DocAction = ElementAddAction | ElementMoveAction | ElementRemoveAction | ElementUpdateAction;
+export type DocActionSet = {
+    type: "ACTION_SET"
+    actions: DocAction[]
+}
+
+export type DocAction = ElementAddAction | ElementMoveAction | ElementRemoveAction | ElementUpdateAction | DocActionSet;
+
+export type PropEditorRenderProps = {
+    renderPropEditor: PropEditorFactory 
+    propType: PropMetadata
+    propName: string
+    value: any
+    onChange: (propName:string, value:any) => void
+}
+
+export type PropEditorFactory = (renderProps: PropEditorRenderProps) => JSX.Element

@@ -7,8 +7,8 @@ import { DocLibState } from "./docLibModels";
 
 export const useDocLibState = <TResult>(selector: (docLibState: DocLibState) => TResult, 
     eq?: (r1:TResult,r2:TResult) => boolean) => {
-    return useSelector<any, TResult>(s => selector(selectDocLibState(s)), eq);
-}
+        return useSelector<any, TResult>(s => selector(selectDocLibState(s)), eq);
+    }
 
 const ComponentNotFound = (props:any) => React.createElement("div", {});
 

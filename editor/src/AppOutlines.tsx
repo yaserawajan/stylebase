@@ -16,7 +16,7 @@ interface Props {
     dropLocation: { component: string, elementId: string, actionType: string }
 }
 
-export const AppOutlines:React.SFC<Props> = ({ dragItem, rootElement, hoveredElement, component, selectedElements, dropLocation }) => {
+export const AppOutlines:React.SFC<Props> = ({ hoveredElement, selectedElements, dropLocation }) => {
 
     return (
         <>

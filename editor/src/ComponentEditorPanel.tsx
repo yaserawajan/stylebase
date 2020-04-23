@@ -9,12 +9,14 @@ import { Wheel, WheelItem } from "./uiShell/controls/Wheel";
 import { ComponentViewEditorSection } from "./ComponentViewEditorSection";
 import { ComponentMetadataSection } from "./ComponentMetadataSection";
 import { IconLA } from "./uiShell/IconLA";
+import { PropEditorFactory } from "./doc/docModels";
 
 
 
 interface Props {
     component: string
     style: React.CSSProperties
+    propEditorFactory: PropEditorFactory
 }
 
 export const ComponentEditorPanel:React.SFC<Props> = (props) => {
@@ -43,7 +45,7 @@ export const ComponentEditorPanel:React.SFC<Props> = (props) => {
             
             <Wheel key="componentEditMode" value={componentEditMode}>
                 <WheelItem key="design" name="design">
-                    <ComponentViewEditorSection />
+                    <ComponentViewEditorSection propEditorFactory={props.propEditorFactory} />
                 </WheelItem>
                 <WheelItem key="metadata" name="metadata">
                     <ComponentMetadataSection />

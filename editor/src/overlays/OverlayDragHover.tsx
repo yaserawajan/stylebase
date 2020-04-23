@@ -1,6 +1,8 @@
 import "./overlay_drag_hover.css";
 
 import * as React from "react";
+import { classes } from "../uiShell/utils";
+import { IconLA } from "../uiShell/IconLA";
 
 interface Props {
     actualRect: DOMRect
@@ -13,9 +15,11 @@ export const OverlayDragHover:React.SFC<Props> = ({ displayRect, children, actio
 
     const { top, left, width, height } = displayRect;
     return (
-        <div key="drag-hover" className="overlay-drag-hover" style={{ top, left, width, height }}>
+        <div key="drag-hover" className={classes("overlay-drag-hover", actionType)} style={{ top, left, width, height }}>
         
-            {actionType}
+            {(actionType == "before") && <IconLA className="left" icon="arrow-left" />}
+
+            {(actionType == "after") && <IconLA className="right" icon="arrow-right" />}
 
             {children}
 

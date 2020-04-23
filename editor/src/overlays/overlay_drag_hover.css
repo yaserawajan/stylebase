@@ -1,36 +1,31 @@
 .overlay-drag-hover {
     display: flex;
-    justify-content: stretch;
-    align-items: stretch;
+    flex-direction: row;
+    transition: all 0.2 ease-in-out;
 }
 
-.overlay-drag-hover .drop-surface {
-    /* border: 2px solid rgba(255,255,255,0.2); */
-    display: flex;
-    color: rgba(255,255,255,0.5);
-    align-self: stretch;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+.overlay-drag-hover.before {
+    border-top: 5px solid rgba(255,255,255,0.5);
+    border-left: 5px solid rgba(255,255,255,0.5);
 }
 
-.overlay-drag-hover .drop-surface.before {
-    flex: 0 0 10%;
-    left: -20%;
+.overlay-drag-hover.after {
+    border-bottom: 5px solid rgba(255,255,255,0.5);
+    border-right: 5px solid rgba(255,255,255,0.5);
 }
 
-.overlay-drag-hover .drop-surface.in {
-    flex: 1 1 auto;
+.overlay-drag-hover > .left {
+    position: absolute;
+    left: -20px;
 }
 
-.overlay-drag-hover .drop-surface.after {
-    flex: 0 0 10%;
-    left: 20%;
+.overlay-drag-hover > .right {
+    position: absolute;
+    right: -20px;
 }
 
-.overlay-drag-hover .drop-surface.hover {
+.overlay-drag-hover.in {
     background-color: rgba(255,255,255,0.2);
-    color: #333;
 }
+
 

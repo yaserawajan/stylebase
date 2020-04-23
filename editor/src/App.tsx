@@ -6,9 +6,10 @@ import { Command } from "./uiShell/controls/Command";
 import { ComponentEditorPanel } from "./ComponentEditorPanel";
 import { useActivePanelState } from "./uiState/ideState";
 import { AppDocumentView } from "./AppDocumentView";
+import { PropEditorFactory } from "./doc/docModels";
 
 interface Props {
-    
+    propEditorFactory: PropEditorFactory
 }   
 
 export const App:React.SFC<Props> = (props) => {
@@ -32,7 +33,11 @@ export const App:React.SFC<Props> = (props) => {
             renderPanel={(panelName, rect) => {
                 switch (panelName) {
                     case "docNavigator": return <div style={rect} />;
-                    case "componentEditor": return <ComponentEditorPanel component="Component1" style={rect} />;
+                    case "componentEditor": return (
+                            <ComponentEditorPanel 
+                                propEditorFactory={props.propEditorFactory} 
+                                component="Component1" style={rect} />
+                        );
                     default: return <div style={rect} />;
                 }
             }}

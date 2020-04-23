@@ -112,6 +112,38 @@ const createId = (componentState: ComponentState, type: ComponentUri):[string,Co
 export const docUpdateReducer = (state:DocSnapshot<DocState, DocSelection>, action: DocAction)
     : DocSnapshot<DocState, DocSelection> => {
 
+    if (action.type == "ACTION_SET") {
+        let newState = state;
+        action.actions.forEach(a => {
+            newState = docUpdateReducer(newState, a);
+        })
+        return newState;
+    }
+
+    if (action.type == "ELEMENT_UPDATE") {
+        const componentState = state.data.components.byName[action.component];
+        return {
+            ...state,
+            data: {
+                ...state.data,
+                components: {
+                    ...state.data.components,
+                    byName: {
+                        ...state.data.components.byName,
+                        [action.component]: {
+                            ...componentState,
+                            elements: entitySetUpdate(componentState.elements, 
+                                action.elementId, 
+                                { 
+                                    props: action.props
+                                })
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     if (action.type == "ELEMENT_ADD") {
         
         const [ newId, componentState ] = createId(state.data.components.byName[action.location.component], action.elementType);

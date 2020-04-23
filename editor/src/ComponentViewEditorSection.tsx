@@ -1,4 +1,6 @@
 import * as React from "react";
+import { shallowEqual, useDispatch } from "react-redux";
+
 import { useActivePanelState } from "./uiState/ideState";
 import { TabSelector } from "./uiShell/controls/TabSelector";
 import { WheelItem, Wheel } from "./uiShell/controls/Wheel";
@@ -8,13 +10,12 @@ import { SelectedElementField } from "./SelectedElementField";
 import { ElementInsertSection } from "./ElementInsertSection";
 import { ElementUpdateSection } from "./ElementUpdateSection";
 import { ElementListSection } from "./ElementListSection";
-import { shallowEqual, useDispatch } from "react-redux";
 import { useDocEditorState } from "./docEditor/docEditorHooks";
 import { DocEditorState, selectionChanged } from "./docEditor/docEditorState";
-import { DocState, DocSelection } from "./doc/docModels";
+import { DocState, DocSelection, PropEditorFactory } from "./doc/docModels";
 
 interface Props {
-    
+    propEditorFactory: PropEditorFactory
 }
 
 export const ComponentViewEditorSection:React.SFC<Props> = (props) => {
@@ -63,7 +64,10 @@ export const ComponentViewEditorSection:React.SFC<Props> = (props) => {
                 </WheelItem>
 
                 <WheelItem name="edit" key="edit">
-                    <ElementUpdateSection />
+                    <ElementUpdateSection 
+                        renderPropEditor={props.propEditorFactory} 
+                        component={component} 
+                        elementIds={elements} />
                 </WheelItem>
 
                 <WheelItem name="elements" key="elements">
