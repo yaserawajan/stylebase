@@ -65,14 +65,12 @@ export const DocumentView:React.SFC<Props> = (props) => {
 
     // refresh rectangles on mount and zoom changes
     React.useEffect(() => {
-        //let all:PartialMutationRecord[] = [];
-        //marginRef.current.querySelectorAll("*").forEach(n => all.push({ target: n }));
         handleMutations(/*all*/);
     }, [props.zoom, props.rerenderSequence]);
 
     React.useEffect(() => {
         let mo = new MutationObserver(() => setTimeout(handleMutations, 0));
-        mo.observe(marginRef.current, { childList: true, subtree: true });
+        mo.observe(marginRef.current, { childList: true, subtree: true, characterData: true, attributes: true });
         return () => mo.disconnect();
     }, []);
 

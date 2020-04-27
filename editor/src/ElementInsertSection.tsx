@@ -27,14 +27,14 @@ export const ElementInsertSection:React.SFC<Props> = (props) => {
                     placeholder="Filter ..." />
             </div> 
 
-            <div key="body" className="panel-body bg-dotted stretch">
+            <div key="body" className="panel-body bg-dotted ">
                 {
                     Object.keys(libs.byName).map(libName => {
                         const lib = libs.byName[libName];
                         const editorExt = editorExtensions.byName[libName]
                         return (
-                            <div key={libName} className="section">
-                                {Object.keys(lib.components).map(compName => {
+                            
+                                Object.keys(lib.components).map(compName => {
 
                                     const component = (editorExt? editorExt.componentCards[compName]: undefined) || defaultRenderer;
                                     const defaultProps = lib.components[compName].defaultProps;
@@ -43,13 +43,14 @@ export const ElementInsertSection:React.SFC<Props> = (props) => {
                                         defaultProps={defaultProps}
                                         componentUri={{ lib: libName, component: compName }}
                                         renderComponent={component} />;
-                                })} 
-                            </div>
+                                })
+                            
                         );
                     }) 
                 }
-            
+                <div className="stretch" />
             </div>
+            
         </>
     );
 }

@@ -20,12 +20,6 @@ export type ArrayDataType = {
     itemType: PropMetadata
 }
 
-
-export type ColorDataType = {
-    type: "color"
-
-}
-
 export type TextDataType = {
     type: "text"
 
@@ -55,6 +49,12 @@ export type ElementRefDataType = {
     type: "elementRef"
 }
 
+export type EntityRefDataType = {
+    type: "entityRef"
+    dataSourceUri?: string
+    inlineData?: any[]
+}
+
 export type PropMetadata = 
     AnyDataType | 
     MapDataType | 
@@ -63,6 +63,7 @@ export type PropMetadata =
     TextDataType |
     NumberDataType |
     MediaDataType |
+    EntityRefDataType |
     ElementRefDataType | { type: string, lib: string };
 
 export type PropMapMetadata = {

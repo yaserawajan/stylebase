@@ -1,6 +1,7 @@
 import * as React from "react";
 import { ComponentLibEditorManifest } from "../doc/docLibModels";
 import { Box } from "./box/Box";
+import { Text } from "./Text";
 import { ColorPropEditor } from "./propEditors/color/ColorPropEditor";
 
 const propEditors:{[k:string]: React.ComponentType<any>} = {
@@ -17,7 +18,16 @@ export const boxLibEditorManifest:ComponentLibEditorManifest = {
                         minHeight: 30,
                         width: "100%",
                         backgroundColor: "white"
-                    }} />
+                    }} />,
+
+        Text: () => <div style={{
+                        border: "1px dashed #333",
+                        fontFamily: "monospace",
+                        fontSize: 20,
+                        width: "100%",
+                        lineHeight: "30px",
+                        textAlign: "center"
+                    }}>TEXT</div>
     },
 
     propEditorFactory: (renderProps) => {
