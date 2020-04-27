@@ -2,7 +2,6 @@
 
 export type AnyDataType = {
     type: "any"
-
 }
 
 export type MapPropDesc = PropMetadata & {
@@ -21,10 +20,6 @@ export type ArrayDataType = {
     itemType: PropMetadata
 }
 
-export type LengthDataType = {
-    type: "length"
-
-}
 
 export type ColorDataType = {
     type: "color"
@@ -43,15 +38,17 @@ export type BooleanDataType = {
 
 export type NumberDataType = {
     type: "number"
-
+    min?: number
+    max?: number
+    step?: number
+    stepExclusive?: boolean
+    precision?: number
 }
+
+
 
 export type MediaDataType = {
     type: "media"
-}
-
-export type TemplateDataType = {
-    type: "template"
 }
 
 export type ElementRefDataType = {
@@ -61,15 +58,12 @@ export type ElementRefDataType = {
 export type PropMetadata = 
     AnyDataType | 
     MapDataType | 
-    ArrayDataType | 
-    LengthDataType | 
-    ColorDataType | 
+    ArrayDataType |  
     BooleanDataType |
     TextDataType |
     NumberDataType |
     MediaDataType |
-    TemplateDataType | 
-    ElementRefDataType;
+    ElementRefDataType | { type: string, lib: string };
 
 export type PropMapMetadata = {
     [propName:string]: MapPropDesc
@@ -126,6 +120,7 @@ export type DocFormat = {
 
 
 // STATE
+
 
 
 import { EntitySet } from "../entitySet/entitySetModels"
@@ -208,13 +203,16 @@ export type DocActionSet = {
     actions: DocAction[]
 }
 
-export type DocAction = ElementAddAction | ElementMoveAction | ElementRemoveAction | ElementUpdateAction | DocActionSet;
+export type DocAction = ElementAddAction | ElementMoveAction | ElementRemoveAction | ElementUpdateAction | DocActionSet
 
 export type PropEditorRenderProps = {
     renderPropEditor: PropEditorFactory 
+    path: string[]
     propType: PropMetadata
     propName: string
+    compact: boolean
     value: any
+    
     onChange: (propName:string, value:any) => void
 }
 

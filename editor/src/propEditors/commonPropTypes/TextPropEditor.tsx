@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { PropEditorRenderProps } from "../../doc/docModels";
-import { InputGroup } from "../InputGroup";
+import { InputBar } from "../InputBar";
 import { SimpleProp } from "../SimpleProp";
 import { Input } from "../Input";
 
@@ -16,10 +16,10 @@ export const TextPropEditor:React.SFC<Props> = (props) => {
     }
 
     return (
-        <SimpleProp name={props.propName} key={props.propName} assigned={!!props.value}>
-            <InputGroup>
+        <SimpleProp name={props.propName} key={props.propName} assigned={!!props.value} compact={props.compact}>
+            <InputBar>
                 <Input value={props.value} onChange={handleChange} />
-            </InputGroup>
+            </InputBar>
         </SimpleProp>
     );
 }

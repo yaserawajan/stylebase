@@ -43,11 +43,11 @@ export const ComponentEditorPanel:React.SFC<Props> = (props) => {
                 </TabSelector>
             </div>
             
-            <Wheel key="componentEditMode" value={componentEditMode}>
-                <WheelItem key="design" name="design">
+            <Wheel key="componentEditMode" value={componentEditMode} className="stretch">
+                <WheelItem key="design" name="design" className="stretch">
                     <ComponentViewEditorSection propEditorFactory={props.propEditorFactory} />
                 </WheelItem>
-                <WheelItem key="metadata" name="metadata">
+                <WheelItem key="metadata" name="metadata" className="stretch">
                     <ComponentMetadataSection />
                 </WheelItem>
             </Wheel>

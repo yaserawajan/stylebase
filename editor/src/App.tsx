@@ -1,12 +1,11 @@
 import * as React from "react";
 
 import { Layout } from "./uiShell/Layout";
-import { Section } from "./uiShell/controls/Section";
-import { Command } from "./uiShell/controls/Command";
 import { ComponentEditorPanel } from "./ComponentEditorPanel";
 import { useActivePanelState } from "./uiState/ideState";
 import { AppDocumentView } from "./AppDocumentView";
 import { PropEditorFactory } from "./doc/docModels";
+import { AppToolbarEdit } from "./AppToolbarEdit";
 
 interface Props {
     propEditorFactory: PropEditorFactory
@@ -24,6 +23,7 @@ export const App:React.SFC<Props> = (props) => {
         <Layout 
             activeLeftPanel={leftPanel}
             activeRightPanel={rightPanel}
+            floatingPanels={[]}
             leftPanels={[ "docNavigator" ]}
             rightPanels={[ "componentEditor" ]}
             panelSpecs={{
@@ -47,14 +47,7 @@ export const App:React.SFC<Props> = (props) => {
                     <>
                         <div key="d1" className="stretch" />
                         <div key="d2" className="divider" />
-                        <Section>
-                            <Command key="undo" name="undo" label="Undo" icon="undo" />
-                            <Command key="redo" name="redo" label="Redo" icon="redo" />
-                            <Command key="cut" name="cut" label="Cut" icon="cut" />
-                            <Command key="copy" name="copy" label="Copy" icon="copy" />
-                            <Command key="paste" name="paste" label="Paste" icon="paste" />
-                            <Command key="delete" name="delete" label="Delete" icon="trash" />
-                        </Section>
+                        <AppToolbarEdit />
                     </>
                 )}
 

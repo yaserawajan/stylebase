@@ -5,11 +5,6 @@ import "./panel-l2.css";
 import "./panel-l3.css";
 import { classes } from "../utils";
 
-const cssOpen:React.CSSProperties = {
-    overflowX: "hidden",
-    overflowY: "scroll",
-} 
-
 interface Props {
     style: React.CSSProperties
     
@@ -17,12 +12,8 @@ interface Props {
 
 export const Panel:React.SFC<Props> = (props) => {
 
-    const computedCss = {
-        ...props.style, 
-        ...cssOpen
-    }
     return (
-        <div className={classes("panel")} style={computedCss}>
+        <div className={classes("panel")} style={props.style}>
             {props.children}
         </div>
     );

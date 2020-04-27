@@ -27,7 +27,7 @@ export const ElementInsertSection:React.SFC<Props> = (props) => {
                     placeholder="Filter ..." />
             </div> 
 
-            <div key="body" className="panel-body bg-dotted">
+            <div key="body" className="panel-body bg-dotted stretch">
                 {
                     Object.keys(libs.byName).map(libName => {
                         const lib = libs.byName[libName];

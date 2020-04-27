@@ -5,12 +5,20 @@ import { classes } from "../utils";
 
 type Orientation = "x" | "y" | "both"
 
+type WheelContext = {
+    value: string
+}
+
+const wheelContext = React.createContext<WheelContext>({
+    value: undefined
+})
+
 interface Props {
     orientation?: Orientation
     className?: string
     style?: React.CSSProperties
-    allowScrolling?: boolean
-    visibleItems?: number
+    //allowScrolling?: boolean
+    //visibleItems?: number
     value?: string
     
 }
@@ -32,31 +40,59 @@ const findElement = (parent:HTMLElement, name: string):HTMLElement => {
 
 export const Wheel:React.SFC<Props> = (props) => {
 
-    const ref = React.useRef<HTMLDivElement>(null);
+    //const ref = React.useRef<HTMLDivElement>(null);
     
-    React.useEffect(() => {
-        const el = findElement(ref.current, props.value);
-        ref.current.style.left = `${-el.offsetLeft}px`;
-    }, [props.value, props.children]);
+    // React.useEffect(() => {
+    //     const el = findElement(ref.current, props.value);
+    //     ref.current.style.left = `${-el.offsetLeft}px`;
+    // }, [props.value, props.children]);
+
+
 
     return (
-        <div key="d" className={classes("wheel", props.className)} style={props.style}>
-            <div ref={ref} className={classes("wheel-sheet", props.orientation)}>
+        <wheelContext.Provider value={{ value: props.value }}>
+            
+                
                 <WheelItem name="" key="__default" />
+
                 {props.children}
-            </div>
-        </div>
+                
+            
+        </wheelContext.Provider>
     );
 }
 
-interface WheelProps {
+// export const Wheel:React.SFC<Props> = (props) => {
+
+//     const ref = React.useRef<HTMLDivElement>(null);
+    
+//     React.useEffect(() => {
+//         const el = findElement(ref.current, props.value);
+//         ref.current.style.left = `${-el.offsetLeft}px`;
+//     }, [props.value, props.children]);
+
+//     return (
+//         <div key="d" className={classes("wheel", props.className)} style={props.style}>
+//             <div ref={ref} className={classes("wheel-sheet", props.orientation)}>
+//                 <WheelItem name="" key="__default" />
+//                 {props.children}
+//             </div>
+//         </div>
+//     );
+// }
+
+interface WheelItemProps {
     name: string
+    className?: string
+    style?: React.CSSProperties
 }
 
-export const WheelItem:React.SFC<WheelProps> = ({ name, children }) => {
+export const WheelItem:React.SFC<WheelItemProps> = ({ name, children, className, style }) => {
 
-    return (
-        <div className="wheel-item" data-name={name} key="d">{children}</div>
-    );
+    const { value } = React.useContext(wheelContext);
+    const selected = value === name;
+    return selected
+        ? <>{children}</>
+        : null
 };
 

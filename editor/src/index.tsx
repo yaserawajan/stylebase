@@ -11,7 +11,7 @@ import { enableBatching } from "redux-batched-actions";
 
 import { createIdeReducer, IDE } from "./uiState/ideState";
 import { createEditorReducer } from "./docEditor/docEditorState";
-import { DocState, DocSelection, DocAction, PropMetadata, PropEditorRenderProps, PropEditorFactory } from "./doc/docModels";
+import { DocState, DocSelection, DocAction } from "./doc/docModels";
 import { App } from "./App";
 import { createDefaultTemplate } from "./doc/templates/defaultTemplate";
 import { defaultSelector } from "./doc/docDefaultSelector";
@@ -21,16 +21,14 @@ import { boxLibManifest } from "./componentCatalog/boxLibManifest";
 import { importDocState } from "./doc/docImportUtils";
 import { DOC_LIB, createDocLibReducer } from "./doc/docLibReducer";
 import { boxLibEditorManifest } from "./componentCatalog/boxLibEditorManifest";
-import { MapPropEditor } from "./propEditors/commonPropTypes/MapPropEditor";
-import { TextPropEditor } from "./propEditors/commonPropTypes/TextPropEditor";
-import { NumberPropEditor } from "./propEditors/commonPropTypes/NumberPropEditor";
+import { createPropEditorFactory } from "./doc/propEditorUtils";
 
+const libs = { "boxes": boxLibManifest };
+const editorLibs = { "boxes": boxLibEditorManifest };
 
 const store = createStore(enableBatching(combineReducers({
 
-    [DOC_LIB]: createDocLibReducer(
-        { "boxes": boxLibManifest }, 
-        { "boxes": boxLibEditorManifest }),
+    [DOC_LIB]: createDocLibReducer(libs, editorLibs),
     
     [IDE]: createIdeReducer({
         "right": "componentEditor",
@@ -44,21 +42,8 @@ const store = createStore(enableBatching(combineReducers({
         updateReducer: docUpdateReducer
     }) 
 }))); 
- 
 
-const propEditorFactory:PropEditorFactory = (renderProps) => {
-    if (renderProps.propType.type == "map") {
-        return <MapPropEditor {...renderProps} />;
-    }
-    else if (renderProps.propType.type == "text") {
-        return <TextPropEditor {...renderProps} />;
-    }
-    else if (renderProps.propType.type == "number") {
-        return <NumberPropEditor {...renderProps} />;
-    }
-
-    return null;
-}
+const propEditorFactory = createPropEditorFactory(libs, [ boxLibEditorManifest ]);
 
 ReactDOM.render(
     <Provider store={store}>

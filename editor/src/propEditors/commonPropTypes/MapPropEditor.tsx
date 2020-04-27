@@ -14,17 +14,19 @@ export const MapPropEditor:React.SFC<Props> = (props) => {
 
     const mapType = props.propType as MapDataType;
 
-    const handlePropChange = (propName: string, propValue: any) => {
+    const handlePropChange = React.useCallback((propName: string, propValue: any) => {
+        
         props.onChange(props.propName, {
             ...value,
             [propName]: propValue
         })
-    }
+    }, [value]);
 
     return (
         <PropFolder 
             assigned={props.value && Object.keys(props.value).length > 0}
             name={props.propName} 
+            indent
             renderSummary={({ }) => (<div />)}>
             
             {Object.keys(mapType.properties).map(propName => {
@@ -32,6 +34,7 @@ export const MapPropEditor:React.SFC<Props> = (props) => {
                 return (
                     <PropEditor {...props} 
                         key={propName} 
+                        path={[...props.path, propName ]}
                         propType={desc} 
                         propName={propName}
                         value={value[propName]} 

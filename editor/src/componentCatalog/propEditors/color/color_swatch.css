@@ -1,0 +1,23 @@
+.color-swatch {
+    /* border: 1px solid #ccc; */
+    
+    /* overflow: hidden; */
+    
+    background-color: #ffffff;
+    background-image: url("https://www.transparenttextures.com/patterns/60-lines.png");
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.color-swatch > .inner {
+    background-clip: padding-box;
+    /* border: 1px solid white; */
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+}
+

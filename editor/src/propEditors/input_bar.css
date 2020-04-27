@@ -1,0 +1,36 @@
+.input-bar {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    line-height: 30px;
+}
+
+
+
+.input-bar > :first-child {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.input-bar > :last-child {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    
+}
+
+.input-bar:only-child {
+    border-bottom: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.input-bar > * + *, .input-bar > * + .input {
+    border-left: 1px solid #eee;
+}
+
+.input-bar > :only-child {
+    flex: 1 1 auto;
+}
+
+.input-bar.error > .input {
+    color: red;
+}

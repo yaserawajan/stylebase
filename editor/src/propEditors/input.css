@@ -1,0 +1,13 @@
+.input {
+    font-size: 12px;
+    font-weight: 400;
+    background: none;
+    border: none;
+    outline: none;
+    padding: 0 10px;
+}
+
+
+.input:only-child {
+    width: 100%;
+}

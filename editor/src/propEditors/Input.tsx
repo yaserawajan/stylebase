@@ -1,3 +1,5 @@
+import "./input.css";
+
 import * as React from "react";
 import { classes } from "../uiShell/utils";
 

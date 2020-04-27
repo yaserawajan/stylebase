@@ -1,0 +1,29 @@
+.simple-prop {
+    padding: 10px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    border-bottom: 1px solid white;
+    border-left: 1px solid white;
+}
+
+.simple-prop.one-line {
+    flex-direction: row;
+    justify-content: space-between;
+    line-height: 30px;
+}
+
+.simple-prop > .prop-title {
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.simple-prop.one-line > .prop-title {
+    
+    margin-bottom: 0;
+}
+
+.simple-prop.assigned > .prop-title {
+    font-weight: bold;
+}

@@ -1,4 +1,4 @@
-import { PropsMap, PropMapMetadata, ComponentUri } from "./docModels"
+import { PropsMap, PropMapMetadata, ComponentUri, PropMetadata, PropEditorFactory } from "./docModels"
 import { EntitySet } from "../entitySet/entitySetModels"
 
 
@@ -10,13 +10,14 @@ export type ComponentManifest = {
 
 export type ComponentLibManifest = {
     components: { [name:string]: ComponentManifest }
-
+    types: { [name:string]: PropMetadata }
 }
 
 type RenderMap = { [k:string]: (componentUri:ComponentUri) => JSX.Element }
 
 export type ComponentLibEditorManifest = {
     componentCards: RenderMap
+    propEditorFactory: PropEditorFactory
 }
 
 export type DocLibCollection = {[k:string]:ComponentLibManifest}

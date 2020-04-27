@@ -4,11 +4,17 @@ import { PropMapMetadata } from "../doc/docModels";
 import { cssProps } from "./cssProps";
 
 const boxProps:PropMapMetadata = {
+
     style: cssProps,
+
     className: {
         required: false,
-        type: "text"
+        type: "array",
+        itemType: {
+            type: "text"
+        }
     },
+    
     children: {
         type: "array",
         required: false,
@@ -32,5 +38,34 @@ export const boxLibManifest:ComponentLibManifest = {
                 }
             }
         }  
+    },
+
+    types: {
+
+        opacity: {
+            type: "number",
+            min: 0,
+            max: 1,
+            step: 0.05,
+            precision: 2
+        },
+
+        rgbComponent: {
+            type: "number",
+            min: 0,
+            max: 255,
+            step: 1,
+            precision: 0
+        },
+
+        color: {
+            type: "map",
+            properties: {
+                r: { type: "rgbComponent", lib: "boxes" },
+                g: { type: "rgbComponent", lib: "boxes" },
+                b: { type: "rgbComponent", lib: "boxes" },
+                a: { type: "opacity", lib: "boxes" }
+            }
+        }
     }
 } 

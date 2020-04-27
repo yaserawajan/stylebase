@@ -84,7 +84,7 @@ input {
 
 .stretch {
     flex: 1 1 auto;
-    max-width: 100%;
+    /* max-width: 100%; */
 }
 
 .p1 { padding: 5px; }
@@ -132,8 +132,10 @@ input {
 }
 
 .control {
-    position: relative
-
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
 }
 
 .control-label {
@@ -155,10 +157,16 @@ input {
     display:block;
 }
 
+.control-input {
+    display: flex;
+    flex-direction: row;
+}
+
 .control-input-value {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    flex:1 1 auto;
     /* padding: 0 0.2em; */
 }
 

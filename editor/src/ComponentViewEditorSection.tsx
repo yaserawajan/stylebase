@@ -35,7 +35,7 @@ export const ComponentViewEditorSection:React.SFC<Props> = (props) => {
     }
 
     return (
-        <div className="column">
+        <>
             <div className="l2 row" key="l2">
                 <TabSelector key="tabs" value={editMode} onChange={setEditMode}>
 
@@ -57,23 +57,23 @@ export const ComponentViewEditorSection:React.SFC<Props> = (props) => {
                 </TabSelector> 
             </div>
             
-            <Wheel className="stretch" orientation="x" value={editMode}>
+            <Wheel  orientation="x" value={editMode} key="editMode">
                 
-                <WheelItem name="create" key="create">
+                <WheelItem name="create" key="create" className="stretch">
                     <ElementInsertSection />
                 </WheelItem>
 
-                <WheelItem name="edit" key="edit">
+                <WheelItem name="edit" key="edit" className="stretch">
                     <ElementUpdateSection 
                         renderPropEditor={props.propEditorFactory} 
                         component={component} 
                         elementIds={elements} />
                 </WheelItem>
 
-                <WheelItem name="elements" key="elements">
+                <WheelItem name="elements" key="elements" className="stretch">
                     <ElementListSection />
                 </WheelItem>
             </Wheel>
-        </div>
+        </>
     );
 }

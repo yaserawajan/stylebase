@@ -9,6 +9,8 @@ import { Section } from "./controls/Section";
 import { Command } from "./controls/Command";
 import { TabSelector } from "./controls/TabSelector";
 import { Tab } from "./controls/Tab";
+import { LayoutCarousel } from "./LayoutCarousel";
+import { LayoutCarouselItem } from "./LayoutCarouselItem";
  
 
 const navBarCss:React.CSSProperties = {
@@ -38,13 +40,18 @@ export type PanelSpecs = {
 }
 
 interface Props {
-    activeLeftPanel: string
+    
+    
+    floatingPanels: string[]
     
     leftPanels: string[]
+    rightPanels: string[]
+    activeLeftPanel: string
+
     activeRightPanel: string
     
-    rightPanels: string[]
     panelSpecs: PanelSpecs
+    
     documentTitle?: string
 
     renderLogo: () => React.ReactNode
@@ -58,6 +65,10 @@ interface Props {
 
 export const Layout:React.SFC<Props> = (props) => {
     
+    const floatingPanels = props.floatingPanels || [];
+
+
+
     return (
         <>
             <NavBar key="nb" style={navBarCss}>
@@ -90,9 +101,7 @@ export const Layout:React.SFC<Props> = (props) => {
                             </Tab> 
                     ))}
                 </TabSelector>
-                
-                
-                
+
             </NavBar>
 
             {props.activeLeftPanel && props.renderPanel(props.activeLeftPanel, {
@@ -113,7 +122,17 @@ export const Layout:React.SFC<Props> = (props) => {
                 position: "fixed" 
             })}
 
-            
+            {(floatingPanels.length > 0) &&
+                <LayoutCarousel>
+                    {floatingPanels.map(panelName => 
+                        <LayoutCarouselItem> 
+                            {props.renderPanel(panelName, {
+                                position: "relative",
+                                zIndex: 1
+                            })}
+                        </LayoutCarouselItem>)}
+                </LayoutCarousel>
+            }
             <Toolbar key="ct" top={50} 
                 left={props.activeLeftPanel? 270: 0} 
                 right={props.activeRightPanel? 270: 0} 

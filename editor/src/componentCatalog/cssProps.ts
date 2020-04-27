@@ -5,14 +5,18 @@ import { PropMetadata } from "../doc/docModels";
 export const cssProps:PropMetadata = {
     type: "map",
     properties: {
-        "backgroundColor": {
-            type: "color"
+        backgroundColor: {
+            type: "color",
+            lib: "boxes"
         },
-        "color": {
-            type: "color"
+        color: {
+            type: "color",
+            lib: "boxes"
         },
         opacity: {
-            type: "number"
-        }
+            type: "opacity",
+            lib: "boxes"
+        },
+        
     }
 }

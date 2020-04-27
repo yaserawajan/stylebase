@@ -121,7 +121,9 @@ export const docUpdateReducer = (state:DocSnapshot<DocState, DocSelection>, acti
     }
 
     if (action.type == "ELEMENT_UPDATE") {
+        
         const componentState = state.data.components.byName[action.component];
+        const oldProps = componentState.elements.byName[action.elementId].props;
         return {
             ...state,
             data: {
@@ -135,7 +137,10 @@ export const docUpdateReducer = (state:DocSnapshot<DocState, DocSelection>, acti
                             elements: entitySetUpdate(componentState.elements, 
                                 action.elementId, 
                                 { 
-                                    props: action.props
+                                    props: {
+                                        ...oldProps,
+                                        ...action.props
+                                    }
                                 })
                         }
                     }

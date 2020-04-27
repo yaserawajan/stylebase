@@ -29,9 +29,9 @@ export const DropDownList:React.SFC<Props> = (props) => {
     }, [props.value, props.allValues]);
 
     return (
-        <div style={props.style} className={classes("control", "column", props.className)} >
+        <div style={props.style} className={classes("control", props.className)} >
                 <div className="control-label"><span>{props.label}</span></div>
-                    <div className="control-input row">
+                    <div className="control-input">
                         <div key="prev" className="control-icon"><IconLA onClick={handlePrevious}  icon="angle-left" /></div>
                         <Wheel orientation="x" value={props.value} className="stretch">
                             {props.allValues.map(v => (

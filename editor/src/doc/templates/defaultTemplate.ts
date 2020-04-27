@@ -25,7 +25,7 @@ const docInit:DocFormat = {
                     type: { component: "Box", lib: "boxes" },
                     props: {
                         style: {
-                            backgroundColor: "lightgreen",
+                            backgroundColor: "rgba(160, 128, 64, 0.3)",
                             color: "white",
                             padding: 30
                         },

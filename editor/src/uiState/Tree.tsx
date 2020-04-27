@@ -2,8 +2,8 @@
 
 import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectIde } from "./uiState/ideState";
-import { toggled } from "./uiState/toggleState";
+import { selectIde } from "./ideState";
+import { toggled } from "./toggleState";
 
 interface TreeContext {
     toggleExpand: (path:string) => void

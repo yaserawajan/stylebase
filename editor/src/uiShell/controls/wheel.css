@@ -1,15 +1,20 @@
 
 .wheel {
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
     position: relative;
+
     /*display: flex;*/
 }
+
+
+
 
 .wheel-sheet {
     display: flex;
     position: relative;
     flex-wrap: nowrap;
-    align-items: stretch;
+    align-items: flex-start;
     justify-content: flex-start;
     
     overflow: visible;
@@ -18,9 +23,20 @@
 }
 
 .wheel-item { 
-    flex: 0 0 100%; 
+    /*flex: 0 0 100%; */
+    
     min-width: 0;
-    overflow: hidden;
+    width: 100%;
+    display: none;
+    overflow-y: scroll;
+}
+
+.wheel-item > :first-child {
+    width: 100%;
+}
+
+.wheel-item.selected {
+    display: block
 }
 
 .wheel-sheet.x { flex-direction: row; }
