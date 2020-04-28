@@ -2,13 +2,13 @@ import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Title } from "./uiShell/controls/Title";
-import { useDocElementState } from "./doc/docHooks";
-import { selectComponentMetadata } from "./doc/docLibSelectors";
-import { PropEditor } from "./propEditors/PropEditor";
-import { Tree } from "./uiState/Tree";
-import { PropEditorFactory } from "./doc/docModels";
-import { docElementUpdate, docActionSet } from "./doc/docActions";
-import { actionUpdate } from "./docEditor/docEditorState";
+import { useDocElementState } from "./core/doc/docHooks";
+import { selectComponentMetadata } from "./core/doc/docLibSelectors";
+import { PropEditor } from "./core/propEditors/PropEditor";
+import { Tree } from "./core/uiState/Tree";
+import { PropEditorFactory } from "./core/doc/docModels";
+import { docElementUpdate, docActionSet } from "./core/doc/docActions";
+import { actionUpdate } from "./patterns/docEditor/docEditorState";
 
 interface Props {
     renderPropEditor: PropEditorFactory

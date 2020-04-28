@@ -1,9 +1,9 @@
 import * as React from "react";
 
 import { SearchField } from "./uiShell/controls/SearchField";
-import { ComponentUri } from "./doc/docModels";
+import { ComponentUri } from "./core/doc/docModels";
 import { ComponentCard } from "./ComponentCard";
-import { useDocLibState } from "./doc/docLibHooks";
+import { useDocLibState } from "./core/doc/docLibHooks";
 
 interface Props {
     
@@ -12,9 +12,7 @@ interface Props {
 const defaultRenderer = (componentUri: ComponentUri) => <div />;
 
 export const ElementInsertSection:React.SFC<Props> = (props) => {
-
     const { libs, editorExtensions } = useDocLibState(s => s);
-    
     const [value, setValue] = React.useState("");
 
     return (
@@ -37,10 +35,9 @@ export const ElementInsertSection:React.SFC<Props> = (props) => {
                                 Object.keys(lib.components).map(compName => {
 
                                     const component = (editorExt? editorExt.componentCards[compName]: undefined) || defaultRenderer;
-                                    const defaultProps = lib.components[compName].defaultProps;
                                     return <ComponentCard 
                                         key={compName} 
-                                        defaultProps={defaultProps}
+                                        defaultProps={{}}
                                         componentUri={{ lib: libName, component: compName }}
                                         renderComponent={component} />;
                                 })

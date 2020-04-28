@@ -3,13 +3,13 @@ import { Panel } from "./uiShell/panel/Panel";
 import { Title } from "./uiShell/controls/Title";
 import { TabSelector } from "./uiShell/controls/TabSelector";
 import { Tab } from "./uiShell/controls/Tab";
-import { useActivePanelState } from "./uiState/ideState";
+import { useActivePanelState } from "./core/uiState/ideState";
 import { Command } from "./uiShell/controls/Command";
 import { Wheel, WheelItem } from "./uiShell/controls/Wheel";
 import { ComponentViewEditorSection } from "./ComponentViewEditorSection";
 import { ComponentMetadataSection } from "./ComponentMetadataSection";
 import { IconLA } from "./uiShell/IconLA";
-import { PropEditorFactory } from "./doc/docModels";
+import { PropEditorFactory } from "./core/doc/docModels";
 
 
 
@@ -51,7 +51,7 @@ export const ComponentEditorPanel:React.SFC<Props> = (props) => {
                     <ComponentMetadataSection />
                 </WheelItem>
             </Wheel>
-
+ 
         </Panel>
     );
 }

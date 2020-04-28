@@ -2,18 +2,18 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {  batchActions } from "redux-batched-actions";
 
-import { ComponentFactory, DocAction, ElementAddAction, ElementLocation, ElementMoveAction, PropMetadata } from "./doc/docModels";
-import { useDocElementState } from "./doc/docHooks";
-import { ViewElement } from "./canvas/ViewElement";
-import { useDraggableAsset } from "./uiState/useDraggableAsset";
-import { useViewDropTarget } from "./uiState/useViewDropTarget";
+import { ComponentFactory, DocAction, ElementAddAction, ElementLocation, ElementMoveAction, PropMetadata } from "./core/doc/docModels";
+import { useDocElementState } from "./core/doc/docHooks";
+import { ViewElement } from "./viewport/ViewElement";
+import { useDraggableAsset } from "./core/uiState/useDraggableAsset";
+import { useViewDropTarget } from "./core/uiState/useViewDropTarget";
 
-import { dragEnd } from "./uiState/ideState";
-import { actionUpdate } from "./docEditor/docEditorState";
-import { useDocLibState } from "./doc/docLibHooks";
-import { optionChanged } from "./uiState/optionState";
-import { selectComponentMetadata } from "./doc/docLibSelectors";
-
+import { dragEnd } from "./core/uiState/ideState";
+import { actionUpdate } from "./patterns/docEditor/docEditorState";
+import { optionChanged } from "./core/uiState/optionState";
+import { selectComponentMetadata } from "./core/doc/docLibSelectors";
+import { ErrorShield } from "./ErrorShield";
+ 
 const combineRefs = (...refs:any[]) => (value:any) => {
     refs.forEach(ref => {
         if (!ref) return;
@@ -126,7 +126,7 @@ export const AppElement = (props:Props) => {
 
             dispatch(batchActions([actionUpdate(docAction), optionChanged("editMode", "edit", false)]));
 
-
+            
         }
     });
 
@@ -139,19 +139,21 @@ export const AppElement = (props:Props) => {
             onClick={props.onClick} 
             onHover={props.onHover}>
             {({ ref }) => (
-                <C {...otherProps} 
-                    ref={combineRefs(ref, drag, drop)} 
-                    children={children.map((child:string) => (
-                        <AppElement 
-                            key={child}
-                            component={props.component}
-                            onClick={props.onClick}
-                            onHover={props.onHover}
-                            elementId={child} 
-                            parentElementId={props.elementId}
-                            parentMetadata={metadata}
-                            componentFactory={props.componentFactory} />
-                    ))} />
+                <ErrorShield>
+                    <C {...otherProps} 
+                        ref={combineRefs(ref, drag, drop)} 
+                        children={children.map((child:string) => (
+                            <AppElement 
+                                key={child}
+                                component={props.component}
+                                onClick={props.onClick}
+                                onHover={props.onHover}
+                                elementId={child} 
+                                parentElementId={props.elementId}
+                                parentMetadata={metadata}
+                                componentFactory={props.componentFactory} />
+                        ))} />
+                </ErrorShield>
             )}
         </ViewElement>
         );

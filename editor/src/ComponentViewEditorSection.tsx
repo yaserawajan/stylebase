@@ -1,7 +1,7 @@
 import * as React from "react";
 import { shallowEqual, useDispatch } from "react-redux";
 
-import { useActivePanelState } from "./uiState/ideState";
+import { useActivePanelState } from "./core/uiState/ideState";
 import { TabSelector } from "./uiShell/controls/TabSelector";
 import { WheelItem, Wheel } from "./uiShell/controls/Wheel";
 import { Tab } from "./uiShell/controls/Tab";
@@ -10,9 +10,9 @@ import { SelectedElementField } from "./SelectedElementField";
 import { ElementInsertSection } from "./ElementInsertSection";
 import { ElementUpdateSection } from "./ElementUpdateSection";
 import { ElementListSection } from "./ElementListSection";
-import { useDocEditorState } from "./docEditor/docEditorHooks";
-import { DocEditorState, selectionChanged } from "./docEditor/docEditorState";
-import { DocState, DocSelection, PropEditorFactory } from "./doc/docModels";
+import { useDocEditorState } from "./patterns/docEditor/docEditorHooks";
+import { DocEditorState, selectionChanged } from "./patterns/docEditor/docEditorState";
+import { DocState, DocSelection, PropEditorFactory } from "./core/doc/docModels";
 
 interface Props {
     propEditorFactory: PropEditorFactory

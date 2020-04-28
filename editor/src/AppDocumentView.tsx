@@ -2,14 +2,14 @@ import * as React from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
 import { ViewLayerSpecs } from "./uiShell/Layout";
-import { Viewport } from "./canvas/Viewport";
-import { ElementId } from "./canvas/viewElementIdentification";
-import { selectionChanged, DocEditorState } from "./docEditor/docEditorState";
-import { useZoomState, useHoverState, selectIde } from "./uiState/ideState";
-import { useDocSelectionState, useDocEditorState } from "./docEditor/docEditorHooks";
-import { DocSelection, DocState } from "./doc/docModels";
+import { Viewport } from "./viewport/Viewport";
+import { ElementId } from "./viewport/viewElementIdentification";
+import { selectionChanged, DocEditorState } from "./patterns/docEditor/docEditorState";
+import { useZoomState, useHoverState, selectIde } from "./core/uiState/ideState";
+import { useDocSelectionState, useDocEditorState } from "./patterns/docEditor/docEditorHooks";
+import { DocSelection, DocState } from "./core/doc/docModels";
 import { AppElement } from "./AppElement";
-import { useComponentFactory } from "./doc/docLibHooks";
+import { useComponentFactory } from "./core/doc/docLibHooks";
 import { AppOutlines } from "./AppOutlines";
 
 

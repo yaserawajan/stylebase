@@ -2,9 +2,9 @@ import * as React from "react";
 
 import { Layout } from "./uiShell/Layout";
 import { ComponentEditorPanel } from "./ComponentEditorPanel";
-import { useActivePanelState } from "./uiState/ideState";
+import { useActivePanelState } from "./core/uiState/ideState";
 import { AppDocumentView } from "./AppDocumentView";
-import { PropEditorFactory } from "./doc/docModels";
+import { PropEditorFactory } from "./core/doc/docModels";
 import { AppToolbarEdit } from "./AppToolbarEdit";
 
 interface Props {

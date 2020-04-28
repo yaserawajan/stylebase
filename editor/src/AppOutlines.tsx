@@ -1,9 +1,9 @@
 import * as React from "react";
 
-import { OutLine } from "./canvas/OutLine";
-import { OverlayHover } from "./overlays/OverlayHover";
-import { OverlaySelection } from "./overlays/OverlaySelection";
-import { OverlayDragHover } from "./overlays/OverlayDragHover";
+import { OutLine } from "./viewport/OutLine";
+import { OverlayHover } from "./core/overlays/OverlayHover";
+import { OverlaySelection } from "./core/overlays/OverlaySelection";
+import { OverlayDragHover } from "./core/overlays/OverlayDragHover";
 import { Draggable } from "./draggables";
 
 
