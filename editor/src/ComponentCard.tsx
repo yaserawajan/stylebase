@@ -24,7 +24,7 @@ export const ComponentCard = (props:Props) => {
             <div key="label" className="title">{props.componentUri.component} @ {props.componentUri.lib}</div>
             <div key="sublabel" className="subtitle">{props.componentUri.lib}</div>
             <div ref={drag} key="container" className="container">
-                <ErrorShield>
+                <ErrorShield message="Component Card Error">
                     {props.renderComponent(props.componentUri)}
                 </ErrorShield>
             </div>

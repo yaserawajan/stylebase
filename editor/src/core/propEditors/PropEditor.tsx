@@ -14,7 +14,7 @@ export const PropEditor:React.SFC<Props> = ({ children, ...props }) => {
 
 
     return (
-        <ErrorShield> 
+        <ErrorShield message="Prop Editor Error"> 
             {props.renderPropEditor(props) || <NoPropEditor {...props} />}
         </ErrorShield>
     );

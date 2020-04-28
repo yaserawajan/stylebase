@@ -1,8 +1,12 @@
 import * as React from "react";
 
-export class ErrorShield extends React.Component<{}, { hasError: boolean }> {
+interface Props {
+    message: string
+}
+
+export class ErrorShield extends React.Component<Props, { hasError: boolean }> {
     
-    constructor(props:{}) {
+    constructor(props: Props) {
         super(props);
         this.state = { hasError: false };
     }
@@ -12,14 +16,15 @@ export class ErrorShield extends React.Component<{}, { hasError: boolean }> {
     }
 
     componentDidCatch(error:any, info:any) {
-        //console.log(error, info);
+        console.warn("PLUGIN ERROR", error, info);
     }
-
+ 
     render() {
         if (this.state.hasError) {
             // Render custom fallback UI or Text if there is error
-            return <div>Oops, something went wrong in rendering component card from library</div>;
+            return <div>{this.props.message}</div>;
         }
+
         return this.props.children; 
     }
 }

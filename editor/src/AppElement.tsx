@@ -139,7 +139,7 @@ export const AppElement = (props:Props) => {
             onClick={props.onClick} 
             onHover={props.onHover}>
             {({ ref }) => (
-                <ErrorShield>
+                <ErrorShield message="Component Error">
                     <C {...otherProps} 
                         ref={combineRefs(ref, drag, drop)} 
                         children={children.map((child:string) => (
