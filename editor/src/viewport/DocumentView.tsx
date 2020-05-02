@@ -24,6 +24,7 @@ type Entry =  {
 const createEntryMapper = (marginRect:DOMRect, borderRect: DOMRect, zoom: number) => 
     (pair:Entry):ElementRect => {
         const r = (pair.m.target as Element).getBoundingClientRect();
+        
         return {
             
             display: {
@@ -99,6 +100,7 @@ export const DocumentView:React.SFC<Props> = (props) => {
                 top: 0, 
                 left: 0
             }}>
+            
             <DocumentMargin margin={props.margins}>
                 <div className="document-view" ref={boxRef}>
 
@@ -106,6 +108,7 @@ export const DocumentView:React.SFC<Props> = (props) => {
                     
                 </div>
             </DocumentMargin>
+            
         </div>
     );
 }

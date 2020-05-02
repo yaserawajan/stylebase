@@ -11,7 +11,7 @@ interface Props {
     onChange: (value:string) => void
 }
 
-export const Input:React.SFC<Props> = (props) => {
+export const Input = React.forwardRef((props: Props, ref) => {
 
     const handleChange = (e:any) => {
         props.onChange(e.target.value);
@@ -19,6 +19,7 @@ export const Input:React.SFC<Props> = (props) => {
 
     return (
         <input 
+            ref={ref as any}
             className={classes("input", props.className)} 
             style={props.style}
             placeholder={props.placeholder} 
@@ -27,5 +28,5 @@ export const Input:React.SFC<Props> = (props) => {
             value={props.value || ""} 
             onChange={handleChange} />
     );
-}
+});
 

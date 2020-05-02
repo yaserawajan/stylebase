@@ -89,6 +89,27 @@ export const boxLibManifest:ComponentLibManifest = {
                 bottom: { type: "length", lib: LIB_NAME },
                 left: { type: "length", lib: LIB_NAME }
             }
+        },
+
+        font: {
+            type: "map",
+            properties: {
+                family: { type: "text" },
+                italic: { type: "boolean"},
+                letterSpacing: { type: "number" },
+                provider: { type: "text" },
+                size: { type: "number" },
+                smallCaps: { type: "boolean"},
+                weight: {
+                    type: "number",
+                    min: 100,
+                    max: 900,
+                    step: 100,
+                    stepExclusive: true,
+                    precision: 0
+                }
+            }
+            
         }
 
 

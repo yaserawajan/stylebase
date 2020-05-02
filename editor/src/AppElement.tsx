@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import {  batchActions } from "redux-batched-actions";
 
 import { ComponentFactory, DocAction, ElementAddAction, ElementLocation, ElementMoveAction, PropMetadata } from "./core/doc/docModels";
@@ -35,7 +35,7 @@ interface Props {
 export const AppElement = (props:Props) => {
     const element = useDocElementState(props.component, props.elementId);
     
-    const metadata = useSelector(s => selectComponentMetadata(s, element.type));
+    const {  propTypes } = useSelector(s => selectComponentMetadata(s, element.type), shallowEqual);
 
     const dispatch = useDispatch();
 
@@ -72,7 +72,7 @@ export const AppElement = (props:Props) => {
             // TODO style hover drag action types
             // TODO prevent drag-drop item in self or in child
 
-            if ("children" in metadata) return "in";
+            if ("children" in propTypes) return "in";
 
             return undefined;
             
@@ -150,7 +150,7 @@ export const AppElement = (props:Props) => {
                                 onHover={props.onHover}
                                 elementId={child} 
                                 parentElementId={props.elementId}
-                                parentMetadata={metadata}
+                                parentMetadata={propTypes}
                                 componentFactory={props.componentFactory} />
                         ))} />
                 </ErrorShield>

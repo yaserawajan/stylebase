@@ -29,7 +29,7 @@ export const PropFolder:React.SFC<Props> = (props) => {
                         </div>
                         <div key="title" className="prop-title">{humanizeIdentifier(props.name)}</div>
                         <div key="s1" className="stretch" />
-                        <div key="summary" className="summary">{props.renderSummary({ isToggled: isExpanded() })}</div>
+                        {props.assigned && <div key="summary" className="summary">{props.renderSummary({ isToggled: isExpanded() })}</div>}
                     </div>
                 )}>
                 <div className={classes("prop-folder-items", props.indent && "indent")}>

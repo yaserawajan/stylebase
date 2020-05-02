@@ -1,11 +1,11 @@
 .overlay-selection {
     /* transition: all 0.3s; */
-    border: 2px solid rgba(0, 0, 100, 0.05);
+    outline: 2px solid rgba(0, 0, 100, 0.3);
     /* background-color:rgba(0, 0, 0, 0.02); */
     display: flex;
     justify-content: stretch;
     align-items: stretch;
-    
+    border: none;
 }
 
 .overlay-selection .corner {

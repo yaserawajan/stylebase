@@ -11,6 +11,8 @@ interface Props extends PropEditorRenderProps {
 
 export const TextPropEditor:React.SFC<Props> = (props) => {
 
+    
+
     const handleChange = (newValue: string) => {
         
         props.onChange(props.propName, !!newValue ? newValue : undefined)
@@ -19,7 +21,7 @@ export const TextPropEditor:React.SFC<Props> = (props) => {
     return (
         <SimpleProp name={props.propName} key={props.propName} assigned={!!props.value} compact={props.compact}>
             <InputBar>
-                <Input value={props.value} onChange={handleChange} />
+                <Input placeholder={props.defaultValue || ""} value={props.value} onChange={handleChange} />
             </InputBar>
         </SimpleProp>
     );

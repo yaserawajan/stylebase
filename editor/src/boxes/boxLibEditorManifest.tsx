@@ -3,10 +3,11 @@ import { ComponentLibEditorManifest } from "../core/doc/docLibModels";
 import { Box } from "./box/Box";
 import { ColorPropEditor } from "./propEditors/color/ColorPropEditor";
 import { LIB_NAME } from "./constants";
+import { FontPropEditor } from "./propEditors/font/FontPropEditor";
 
 const propEditors:{[k:string]: React.ComponentType<any>} = {
     color: ColorPropEditor,
-    
+    font: FontPropEditor
 }
 
 export const boxLibEditorManifest:ComponentLibEditorManifest = {

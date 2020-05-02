@@ -9,5 +9,16 @@ const black = {
 
 export const textPropDefaults:TextProps = {
     text: "Add Text ...",
-    color: black
+    color: black,
+    font: {
+        family: {
+            name: "Arial",
+            provider: "system"
+        },
+        italic: false,
+        letterSpacing: 0,
+        size: 16,
+        smallCaps: false,
+        weight: 400
+    }
 }

@@ -9,4 +9,8 @@ export const textPropTypes:PropMapMetadata = {
         type: "color",
         lib: LIB_NAME
     },
+    font: {
+        type: "font",
+        lib: LIB_NAME
+    }
 }

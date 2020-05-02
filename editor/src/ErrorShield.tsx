@@ -22,7 +22,7 @@ export class ErrorShield extends React.Component<Props, { hasError: boolean }> {
     render() {
         if (this.state.hasError) {
             // Render custom fallback UI or Text if there is error
-            return <div>{this.props.message}</div>;
+            return <div style={{ color: "red" }}>{this.props.message}</div>;
         }
 
         return this.props.children; 

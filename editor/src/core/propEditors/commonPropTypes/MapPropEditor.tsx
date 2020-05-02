@@ -19,21 +19,16 @@ const isEmpty = (a: any) => {
 export const MapPropEditor:React.SFC<PropEditorRenderProps> = (props) => {
 
     const value = props.value || {}
-
+    const defaultValue = props.defaultValue || {}
+    
     const mapType = props.propType as MapDataType;
 
     const handlePropChange = React.useCallback((propName: string, propValue: any) => {
-        
-        const newValue = {
-            ...value,
-            [propName]: propValue
-        }
-
+        const newValue = { ...value, [propName]: propValue }
         props.onChange(props.propName, isEmpty(newValue) ? undefined : newValue);
-
     }, [value]);
 
-
+    
 
     return (
         <PropFolder 
@@ -44,6 +39,7 @@ export const MapPropEditor:React.SFC<PropEditorRenderProps> = (props) => {
             
             {Object.keys(mapType.properties).map(propName => {
                 const desc = mapType.properties[propName]
+                
                 return (
                     <PropEditor {...props} 
                         key={propName} 
@@ -51,6 +47,7 @@ export const MapPropEditor:React.SFC<PropEditorRenderProps> = (props) => {
                         propType={desc} 
                         propName={propName}
                         value={value[propName]} 
+                        defaultValue={ defaultValue[propName] }
                         onChange={handlePropChange} />
                 )
             })}

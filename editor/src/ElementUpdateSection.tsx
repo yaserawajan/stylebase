@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
 import { Title } from "./uiShell/controls/Title";
 import { useDocElementState } from "./core/doc/docHooks";
@@ -19,15 +19,15 @@ interface Props {
 export const ElementUpdateSection:React.SFC<Props> = (props) => {
 
     const element = useDocElementState(props.component, props.elementIds[0]);
-    const metadata = useSelector(s => selectComponentMetadata(s, element.type));
+    const { defaultProps, propTypes } = useSelector(s => selectComponentMetadata(s, element.type), shallowEqual);
     const dispatch = useDispatch();
 
     const handleChange = React.useCallback((propName: string, value: any) => {
-        //console.log(element.props)
+        
         const actions = props.elementIds
             .map(id => 
                 docElementUpdate(props.component, id, {
-                    //...element.props,
+                    
                     [propName]: value
                 }));
         
@@ -43,15 +43,16 @@ export const ElementUpdateSection:React.SFC<Props> = (props) => {
             <div key="body" className="panel-body stretch">
                 <Tree name={element.type.component} key={props.component + "/" + props.elementIds[0]}>
 
-                    {Object.keys(metadata).map(propName => (
+                    {Object.keys(propTypes).map(propName => (
                         (propName != "children") && <PropEditor 
                             key={propName} 
                             compact={false}
                             path={ [ props.component, propName ] }
-                            propType={metadata[propName]}
+                            propType={propTypes[propName]}
                             propName={propName}
                             onChange={handleChange}
                             value={element.props[propName]}
+                            defaultValue={defaultProps[propName]}
                             renderPropEditor={props.renderPropEditor} />
                     ))}
                     

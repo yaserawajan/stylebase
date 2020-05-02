@@ -1,9 +1,12 @@
 .input-icon {
+    
+    
     display: flex;
     align-items: center;
     justify-content: center;
     width: 30px;
     cursor: pointer;
+    
 }
 
 .input-icon.disabled {

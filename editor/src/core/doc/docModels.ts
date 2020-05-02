@@ -211,6 +211,7 @@ export type PropEditorRenderProps = {
     propName: string
     compact: boolean
     value: any
+    defaultValue: any
     
     onChange: (propName:string, value:any) => void
 }

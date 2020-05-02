@@ -5,8 +5,12 @@
     border: none;
     outline: none;
     padding: 0 10px;
+    
 }
 
+.input.error {
+    color: red;
+}
 
 .input:only-child {
     width: 100%;

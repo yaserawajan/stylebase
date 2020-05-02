@@ -9,10 +9,15 @@ export const selectDocLibState = (s:any):DocLibState => s[DOC_LIB];
 
 export const selectComponentMetadata = (s:any, uri: ComponentUri) => {
     if (uri.lib) {
-        return selectDocLibState(s).libs.byName[uri.lib].components[uri.component].propTypes;
+        const { propTypes, defaultProps } = selectDocLibState(s).libs.byName[uri.lib].components[uri.component];
+        return { propTypes, defaultProps }
     }
     else {
-        return selectPresentState<DocState>(s).components.byName[uri.component].propTypes.byName;
+        const { propTypes: set, defaultProps } = selectPresentState<DocState>(s).components.byName[uri.component];
+        return {
+            propTypes: set.byName,
+            defaultProps
+        } 
     }
 }
 
