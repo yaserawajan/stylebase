@@ -6,6 +6,7 @@ const htmlPlugin = new HtmlWebPackPlugin({
 });
 
 const config: webpack.Configuration = {
+  devtool: 'source-map',
   mode: "development",
   entry: "./src/index.tsx",
   resolve: {
@@ -16,14 +17,34 @@ const config: webpack.Configuration = {
   module: {
     rules: [
       // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
-      { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
+      { test: /\.tsx?$/, loader: "ts-loader" },
+
+      {
+        test: /\.less$/,
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'less-loader',
+            options: {
+              lessOptions: {
+                strictMath: true,
+              },
+            },
+          },
+        ],
+      },
 
       {
         test: /\.css$/,
         use: [
           'style-loader',
           'css-loader'
-        ]
+         ]
       }
     ]
   },

@@ -1,4 +1,4 @@
-import "./footer.css";
+import "./footer.less";
 
 import * as React from "react";
 
@@ -9,7 +9,7 @@ interface Props {
     thickness: number
     right: number
 }
-
+ 
 export const Footer:React.SFC<Props> = (props) => {
 
     return (

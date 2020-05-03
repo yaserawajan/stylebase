@@ -1,4 +1,4 @@
-import "./wheel.css";
+import "./wheel.less";
 
 import * as React from "react";
 import { classes } from "../utils";
@@ -51,12 +51,12 @@ export const Wheel:React.SFC<Props> = (props) => {
 
     return (
         <wheelContext.Provider value={{ value: props.value }}>
-            
+            <div className={classes("row", props.className)}>
                 
-                <WheelItem name="" key="__default" />
+                <WheelItem name="" key="__default"  />
 
                 {props.children}
-                
+            </div>
             
         </wheelContext.Provider>
     );
@@ -92,7 +92,7 @@ export const WheelItem:React.SFC<WheelItemProps> = ({ name, children, className,
     const { value } = React.useContext(wheelContext);
     const selected = value === name;
     return selected
-        ? <>{children}</>
+        ? <div style={{ width: "100%" }}>{children}</div>
         : null
 };
 

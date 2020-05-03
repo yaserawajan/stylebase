@@ -1,4 +1,5 @@
-import "./navbar.css";
+import "../stylesheets/containers/navbar.less";
+
 import * as React from "react";
 import { classes } from "../utils";
 
@@ -9,8 +10,7 @@ interface Props {
 
 export const NavBar:React.SFC<Props> = ({ style, className, children }) => (
     
-    
-    <div className={classes("navbar", className)} style={style}>
+    <div className={classes("navbar row", className)} style={style}>
         {children}
     </div>
 

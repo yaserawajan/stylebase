@@ -1,4 +1,14 @@
-import { BoxStyleProps } from "../types";
+import { BoxStyleProps, BoxBorderStyle, BoxColor } from "../types";
+
+const transparent:BoxColor = { r: 0, g: 0, b: 0, a: 0 }
+
+const none:BoxBorderStyle = {
+    color: transparent,
+    width: "0px",
+    style: "none"
+}
+
+
 
 export const boxPropDefaults:BoxStyleProps = { 
 
@@ -10,30 +20,14 @@ export const boxPropDefaults:BoxStyleProps = {
     },
 
     border: {
-        top: {
-            width: "2px",
-            style: "solid",
-            color: { r: 33, g: 33, b: 33, a: 1 }
-        },
-        right: {
-            width: "2px",
-            style: "solid",
-            color: { r: 33, g: 33, b: 33, a: 1 }
-        },
-        bottom: {
-            width: "2px",
-            style: "solid",
-            color: { r: 33, g: 33, b: 33, a: 1 }
-        },
-        left: {
-            width: "2px",
-            style: "solid",
-            color: { r: 33, g: 33, b: 33, a: 1 }
-        }
+        top: none,
+        right: none,
+        bottom: none,
+        left: none
     },
 
     fill: {
-        color: { r: 255, g: 255, b: 255, a: 1 },
+        color: transparent,
         
     }
 

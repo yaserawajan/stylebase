@@ -2,9 +2,9 @@ import * as React from "react";
 
 import { PropEditorRenderProps, ArrayDataType } from "../../doc/docModels";
 import { PropEditor } from "../PropEditor";
-import { SimpleProp } from "../SimpleProp";
 import { InputBarList } from "../InputBarList";
 import { InputIcon } from "../InputIcon";
+import { FormField } from "../FormField";
 
 interface Props extends PropEditorRenderProps {
     
@@ -40,7 +40,7 @@ export const ArrayPropEditor:React.SFC<Props> = (props) => {
     const renderedValue = value.length > 0 ? value : [ undefined ];
     const lastIndex = renderedValue.length - 1;
     return (
-        <SimpleProp 
+        <FormField 
             assigned={props.value && Object.keys(props.value).length > 0}
             name={props.propName}>
             
@@ -65,6 +65,6 @@ export const ArrayPropEditor:React.SFC<Props> = (props) => {
                     </div>
                 )}
             </InputBarList>
-        </SimpleProp>
+        </FormField>
     )
 }

@@ -1,4 +1,4 @@
-import "./form_field.css";
+import "./form_field.less";
 
 import * as React from "react";
 import { classes } from "../../uiShell/utils";

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { classes } from "../../../uiShell/utils";
-import "./color_swatch.css";
+import "./color_swatch.less";
 
 interface Props {
     color: any

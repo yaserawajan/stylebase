@@ -1,8 +1,8 @@
-::-webkit-input-placeholder { /* Edge */
+/* ::-webkit-input-placeholder { 
     font-weight: 300;
 }
 
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
+:-ms-input-placeholder { 
     font-weight: 300;
 }
 
@@ -36,10 +36,10 @@ input,
 optgroup,
 select,
 textarea {
-  font-family: inherit; /* 1 */
-  font-size: 0.3em; /* 1 */
-  line-height: inherit; /* 1 */
-  margin: 0; /* 2 */
+  font-family: inherit;
+  font-size: 0.3em; 
+  line-height: inherit; 
+  margin: 0; 
 }
 
 body {
@@ -79,7 +79,6 @@ input {
 .row {
     display: flex;
     flex-direction: row;
-    /* width: 100%; */
 }
 
 .column {
@@ -89,7 +88,6 @@ input {
 
 .stretch {
     flex: 1 1 auto;
-    /* max-width: 100%; */
 }
 
 .p1 { padding: 5px; }
@@ -172,7 +170,6 @@ input {
     overflow: hidden;
     text-overflow: ellipsis;
     flex:1 1 auto;
-    /* padding: 0 0.2em; */
 }
 
 .control-input-value > span {
@@ -219,4 +216,4 @@ input {
 .tab {
     display: flex;
     flex-direction: row;
-}
+} */

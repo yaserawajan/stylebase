@@ -1,0 +1,41 @@
+@import "../all.less";
+
+.navbar-item {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    max-width: 1em;
+    overflow: hidden;
+    height: 1em;
+    .animate();
+
+    & > .icon {
+        width: 1em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    & > .icon > i {
+        font-size: 0.4em;
+    }
+
+    & > .text {
+        word-break: break-all;
+        word-wrap: none;
+        font-size: 0.3em;
+        padding-right: 15px;
+        display: none;
+    }
+
+    &.selected {
+        .bg-lighten(0.3);
+        max-width: 1000px;
+        overflow: visible;
+    }
+
+    &.selected > .text {
+        display: block;
+    }
+}
+

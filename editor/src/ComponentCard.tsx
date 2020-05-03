@@ -1,4 +1,4 @@
-import "./component_card.css";
+import "./component_card.less";
 
 import * as React from "react";
 

@@ -1,4 +1,4 @@
-import "./input_bar_list.css";
+// import "./input_bar_list.css";
 
 import * as React from "react";
 

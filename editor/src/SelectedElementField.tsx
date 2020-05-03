@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { DropDownList } from "./uiShell/controls/DropDownList";
+import { classes } from "./uiShell/utils";
 
 
 interface Props {
@@ -20,13 +21,16 @@ export const SelectedElementField:React.SFC<Props> = ({ className, value, onChan
 
     if (value.length < 2) {
         return (
-            <DropDownList
-                className={className}
-                key="elementSel"
-                label="Element" 
-                allValues={allElements}
-                value={value[0]}
-                onChange={handleChange} />
+            <div className={classes("row", className)}>
+                <div className="text caption">Element</div>
+                <DropDownList
+                    className="stretch"
+                    key="elementSel"
+                    label="Element" 
+                    allValues={allElements}
+                    value={value[0]}
+                    onChange={handleChange} />
+            </div>
         );
     }
     else return <div className={className}>({value.length}) Elements</div>

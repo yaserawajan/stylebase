@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ElementRect } from "./types";
-import "./document_view.css";
+import "./document_view.less";
 import { DocumentMargin } from "./DocumentMargin";
 import { elementIdFromDom } from "./viewElementIdentification";
 

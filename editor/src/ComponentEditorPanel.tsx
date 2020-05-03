@@ -4,12 +4,13 @@ import { Title } from "./uiShell/controls/Title";
 import { TabSelector } from "./uiShell/controls/TabSelector";
 import { Tab } from "./uiShell/controls/Tab";
 import { useActivePanelState } from "./core/uiState/ideState";
-import { Command } from "./uiShell/controls/Command";
+import { Button } from "./uiShell/controls/Button";
 import { Wheel, WheelItem } from "./uiShell/controls/Wheel";
 import { ComponentViewEditorSection } from "./ComponentViewEditorSection";
 import { ComponentMetadataSection } from "./ComponentMetadataSection";
 import { IconLA } from "./uiShell/IconLA";
 import { PropEditorFactory } from "./core/doc/docModels";
+import { MenuItem } from "./uiShell/controls/MenuItem";
 
 
 
@@ -23,34 +24,43 @@ export const ComponentEditorPanel:React.SFC<Props> = (props) => {
 
     const [componentEditMode, setComponentEditMode] = useActivePanelState("componentEditMode", false);
     
+    const editModeSetter = (value: string) => 
+        () => {
+            setComponentEditMode(value);
+        }
 
     return (
         <Panel key="cvep" style={props.style}>
 
-            <div className="l1 row" key="l1">
-                <Title>
+            <div className="palette-3 dark scale-1 row pdl-2 edge-bottom" key="l1">
+
+                <div className="text row">
                     <IconLA icon="microchip" />
-                    &nbsp;{props.component}
-                </Title>
-                <div className="stretch" />
-                <TabSelector key="tabs" value={componentEditMode} onChange={setComponentEditMode}>
-                    <Tab key="design" name="design">
-                        <Command label="Design Editor" icon="palette" name="toggleDesign" />
-                    </Tab>
-                    <Tab key="metadata" name="metadata">
-                        <Command label="Metadata Editor" icon="list" name="toggleMetadata" />
-                    </Tab>
-                </TabSelector>
+                    &nbsp;
+                    {props.component}
+                </div>
+
+
+                
             </div>
             
-            <Wheel key="componentEditMode" value={componentEditMode} className="stretch">
-                <WheelItem key="design" name="design" className="stretch">
-                    <ComponentViewEditorSection propEditorFactory={props.propEditorFactory} />
-                </WheelItem>
-                <WheelItem key="metadata" name="metadata" className="stretch">
-                    <ComponentMetadataSection />
-                </WheelItem>
-            </Wheel>
+            <div className="scale-2 row palette-4 dark edge-bottom">
+                <MenuItem 
+                    key="design" 
+                    selected={componentEditMode == "design"}
+                    onClick={editModeSetter("design")} label="Design" icon="palette" name="toggleDesign" />
+                
+                <MenuItem 
+                    key="metadata" 
+                    selected={componentEditMode == "metadata"}
+                    onClick={editModeSetter("metadata")} label="Metadata" icon="list" name="toggleMetadata" />
+            </div>
+
+
+            {(componentEditMode == "design") && <ComponentViewEditorSection propEditorFactory={props.propEditorFactory} />}
+            {(componentEditMode == "metadata") && <ComponentMetadataSection /> }
+
+            
  
         </Panel>
     );

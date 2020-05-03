@@ -1,4 +1,4 @@
-import "./input_icon.css";
+// import "./input_icon.css";
 
 import * as React from "react";
 import { IconLA } from "../../uiShell/IconLA";

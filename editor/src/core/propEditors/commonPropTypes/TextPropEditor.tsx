@@ -2,8 +2,8 @@ import * as React from "react";
 
 import { PropEditorRenderProps } from "../../doc/docModels";
 import { InputBar } from "../InputBar";
-import { SimpleProp } from "../SimpleProp";
 import { Input } from "../Input";
+import { FormField } from "../FormField";
 
 interface Props extends PropEditorRenderProps {
     
@@ -19,10 +19,10 @@ export const TextPropEditor:React.SFC<Props> = (props) => {
     }
 
     return (
-        <SimpleProp name={props.propName} key={props.propName} assigned={!!props.value} compact={props.compact}>
+        <FormField name={props.propName} key={props.propName} assigned={!!props.value}>
             <InputBar>
                 <Input placeholder={props.defaultValue || ""} value={props.value} onChange={handleChange} />
             </InputBar>
-        </SimpleProp>
+        </FormField>
     );
 }

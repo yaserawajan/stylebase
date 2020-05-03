@@ -29,22 +29,20 @@ export const DropDownList:React.SFC<Props> = (props) => {
     }, [props.value, props.allValues]);
 
     return (
-        <div style={props.style} className={classes("control", props.className)} >
-                <div className="control-label"><span>{props.label}</span></div>
-                    <div className="control-input">
-                        <div key="prev" className="control-icon"><IconLA onClick={handlePrevious}  icon="angle-left" /></div>
-                        <Wheel orientation="x" value={props.value} className="stretch">
-                            {props.allValues.map(v => (
-                                <WheelItem name={v} key={v}>
-                                    <div key="v" className="control-input-value text-center">
-                                        <span>{v}</span>
-                                    </div>
-                                </WheelItem>
-                            ))}
-                        </Wheel>
-                        <div key="next" className="control-icon"><IconLA onClick={handleNext} size="fa-lx" icon="angle-right" />
-                    </div>
-                </div>
+        <div style={props.style} className={classes("drop-down-list row", props.className)} >
+        
+            <div key="prev" className="icon"><IconLA onClick={handlePrevious} icon="angle-left" /></div>
+
+            <Wheel orientation="x" value={props.value} className="stretch">
+                {props.allValues.map(v => (
+                    <WheelItem name={v} key={v}>
+                        <div key="v" className="text text-center">{v}</div>
+                    </WheelItem>
+                ))}
+            </Wheel>
+
+            <div key="next" className="icon"><IconLA onClick={handleNext} size="fa-lx" icon="angle-right" /></div>
+            
         </div>
     );
 }

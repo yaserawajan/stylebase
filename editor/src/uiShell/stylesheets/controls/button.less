@@ -1,0 +1,60 @@
+@import "../all.less";
+
+@radius: 0.06em;
+
+.button {
+
+    
+
+    border-radius: @radius;
+
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    line-height: 0.6em;
+    padding-right: 0.2em;
+
+    & > .icon {
+        width: 0.6em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    & > .icon > i {
+        font-size: 0.4em;
+    }
+
+    & > .text {
+        font-size: 0.3em;
+        
+        font-variant: small-caps;
+    }
+
+}
+
+.group {
+    padding: 0 0.2em;
+    display: flex;
+    flex-direction: inherit;
+
+    & > .button {
+        border-radius: 0;
+    }
+
+    & > .button + .button {
+        margin-left: 1px
+    }
+
+    & > :first-child {
+        border-top-left-radius: @radius;
+        border-bottom-left-radius: @radius;
+    }
+
+    & > :last-child {
+        border-top-right-radius: @radius;
+        border-bottom-right-radius: @radius;
+    }
+    
+}

@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		"plugins": [{ "name": "typescript-plugin-css-modules" }],
 		"outDir": "./dist/",
 		"noImplicitAny": true,
 		"target": "es5",

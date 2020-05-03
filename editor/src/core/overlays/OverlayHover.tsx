@@ -1,4 +1,4 @@
-import "./overlay_hover.css";
+import "./overlay_hover.less";
 
 import * as React from "react";
 

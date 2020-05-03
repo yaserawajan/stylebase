@@ -1,4 +1,4 @@
-import "./input.css";
+import "./input.less";
 
 import * as React from "react";
 import { classes } from "../../uiShell/utils";

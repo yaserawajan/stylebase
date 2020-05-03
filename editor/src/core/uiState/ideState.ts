@@ -153,6 +153,7 @@ export const selectIde = (s:any):IdeState => s[IDE];
 export const useActivePanelState = (subject: string, allowNone: boolean = true):[string,(v:string) => void] => {  
     const value = useSelector<any,string>(s => selectIde(s).panels[subject] || "");
     const dispatch = useDispatch();
+    
     return [
         value,
         (value: string) => dispatch(optionChanged(subject, value, allowNone))

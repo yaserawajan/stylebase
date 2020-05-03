@@ -1,19 +1,18 @@
+import "../stylesheets/containers/panel.less";
+
 import * as React from "react";
-import "./panel.css";
-import "./panel-l1.css";
-import "./panel-l2.css";
-import "./panel-l3.css";
+
 import { classes } from "../utils";
 
 interface Props {
-    style: React.CSSProperties
-    
+    style?: React.CSSProperties
+    className?: string
 }
 
 export const Panel:React.SFC<Props> = (props) => {
 
     return (
-        <div className={classes("panel")} style={props.style}>
+        <div className={classes("panel", props.className)} style={props.style}>
             {props.children}
         </div>
     );

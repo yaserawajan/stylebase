@@ -15,7 +15,7 @@ import { selectComponentMetadata } from "./core/doc/docLibSelectors";
 import { ErrorShield } from "./ErrorShield";
  
 const combineRefs = (...refs:any[]) => (value:any) => {
-    refs.forEach(ref => {
+    refs.forEach(ref => { 
         if (!ref) return;
         if (typeof ref === 'function') ref(value)
         else ref.current = value;

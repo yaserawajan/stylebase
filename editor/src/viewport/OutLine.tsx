@@ -1,6 +1,6 @@
 import * as React from "react";
 import RectContext from "./RectContext";
-import "./outline.css";
+import "./outline.less";
 import { ElementRect } from "./types";
 
 interface Props {

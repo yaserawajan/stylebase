@@ -1,4 +1,4 @@
-import "./font_form.css";
+import "./font_form.less";
 
 import * as React from "react";
 import { BoxFont } from "../../types";

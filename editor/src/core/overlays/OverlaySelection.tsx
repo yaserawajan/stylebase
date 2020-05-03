@@ -1,4 +1,4 @@
-import "./overlay_selection.css";
+import "./overlay_selection.less";
 
 import * as React from "react";
 import { IconLA } from "../../uiShell/IconLA";

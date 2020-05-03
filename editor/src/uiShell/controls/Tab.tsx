@@ -7,8 +7,7 @@ interface Props {
     name: string
     className? : string
 }
-// <Tab key="create" name="create" icon="plus" />
-//                     <Tab key="edit" name="edit" icon="edit" />
+
 export const Tab:React.SFC<Props> = (props) => {
 
     const { selectTab, value } = React.useContext(TabSelectorContext);

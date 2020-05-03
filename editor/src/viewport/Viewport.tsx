@@ -1,6 +1,6 @@
 import * as React from "react";
 import Ruler from "@scena/react-ruler";
-import "./viewport.css";
+import "./viewport.less";
 import { DocumentView } from "./DocumentView";
 import { ElementRectMap, ElementRect } from "./types";
 import RectContext from "./RectContext";

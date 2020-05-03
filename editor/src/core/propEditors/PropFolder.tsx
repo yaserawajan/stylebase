@@ -1,4 +1,4 @@
-import "./prop_folder.css";
+// import "./prop_folder.css";
 
 import * as React from "react";
 import { TreeItem } from "../uiState/Tree";

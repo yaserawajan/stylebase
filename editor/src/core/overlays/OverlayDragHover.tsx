@@ -1,4 +1,4 @@
-import "./overlay_drag_hover.css";
+import "./overlay_drag_hover.less";
 
 import * as React from "react";
 import { classes } from "../../uiShell/utils";

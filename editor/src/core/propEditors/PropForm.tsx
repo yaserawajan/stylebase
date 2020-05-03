@@ -1,4 +1,4 @@
-import "./prop_form.css";
+import "./prop_form.less";
 
 import * as React from "react";
 

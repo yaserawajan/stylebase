@@ -1,4 +1,4 @@
-import "./input_bar.css";
+import "./input_bar.less";
 
 import * as React from "react";
 import { classes } from "../../uiShell/utils";

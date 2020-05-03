@@ -1,0 +1,14 @@
+@import "../all.less";
+
+.panel {
+    display: flex;
+    flex-direction: column;
+
+    .color-pal-5();
+    z-index: @editor-z-index;
+    .user-select(none);
+
+    & > * + * {
+        margin-top: 1px;
+    }
+}

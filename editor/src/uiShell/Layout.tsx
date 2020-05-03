@@ -1,16 +1,14 @@
-import "./layout.css";
-
+// import "./stylesheets/all.less";
 import * as React from "react";
 
 import { NavBar } from "./navbar/NavBar";
 import { Toolbar } from "./toolbar/Toolbar";
-import { Footer } from "./Footer"
-import { Section } from "./controls/Section";
-import { Command } from "./controls/Command";
+import { Footer } from "./Footer";
+import { Button } from "./controls/Button";
 import { TabSelector } from "./controls/TabSelector";
 import { Tab } from "./controls/Tab";
-import { LayoutCarousel } from "./LayoutCarousel";
-import { LayoutCarouselItem } from "./LayoutCarouselItem";
+import { MenuItem } from "./controls/MenuItem";
+import { NavBarItem } from "./controls/NavBarItem";
  
 
 const navBarCss:React.CSSProperties = {
@@ -65,47 +63,60 @@ interface Props {
 
 export const Layout:React.SFC<Props> = (props) => {
     
-    const floatingPanels = props.floatingPanels || [];
+    
 
+    const leftChangeHandler = (value: string) =>
+        () => {
+            props.onLeftPanelSelection(value);
+        }
 
-
+    const rightChangeHandler = (value: string) =>
+        () => {
+            props.onRightPanelSelection(value);
+        } 
+ 
     return (
         <>
             <NavBar key="nb" style={navBarCss}>
                 
-                <TabSelector key="left" value={props.activeLeftPanel} onChange={props.onLeftPanelSelection}>
-                    {props.leftPanels.map(panelName => (
-                        props.panelSpecs[panelName] && 
-                        <Tab key={panelName} name={panelName}>
-                            <Command name={panelName} 
-                                icon={props.panelSpecs[panelName].icon}
-                                label={props.panelSpecs[panelName].label} />
-                        </Tab> 
-                    ))}
-                </TabSelector>
+                
+                {props.leftPanels.map(panelName => (
+                    props.panelSpecs[panelName] && 
+                    
+                        <NavBarItem 
+                            selected={props.activeLeftPanel == panelName}
+                            onClick={leftChangeHandler(panelName)}
+                            key={panelName}
+                            name={panelName} 
+                            icon={props.panelSpecs[panelName].icon}
+                            label={props.panelSpecs[panelName].label} />
+                    
+                ))}
 
-                <div key="div1" className="divider" />
+                
                 <div key="logo">
                     {props.renderLogo()}
                 </div>
-                <div key="stretch" className="stretch" />
-                <div key="div2" className="divider" />
-                
-                <TabSelector key="right" value={props.activeRightPanel} onChange={props.onRightPanelSelection}>
-                    {props.rightPanels.map(panelName => (
-                        props.panelSpecs[panelName] && 
-                            <Tab key={panelName} name={panelName}>
-                                <Command name={panelName} 
-                                    icon={props.panelSpecs[panelName].icon}
-                                    label={props.panelSpecs[panelName].label} />
-                            </Tab> 
-                    ))}
-                </TabSelector>
 
+                <div key="stretch" className="stretch" />
+                
+                {props.rightPanels.map(panelName => (
+                    props.panelSpecs[panelName] && 
+                        
+                        <NavBarItem 
+                            selected={props.activeRightPanel == panelName}
+                            onClick={rightChangeHandler(panelName)}
+                            key={panelName}
+                            name={panelName} 
+                            icon={props.panelSpecs[panelName].icon}
+                            label={props.panelSpecs[panelName].label} />
+                        
+                ))}
+                
             </NavBar>
 
             {props.activeLeftPanel && props.renderPanel(props.activeLeftPanel, {
-                top: 50,
+                top: 51,
                 bottom: 0,
                 left: 0,
                 width: 270,
@@ -114,7 +125,7 @@ export const Layout:React.SFC<Props> = (props) => {
             })}
 
             {props.activeRightPanel && props.renderPanel(props.activeRightPanel, {
-                top: 50,
+                top: 51,
                 bottom: 0,
                 right: 0,
                 width: 270,
@@ -122,31 +133,33 @@ export const Layout:React.SFC<Props> = (props) => {
                 position: "fixed" 
             })}
 
-            {(floatingPanels.length > 0) &&
-                <LayoutCarousel>
-                    {floatingPanels.map(panelName => 
-                        <LayoutCarouselItem> 
-                            {props.renderPanel(panelName, {
-                                position: "relative",
-                                zIndex: 1
-                            })}
-                        </LayoutCarouselItem>)}
-                </LayoutCarousel>
-            }
-            <Toolbar key="ct" top={50} 
-                left={props.activeLeftPanel? 270: 0} 
-                right={props.activeRightPanel? 270: 0} 
-                thickness={50}>
+            <div className="palette-4 dark" style={{ 
+                position: "fixed",
+                zIndex: 5,
+                top: 51,
+                bottom: 0,
+                left: props.activeLeftPanel? 270: 0,
+                width: `calc(100% - ${(props.activeLeftPanel? 270: 0) + (props.activeRightPanel? 270: 0)}px)` 
+            }} />
+
+            <Toolbar key="ct" style={{
+                position: "fixed",
+                left: props.activeLeftPanel? 270: 0,
+                top: 51,
+                right: props.activeRightPanel? (270 + 1): 0,
+                height: 50,
+                width: `calc(100% - ${(props.activeLeftPanel? 270: 0) + (props.activeRightPanel? 270: 0) + 1}px)`
+            }}> 
                 
                 {props.renderToolbarElements()}
                 
             </Toolbar>
-
+ 
             {props.renderView("default", {
-                top: 100,
+                top: 102,
                 left: props.activeLeftPanel? 270: 0, 
                 bottom: 40,
-                right: props.activeRightPanel? 270: 0,
+                right: (props.activeRightPanel? 270: 0) + 1,
                 zIndex: 999,
                 position: "fixed"
             })}

@@ -1,21 +1,21 @@
+import "../stylesheets/containers/toolbar.less";
+
 import * as React from "react";
-import "./toolbar.css";
+
 
 interface Props {
-    top: number
-    left: number
-    thickness: number
-    right: number
+    style?: React.CSSProperties
+    className?: string
 }
 
 export const Toolbar:React.SFC<Props> = (props) => {
 
     return (
-
-        <div className="toolbar" style={{ top: props.top, left: props.left, right: props.right, height: props.thickness  }}>
-            {props.children}
+        <div className="toolbar row" style={props.style}>
+            <div className="row" style={{ width: "100%" }}>
+                {props.children}
+            </div>
         </div>
-
     );
 
 }

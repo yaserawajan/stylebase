@@ -1,4 +1,4 @@
-import "./search_field.css";
+import "./search_field.less";
 
 import * as React from "react";
 import { IconLA } from "../IconLA";

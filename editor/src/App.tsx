@@ -41,7 +41,7 @@ export const App:React.SFC<Props> = (props) => {
                     default: return <div style={rect} />;
                 }
             }}
-            renderLogo={() => <span className="font-m" style={{ marginLeft: 10, display: "block" }}>S T Y L E B A S E</span>}
+            renderLogo={() => <span style={{ marginLeft: 10, fontSize: "0.3em", display: "block" }}>S T Y L E B A S E</span>}
             renderToolbarElements={
                 () => (
                     <>
