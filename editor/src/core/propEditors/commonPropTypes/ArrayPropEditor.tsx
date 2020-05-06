@@ -2,9 +2,9 @@ import * as React from "react";
 
 import { PropEditorRenderProps, ArrayDataType } from "../../doc/docModels";
 import { PropEditor } from "../PropEditor";
-import { InputBarList } from "../InputBarList";
-import { InputIcon } from "../InputIcon";
-import { FormField } from "../FormField";
+import { InputIcon } from "../../../uiShell/controls/InputIcon";
+import { FormField } from "../../../uiShell/controls/FormField";
+import { InputArea } from "../../../uiShell/controls/InputArea";
 
 interface Props extends PropEditorRenderProps {
     
@@ -44,7 +44,7 @@ export const ArrayPropEditor:React.SFC<Props> = (props) => {
             assigned={props.value && Object.keys(props.value).length > 0}
             name={props.propName}>
             
-            <InputBarList>
+            <InputArea>
                 {renderedValue.map((item, idx) => 
                     <div className="item" key={idx}>
                         <InputIcon 
@@ -64,7 +64,7 @@ export const ArrayPropEditor:React.SFC<Props> = (props) => {
                             <InputIcon icon="plus" onClick={handleItemAdd} disabled={item === undefined} />}
                     </div>
                 )}
-            </InputBarList>
+            </InputArea>
         </FormField>
     )
 }

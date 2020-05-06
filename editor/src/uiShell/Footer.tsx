@@ -16,7 +16,7 @@ export const Footer:React.SFC<Props> = (props) => {
 
         <div className="footer" style={{ bottom: props.bottom, left: props.left, right: props.right, height: props.thickness  }}>
             {props.children}
-        </div>
+        </div> 
 
     );
 

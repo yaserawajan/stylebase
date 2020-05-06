@@ -1,4 +1,3 @@
-import "./wheel.less";
 
 import * as React from "react";
 import { classes } from "../utils";

@@ -11,6 +11,7 @@ import { useDocEditorState } from "./patterns/docEditor/docEditorHooks";
 import { DocEditorState, selectionChanged } from "./patterns/docEditor/docEditorState";
 import { DocState, DocSelection, PropEditorFactory } from "./core/doc/docModels";
 import { MenuItem } from "./uiShell/controls/MenuItem";
+import { FormField } from "./uiShell/controls/FormField";
 
 interface Props {
     propEditorFactory: PropEditorFactory
@@ -39,56 +40,54 @@ export const ComponentViewEditorSection:React.SFC<Props> = (props) => {
 
     return (
         <>
-            <div className="scale-3 row palette-3 pdl-2" key="l1">
+            <div className="column separator-collapse palette-3 edge-bottom">
+                <div className="scale-3 row pdl-4" key="l1">
+                    
+                    <SelectedElementField
+                        key="elements"
+                        className="stretch"
+                        allElements={allElements}
+                        value={elements}
+                        onChange={handleChange} />
+                    
+                </div>
                 
-                <SelectedElementField
-                    key="elements"
-                    className="stretch"
-                    allElements={allElements}
-                    value={elements}
-                    onChange={handleChange} />
+
+                <div className="scale-3 row" key="l2">
+                    
+                    <MenuItem 
+                        key="create"
+                        className="highlight-none"
+                        selected={editMode == "create"}
+                        onClick={editModeSetter("create")}
+                        label="Add Element" icon="plus" name="addElement" />
+                    
+                    <MenuItem 
+                        key="edit" 
+                        className="highlight-none"
+                        onClick={editModeSetter("edit")}
+                        selected={editMode == "edit"}
+                        label="Properties" icon="edit" name="editElement" />
+                    
+                    <MenuItem 
+                        key="elements" 
+                        className="highlight-none"
+                        onClick={editModeSetter("elements")}
+                        selected={editMode == "elements"}
+                        label="Elements" icon="sitemap" name="elements" />
+
+                </div>
             </div>
-            
 
-            <div className="scale-3 row palette-3" key="l2">
+            {(editMode == "create") && <ElementInsertSection />}
                 
-                <MenuItem 
-                    key="create"
-                    selected={editMode == "create"}
-                    onClick={editModeSetter("create")}
-                    label="Add Element" icon="plus" name="addElement" />
-                 
-                <MenuItem 
-                    key="edit" 
-                    onClick={editModeSetter("edit")}
-                    selected={editMode == "edit"}
-                    label="Properties" icon="edit" name="editElement" />
-                
-                <MenuItem 
-                    key="elements" 
-                    onClick={editModeSetter("elements")}
-                    selected={editMode == "elements"}
-                    label="Elements" icon="sitemap" name="elements" />
+            {(editMode == "edit") && <ElementUpdateSection 
+                                        renderPropEditor={props.propEditorFactory} 
+                                        component={component} 
+                                        elementIds={elements} />}
 
-            </div>
-            
-            <Wheel  orientation="x" value={editMode} key="editMode">
-                
-                <WheelItem name="create" key="create" className="stretch">
-                    <ElementInsertSection />
-                </WheelItem>
+            {(editMode == "elements") && <ElementListSection />}
 
-                <WheelItem name="edit" key="edit" className="stretch">
-                    <ElementUpdateSection 
-                        renderPropEditor={props.propEditorFactory} 
-                        component={component} 
-                        elementIds={elements} />
-                </WheelItem>
-
-                <WheelItem name="elements" key="elements" className="stretch">
-                    <ElementListSection />
-                </WheelItem>
-            </Wheel>
         </>
     );
 }

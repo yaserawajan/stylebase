@@ -1,4 +1,6 @@
-const ELEMENT_ID_ATTR = "editorId";
+
+
+export const ELEMENT_ID_ATTR = "editorId";
 
 export type ElementId = string
 

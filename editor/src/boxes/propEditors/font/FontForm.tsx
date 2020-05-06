@@ -1,11 +1,10 @@
-import "./font_form.less";
 
 import * as React from "react";
 import { BoxFont } from "../../types";
-import { FormField } from "../../../core/propEditors/FormField";
-import { NumberInput } from "../../../core/propEditors/NumberInput";
-import { InputBar } from "../../../core/propEditors/InputBar";
-import { InputIcon } from "../../../core/propEditors/InputIcon";
+import { FormField } from "../../../uiShell/controls/FormField";
+import { NumberInput } from "../../../uiShell/controls/NumberInput";
+import { InputArea } from "../../../uiShell/controls/InputArea";
+import { InputIcon } from "../../../uiShell/controls/InputIcon";
 import { FontFamilySelector } from "./FontFamilySelector";
 
 interface Props {
@@ -24,25 +23,25 @@ export const FontForm:React.FC<Props> = (props) => {
         }, [props.value]);
 
     return (
-        <div className="font-form">
+        <div className="column">
             <div className="row">
 
                 <FormField key="size" name="size" className="stretch">
-                    <InputBar>
+                    <InputArea>
                         <NumberInput
                             onChange={changeHandler("size")}
                             value={props.value.size}
                             precision={0} />
-                    </InputBar>
+                    </InputArea>
                 </FormField>
 
                 <FormField key="spacing" name="spacing" className="stretch">
-                    <InputBar>
+                    <InputArea>
                         <NumberInput
                             onChange={changeHandler("letterSpacing")}
                             value={props.value.letterSpacing}
                             precision={3} />
-                    </InputBar>
+                    </InputArea>
                 </FormField>
 
             </div>
@@ -50,7 +49,7 @@ export const FontForm:React.FC<Props> = (props) => {
             <div className="row">
 
                 <FormField key="weight" name="weight / style" className="stretch">
-                    <InputBar>
+                    <InputArea>
                         <div className="row">
                             <NumberInput
                                 className="stretch"
@@ -63,13 +62,13 @@ export const FontForm:React.FC<Props> = (props) => {
                                 stepExclusive />
                             <InputIcon icon="italic" />
                         </div>
-                    </InputBar>
+                    </InputArea>
                 </FormField>
 
                 
             </div>
 
-            <FormField key="family" name="family" className="row">
+            <FormField key="family" name="family">
                 <FontFamilySelector value={props.value.family} onChange={changeHandler("family")} />
             </FormField>
             

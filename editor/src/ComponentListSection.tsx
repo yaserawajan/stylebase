@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Title } from "./uiShell/controls/Title";
 
 interface Props {
 
@@ -8,8 +7,8 @@ interface Props {
 export const ComponentListSection:React.SFC<Props> = (props) => {
 
     return (
-        <div className="l3 row">
-            <Title>Component List</Title>
-        </div>
+        <div className="scale-3 palette-3 dark row">
+            <div className="text"><strong>Component List</strong></div>
+        </div> 
     );
 }

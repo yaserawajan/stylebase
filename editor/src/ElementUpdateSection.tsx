@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
-import { Title } from "./uiShell/controls/Title";
 import { useDocElementState } from "./core/doc/docHooks";
 import { selectComponentMetadata } from "./core/doc/docLibSelectors";
 import { PropEditor } from "./core/propEditors/PropEditor";
@@ -9,6 +8,7 @@ import { Tree } from "./core/uiState/Tree";
 import { PropEditorFactory } from "./core/doc/docModels";
 import { docElementUpdate, docActionSet } from "./core/doc/docActions";
 import { actionUpdate } from "./patterns/docEditor/docEditorState";
+import { PanelBody } from "./uiShell/panel/PanelBody";
 
 interface Props {
     renderPropEditor: PropEditorFactory
@@ -37,10 +37,10 @@ export const ElementUpdateSection:React.SFC<Props> = (props) => {
 
     return (
         <>
-            <div key="l3" className="l3 row">
-                <Title>Properties</Title>
+            <div key="l3" className="scale-3 row pdl-4 pdr-4 palette-3">
+                <div className="text"><strong>Properties</strong></div>
             </div>
-            <div key="body" className="panel-body stretch">
+            <PanelBody key="body" className="column separator scale-4 palette-4">
                 <Tree name={element.type.component} key={props.component + "/" + props.elementIds[0]}>
 
                     {Object.keys(propTypes).map(propName => (
@@ -57,7 +57,7 @@ export const ElementUpdateSection:React.SFC<Props> = (props) => {
                     ))}
                     
                 </Tree>
-            </div>
+            </PanelBody>
         </>
     );
 }

@@ -1,8 +1,7 @@
-// import "./input_icon.css";
 
 import * as React from "react";
-import { IconLA } from "../../uiShell/IconLA";
-import { classes } from "../../uiShell/utils";
+import { IconLA } from "./IconLA";
+import { classes } from "../utils";
 
 interface Props {
     className?: string
@@ -18,7 +17,7 @@ export const InputIcon:React.SFC<Props> = React.forwardRef<any, Props>((props, r
 
     return (
         <div ref={ref} style={props.style} 
-            className={classes("input-icon", props.disabled && "disabled", props.className)} 
+            className={classes("icon", props.disabled && "disabled", props.className)} 
             onClick={props.disabled? noOp : props.onClick}>
             {props.icon 
                 ? <IconLA icon={props.icon} />

@@ -1,13 +1,10 @@
-// import "./stylesheets/all.less";
+import "./stylesheets/style.less";
+
 import * as React from "react";
 
 import { NavBar } from "./navbar/NavBar";
 import { Toolbar } from "./toolbar/Toolbar";
 import { Footer } from "./Footer";
-import { Button } from "./controls/Button";
-import { TabSelector } from "./controls/TabSelector";
-import { Tab } from "./controls/Tab";
-import { MenuItem } from "./controls/MenuItem";
 import { NavBarItem } from "./controls/NavBarItem";
  
 

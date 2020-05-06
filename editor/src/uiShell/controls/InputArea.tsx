@@ -1,7 +1,6 @@
-import "./input_bar.less";
 
 import * as React from "react";
-import { classes } from "../../uiShell/utils";
+import { classes } from "../utils";
 
 type ParentHood = { nested?: boolean }
 
@@ -14,14 +13,14 @@ interface Props {
     onClick?: () => void
 }
 
-export const InputBar:React.SFC<Props> = React.forwardRef<any, Props>((props, ref) => {
+export const InputArea:React.SFC<Props> = React.forwardRef<any, Props>((props, ref) => {
 
     const { nested } = React.useContext(parentHood);
 
     return (
         <div ref={ref} 
             tabIndex={props.tabIndex} 
-            className={classes(nested ?  "row" : "input-bar", props.className)} 
+            className={classes(nested ?  "row" : "input-area", props.className)} 
             style={props.style} 
             onClick={props.onClick}>
 

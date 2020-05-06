@@ -1,4 +1,3 @@
-import "./prop_form.less";
 
 import * as React from "react";
 

@@ -1,8 +1,7 @@
-import "../stylesheets/controls/button.less";
 
 import * as React from "react";
 
-import { IconLA } from "../IconLA";
+import { IconLA } from "./IconLA";
 import { classes } from "../utils";
 
 interface Props {

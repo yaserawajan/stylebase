@@ -1,7 +1,7 @@
-import "./input.less";
+
 
 import * as React from "react";
-import { classes } from "../../uiShell/utils";
+import { classes } from "../utils";
 
 interface Props {
     style?: React.CSSProperties
@@ -10,7 +10,7 @@ interface Props {
     placeholder?: string
     onChange: (value:string) => void
 }
-
+ 
 export const Input = React.forwardRef((props: Props, ref) => {
 
     const handleChange = (e:any) => {

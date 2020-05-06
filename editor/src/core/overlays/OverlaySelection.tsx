@@ -1,7 +1,7 @@
 import "./overlay_selection.less";
 
 import * as React from "react";
-import { IconLA } from "../../uiShell/IconLA";
+import { IconLA } from "../../uiShell/controls/IconLA";
 
 interface Props {
     actualRect: DOMRect

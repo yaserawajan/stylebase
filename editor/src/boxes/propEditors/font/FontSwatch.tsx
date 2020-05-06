@@ -30,7 +30,7 @@ export const FontSwatch:React.SFC<Props> = ({ onClick, style:passedStyle, classN
     }
 
     return (
-        <div onClick={onClick} className={classes("font-swatch", className)} style={style}>
+        <div onClick={onClick} className={classes("text", className)} style={style}>
             {font.family.name}
         </div>
     );

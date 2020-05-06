@@ -2,7 +2,7 @@ import "./overlay_drag_hover.less";
 
 import * as React from "react";
 import { classes } from "../../uiShell/utils";
-import { IconLA } from "../../uiShell/IconLA";
+import { IconLA } from "../../uiShell/controls/IconLA";
 
 interface Props {
     actualRect: DOMRect

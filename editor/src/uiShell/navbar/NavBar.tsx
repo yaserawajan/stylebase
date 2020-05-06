@@ -1,4 +1,3 @@
-import "../stylesheets/containers/navbar.less";
 
 import * as React from "react";
 import { classes } from "../utils";

@@ -1,4 +1,3 @@
-import "../stylesheets/containers/panel.less";
 
 import * as React from "react";
 
@@ -12,7 +11,7 @@ interface Props {
 export const Panel:React.SFC<Props> = (props) => {
 
     return (
-        <div className={classes("panel", props.className)} style={props.style}>
+        <div className={classes("panel column", props.className)} style={props.style}>
             {props.children}
         </div>
     );

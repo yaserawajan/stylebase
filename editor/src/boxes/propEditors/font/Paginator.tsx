@@ -1,5 +1,5 @@
 import * as React from "react";
-import { InputIcon } from "../../../core/propEditors/InputIcon";
+import { InputIcon } from "../../../uiShell/controls/InputIcon";
 
 interface Props {
     pageSize: number

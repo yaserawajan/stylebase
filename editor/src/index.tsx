@@ -1,5 +1,4 @@
 import "normalize.css";
-//import "./style.css";
 
 import * as React from "react";
 import { createStore, combineReducers } from "redux";

@@ -1,7 +1,6 @@
-import "./input.less";
 
 import * as React from "react";
-import { classes } from "../../uiShell/utils";
+import { classes } from "../utils";
 import { InputIcon } from "./InputIcon";
 
 interface Props {
@@ -65,7 +64,6 @@ export const NumberInput:React.FC<Props> = (props) => {
             {props.step && <InputIcon icon="minus" disabled={minusDisabled} onClick={handleMinus} />}
             <input 
                 className={classes("input", "stretch", "text-center")} 
-                
                 placeholder={props.placeholder} 
                 size={1} 
                 type="text" 

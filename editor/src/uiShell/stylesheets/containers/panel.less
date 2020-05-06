@@ -1,14 +1,9 @@
-@import "../all.less";
+@import "../mixins/all.less";
 
 .panel {
-    display: flex;
-    flex-direction: column;
-
-    .color-pal-5();
+    // .color-pal-3();
     z-index: @editor-z-index;
     .user-select(none);
-
-    & > * + * {
-        margin-top: 1px;
-    }
+    
+    background-color: white;
 }

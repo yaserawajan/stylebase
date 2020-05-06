@@ -4,6 +4,7 @@ import { SearchField } from "./uiShell/controls/SearchField";
 import { ComponentUri } from "./core/doc/docModels";
 import { ComponentCard } from "./ComponentCard";
 import { useDocLibState } from "./core/doc/docLibHooks";
+import { PanelBody } from "./uiShell/panel/PanelBody";
 
 interface Props {
     
@@ -17,7 +18,7 @@ export const ElementInsertSection:React.SFC<Props> = (props) => {
 
     return (
         <>
-            <div key="l3" className="l3 row">
+            <div key="search" className="scale-3 row palette-4">
                 <SearchField 
                     className="stretch"
                     value={value} 
@@ -25,7 +26,7 @@ export const ElementInsertSection:React.SFC<Props> = (props) => {
                     placeholder="Filter ..." />
             </div> 
 
-            <div key="body" className="panel-body bg-dotted ">
+            <PanelBody key="body" className="column bg-dotted">
                 {
                     Object.keys(libs.byName).map(libName => {
                         const lib = libs.byName[libName];
@@ -45,8 +46,7 @@ export const ElementInsertSection:React.SFC<Props> = (props) => {
                         );
                     }) 
                 }
-                <div className="stretch" />
-            </div>
+            </PanelBody>
             
         </>
     );

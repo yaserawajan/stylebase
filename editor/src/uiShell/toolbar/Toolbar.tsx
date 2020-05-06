@@ -1,4 +1,3 @@
-import "../stylesheets/containers/toolbar.less";
 
 import * as React from "react";
 

@@ -1,9 +1,9 @@
 import * as React from "react";
 
 import { PropEditorRenderProps, NumberDataType } from "../../doc/docModels";
-import { InputBar } from "../InputBar";
-import { NumberInput } from "../NumberInput";
-import { FormField } from "../FormField";
+import { InputArea } from "../../../uiShell/controls/InputArea";
+import { NumberInput } from "../../../uiShell/controls/NumberInput";
+import { FormField } from "../../../uiShell/controls/FormField";
 
 export const NumberPropEditor:React.FC<PropEditorRenderProps> = (props) => {
     
@@ -15,7 +15,7 @@ export const NumberPropEditor:React.FC<PropEditorRenderProps> = (props) => {
     
     return (
         <FormField name={props.propName} key={props.propName} assigned={props.value !== undefined}>
-            <InputBar>
+            <InputArea>
                 <NumberInput 
                     className="stretch text-center" 
                     placeholder={props.defaultValue} 
@@ -26,7 +26,7 @@ export const NumberPropEditor:React.FC<PropEditorRenderProps> = (props) => {
                     min={min}
                     max={max}
                     precision={precision} />
-            </InputBar>
+            </InputArea>
         </FormField>
     );
 }

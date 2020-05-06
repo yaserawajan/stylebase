@@ -1,41 +1,44 @@
-@import "../all.less";
+@import "../mixins/all.less";
 
 .navbar-item {
-    cursor: pointer;
-    display: flex;
-    flex-direction: row;
+    
     max-width: 1em;
-    overflow: hidden;
-    height: 1em;
+
+    .interactive();
+
+    .text-icon-container(0.4em);
+    
     .animate();
 
     & > .icon {
         width: 1em;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    }
+
+    & > .text {
+        width: 0;
+        margin-left: 0;
+        visibility: hidden;
     }
 
     & > .icon > i {
         font-size: 0.4em;
-    }
-
-    & > .text {
-        word-break: break-all;
-        word-wrap: none;
-        font-size: 0.3em;
-        padding-right: 15px;
-        display: none;
-    }
+    } 
 
     &.selected {
+        max-width: 400px;
+        padding: 0 0.4em;
         .bg-lighten(0.3);
-        max-width: 1000px;
-        overflow: visible;
     }
 
-    &.selected > .text {
-        display: block;
+    &.selected > .icon {
+        width: auto;
     }
+    
+    &.selected > .text {
+        margin-left: 0.2em;
+        width: auto;
+        visibility: visible;
+    }
+
 }
 

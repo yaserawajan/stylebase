@@ -1,7 +1,6 @@
-import "./search_field.less";
 
 import * as React from "react";
-import { IconLA } from "../IconLA";
+import { IconLA } from "./IconLA";
 import { classes } from "../utils";
 
 interface Props {

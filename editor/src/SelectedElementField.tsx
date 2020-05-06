@@ -23,6 +23,7 @@ export const SelectedElementField:React.SFC<Props> = ({ className, value, onChan
         return (
             <div className={classes("row", className)}>
                 <div className="text caption">Element</div>
+                
                 <DropDownList
                     className="stretch"
                     key="elementSel"
@@ -30,6 +31,7 @@ export const SelectedElementField:React.SFC<Props> = ({ className, value, onChan
                     allValues={allElements}
                     value={value[0]}
                     onChange={handleChange} />
+                
             </div>
         );
     }

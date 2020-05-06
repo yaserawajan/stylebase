@@ -2,12 +2,11 @@ import * as React from "react";
 
 import { classes } from "../../../uiShell/utils";
 import { FontFamily } from "../../types";
-import { InputIcon } from "../../../core/propEditors/InputIcon";
-import { InputBar } from "../../../core/propEditors/InputBar";
-import { InputOverlay } from "../../../core/propEditors/InputOverlay";
+import { InputIcon } from "../../../uiShell/controls/InputIcon";
+import { InputArea } from "../../../uiShell/controls/InputArea";
 import { FontSwatch } from "./FontSwatch";
 import { FontFamilyExplorer } from "./FontFamilyExplorer";
-import { IconLA } from "../../../uiShell/IconLA";
+import { IconLA } from "../../../uiShell/controls/IconLA";
 
 interface Props {
     className?: string
@@ -27,7 +26,7 @@ export const FontFamilySelector:React.SFC<Props> = (props) => {
     }
 
     return (
-        <InputBar className={props.className} style={props.style} tabIndex={0}>
+        <InputArea className={props.className} style={props.style} tabIndex={0}>
 
             <div className="row" onClick={handleClick}>
 
@@ -47,12 +46,12 @@ export const FontFamilySelector:React.SFC<Props> = (props) => {
 
             {toggled &&
                 <div className="row">
-                    <InputOverlay>
-                        <FontFamilyExplorer value={props.value} onChange={props.onChange} />
-                    </InputOverlay>
+                    
+                    <FontFamilyExplorer className="stretch" value={props.value} onChange={props.onChange} />
+                    
                 </div>
             }
 
-        </InputBar>
+        </InputArea>
     )
 }

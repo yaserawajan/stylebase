@@ -1,10 +1,9 @@
-// import "./prop_folder.css";
 
 import * as React from "react";
 import { TreeItem } from "../uiState/Tree";
-import { IconLA } from "../../uiShell/IconLA";
 import { classes } from "../../uiShell/utils";
 import { humanizeIdentifier } from "./commonPropTypes/utils";
+import { Folder } from "../../uiShell/controls/Folder";
 
 interface Props {
     name: string
@@ -12,29 +11,26 @@ interface Props {
     renderSummary: (state: { isToggled: boolean }) => JSX.Element
     indent?: boolean
 }
-
+ 
 export const PropFolder:React.SFC<Props> = (props) => {
 
     return (
-        <TreeItem name={props.name}
+        <TreeItem 
+            name={props.name}
             renderItem={({ isExpanded, toggleExpand }) => (
-                    <div onClick={toggleExpand} 
-                        className={classes(
-                            "row", 
-                            "prop-folder-header", 
-                            props.assigned && "assigned",
-                            isExpanded() && "toggled" )}>
-                        <div key="toggler" className="prop-toggler">
-                            <IconLA size="fa-lx" icon="angle-right" className={classes("rotatable", isExpanded()? "rotate-90-cw" : "rotate-0")} />
-                        </div>
-                        <div key="title" className="prop-title">{humanizeIdentifier(props.name)}</div>
-                        <div key="s1" className="stretch" />
-                        {props.assigned && <div key="summary" className="summary">{props.renderSummary({ isToggled: isExpanded() })}</div>}
-                    </div>
-                )}>
-                <div className={classes("prop-folder-items", props.indent && "indent")}>
+                <Folder  
+                    title={humanizeIdentifier(props.name)} 
+                    toggled={isExpanded()}
+                    onToggle={toggleExpand}
+                    renderSummary={(t) => (props.assigned && props.renderSummary({ isToggled: t }))} />
+            )}>
+
+            <div className={classes("column", props.indent && "pdl-5")}>
+                <div className={props.indent && "column edge-left"}>
                     {props.children}
                 </div>
+            </div>
+
         </TreeItem>
     );
 }

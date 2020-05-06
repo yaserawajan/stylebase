@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Input } from "../../../core/propEditors/Input";
+import { Input } from "../../../uiShell/controls/Input";
 import { Paginator } from "./Paginator";
 import { usePaginatedList } from "../../../patterns/usePaginatedList";
 import { FontFamily } from "../../types";
@@ -8,6 +8,8 @@ import { classes } from "../../../uiShell/utils";
 import { findFonts } from "../../webFontUtils";
 
 interface Props {
+    style?: React.CSSProperties
+    className?: string
     value: FontFamily
     onChange: (value: FontFamily) => void
 }
@@ -35,7 +37,7 @@ export const FontFamilyExplorer:React.FC<Props> = (props) => {
     const selectHandler = (value: FontFamily) => () => props.onChange(value);
 
     return (
-        <div className="column">
+        <div className={classes("column", props.className)} style={props.style}>
             
             <Input 
                 key="filter"

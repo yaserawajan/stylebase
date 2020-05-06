@@ -1,10 +1,11 @@
 import * as React from "react";
 import { ElementRect } from "./types";
-import "./document_view.less";
 import { DocumentMargin } from "./DocumentMargin";
 import { elementIdFromDom } from "./viewElementIdentification";
 
 interface Props {
+    marginId: string
+    contentId: string
     rerenderSequence: number
     margins: number
     style: React.CSSProperties
@@ -24,7 +25,6 @@ type Entry =  {
 const createEntryMapper = (marginRect:DOMRect, borderRect: DOMRect, zoom: number) => 
     (pair:Entry):ElementRect => {
         const r = (pair.m.target as Element).getBoundingClientRect();
-        
         return {
             
             display: {
@@ -91,6 +91,7 @@ export const DocumentView:React.SFC<Props> = (props) => {
     return (
         <div 
             ref={marginRef}
+            data-editor-id={props.marginId}
             style={{ 
                 ...props.style,
                 display: "block", 
@@ -102,7 +103,7 @@ export const DocumentView:React.SFC<Props> = (props) => {
             }}>
             
             <DocumentMargin margin={props.margins}>
-                <div className="document-view" ref={boxRef}>
+                <div ref={boxRef} data-editor-id={props.contentId}>
 
                     {props.children}
                     

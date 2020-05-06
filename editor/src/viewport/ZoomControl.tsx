@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IconLA } from "../uiShell/IconLA";
+import { IconLA } from "../uiShell/controls/IconLA";
 import "./zoom_control.less"
 
 const classes = (...args:string[]) => args.filter(a => !!a).join(" ");

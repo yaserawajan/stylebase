@@ -1,14 +1,9 @@
 import * as React from "react";
 import { Panel } from "./uiShell/panel/Panel";
-import { Title } from "./uiShell/controls/Title";
-import { TabSelector } from "./uiShell/controls/TabSelector";
-import { Tab } from "./uiShell/controls/Tab";
 import { useActivePanelState } from "./core/uiState/ideState";
-import { Button } from "./uiShell/controls/Button";
-import { Wheel, WheelItem } from "./uiShell/controls/Wheel";
 import { ComponentViewEditorSection } from "./ComponentViewEditorSection";
 import { ComponentMetadataSection } from "./ComponentMetadataSection";
-import { IconLA } from "./uiShell/IconLA";
+import { IconLA } from "./uiShell/controls/IconLA";
 import { PropEditorFactory } from "./core/doc/docModels";
 import { MenuItem } from "./uiShell/controls/MenuItem";
 
@@ -40,11 +35,13 @@ export const ComponentEditorPanel:React.SFC<Props> = (props) => {
                     {props.component}
                 </div>
 
+                <div className="stretch" />
 
                 
+
             </div>
-            
-            <div className="scale-2 row palette-4 dark edge-bottom">
+
+            <div key="menu" className="palette-4 dark scale-2 row">
                 <MenuItem 
                     key="design" 
                     selected={componentEditMode == "design"}
@@ -55,12 +52,11 @@ export const ComponentEditorPanel:React.SFC<Props> = (props) => {
                     selected={componentEditMode == "metadata"}
                     onClick={editModeSetter("metadata")} label="Metadata" icon="list" name="toggleMetadata" />
             </div>
-
-
+            
             {(componentEditMode == "design") && <ComponentViewEditorSection propEditorFactory={props.propEditorFactory} />}
+            
             {(componentEditMode == "metadata") && <ComponentMetadataSection /> }
 
-            
  
         </Panel>
     );

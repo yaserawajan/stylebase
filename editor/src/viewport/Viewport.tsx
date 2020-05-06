@@ -6,6 +6,11 @@ import { ElementRectMap, ElementRect } from "./types";
 import RectContext from "./RectContext";
 import { ZoomControl } from "./ZoomControl";
  
+
+const MARGIN_ID = "@@margin";
+const CONTENT_ID = "@@content";
+
+
 interface Props {
     documentMargins: number
     top: number
@@ -82,7 +87,13 @@ export const Viewport:React.SFC<Props> = ({
 
     }, [right, left, zoom]);
 
+    
+    
     const unit = Math.floor(50 / (zoom * 5)) * 5;
+    
+    const { [CONTENT_ID]: contentRect, [MARGIN_ID]: marginRect, ...rest } = state.rects;
+    const rectArray = Object.keys(rest).map(k => ({ ...state.rects[k], k}));
+
     return (
         <>
             <div key="tr" className="canvas-x-ruler" style={{ top, right, left: left + 40 + 30 }}>
@@ -102,8 +113,52 @@ export const Viewport:React.SFC<Props> = ({
                 top: 40 + 30 + top,
                 left: 40 + 30 + left, 
                 bottom: 30 + bottom,
-                right: 30 + 40 + right
+                right: 30 + 40 + right,
+                zIndex: 10
             }} />
+
+            <div key="content-trans" 
+                
+                style={{ 
+                        position: "absolute", 
+                        overflow: "visible", 
+                        zIndex: 11, 
+                        top: 40 + 30 + top,
+                        display: "block",
+                        left: 40 + 30 + left 
+                    }}>
+                {contentRect && <div className="bg-checkers" style={{
+                        pointerEvents: "none",
+                        position: "absolute",
+                        border: "1px dashed #999",
+                        top: contentRect.display.top,
+                        left: contentRect.display.left,
+                        width: contentRect.display.width,
+                        height: contentRect.display.height
+                    }} />}
+            </div>
+
+            <div key="default-outlines" 
+                style={{ 
+                        position: "absolute", 
+                        overflow: "visible", 
+                        zIndex: 12, 
+                        top: 40 + 30 + top,
+                        display: "block",
+                        left: 40 + 30 + left 
+                    }}>
+                {rectArray.map(rect => (<div key={rect.k} style={{
+                        pointerEvents: "none",
+                        position: "absolute",
+                        border: "1px dashed #555",
+                        top: rect.display.top,
+                        left: rect.display.left,
+                        width: rect.display.width,
+                        height: rect.display.height
+                    }} />))
+                }
+                
+            </div>
 
             <div key="body" 
                 style={{ 
@@ -125,6 +180,8 @@ export const Viewport:React.SFC<Props> = ({
 
                 <DocumentView 
                     key="root"
+                    marginId={MARGIN_ID}
+                    contentId={CONTENT_ID}
                     margins={documentMargins}
                     zoom={zoom}
                     rerenderSequence={state.rerenderSequence}
