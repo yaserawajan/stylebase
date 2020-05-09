@@ -3,6 +3,31 @@ import { DocState, DocSelection, DocAction, ComponentState, ElementLocation, Ele
 import { entitySetUpdate, entitySetAdd } from "../../patterns/entitySet/entitySetUtils";
 import { EntitySet } from "../../patterns/entitySet/entitySetModels";
 
+const findAncestors = (state: ComponentState, el: string):string[] => {
+    const elements = state.elements;
+    const elData = elements.byName[el];
+    if (!elData) return [];
+
+    let elParent:string = null;
+    for (const kEl in elements.byName) { 
+        const elTested = elements.byName[kEl];
+        if (elTested.props.children && elTested.props.children.indexOf(el) !== -1) {
+            elParent = kEl;
+            break;
+        }
+    }
+
+    if (!elParent) return [];
+
+    return [elParent, ...findAncestors(state, elParent)];
+}
+
+const findDescendents = (state: ComponentState, el: string):string[] => {
+    const elData = state.elements.byName[el];
+    if (!elData) return []; 
+    const children:string[] = elData.props.children || [];
+    return [].concat.apply([el], children.map(c => findDescendents(state, c)));
+} 
 
 const purgeImports = (components:EntitySet<ComponentState>):string[] => {
     let unique:any = { }
@@ -176,7 +201,7 @@ export const docUpdateReducer = (state:DocSnapshot<DocState, DocSelection>, acti
     if (action.type == "ELEMENT_MOVE") {
         
         const sameComponent = action.fromComponent == action.location.component
-
+ 
         const componentFromOld = state.data.components.byName[action.fromComponent]
         const componentFrom = removeElement(componentFromOld, action.fromElementId);
         
@@ -225,6 +250,111 @@ export const docUpdateReducer = (state:DocSnapshot<DocState, DocSelection>, acti
         //         elements: [ action.fromElementId ]
         //     }
         // }
+    }
+
+    if (action.type == "ELEMENT_REMOVE") {
+        const compState = state.data.components.byName[action.component];
+        const elTree = findDescendents(compState, action.elementId);
+
+        if (elTree.length < 1) return state;
+
+        const [ parent, ...ancestors ] = findAncestors(compState, action.elementId);
+        
+        let byName:any = {}
+        for (const kEl in compState.elements.byName) {
+            if (elTree.indexOf(kEl) === -1) {
+                const elData = compState.elements.byName[kEl];
+                if (parent == kEl) {
+                    byName[kEl] = {
+                        ...elData,
+                        props: {
+                            ...elData.props,
+                            children: elData.props.children.filter((c:string) => c != action.elementId)
+                        }
+                    }
+                }
+                else {
+                    byName[kEl] = elData;
+                }
+                
+            }
+        }
+
+        return {
+            ...state,
+            selection: {
+                ...state.selection,
+                elements: [ parent ]
+            },
+            data: {
+                ...state.data,
+                components: {
+                    ...state.data.components,
+                    byName: {
+                        ...state.data.components.byName,
+                        [action.component]: {
+                            ...compState,
+                            elements: {
+                                all: Object.keys(byName),
+                                byName
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (action.type == "COMPONENT_RENAME") {
+
+        const all = state.data.components.all.map(n => 
+            n == action.oldName 
+                ? action.newName 
+                : action.oldName);
+
+        const { [action.oldName]: def, ...componentsByNameOld } = state.data.components.byName;
+
+        let componentsByName:any = {};
+        for (const k in componentsByNameOld) {
+            const c = componentsByNameOld[k];
+            let elementsByName:any = {}
+            for (const kEl in c.elements.byName) {
+                const el = c.elements.byName[kEl];
+                if (!el.type.lib && el.type.component == action.oldName) {
+                    elementsByName[kEl] = {
+                        ...el,
+                        type: { component: action.newName }
+                    }
+                }
+                else {
+                    elementsByName[kEl] = el;
+                }
+            }
+            componentsByName[k] = {
+                ...c,
+                elements: {
+                    ...c.elements,
+                    byName: elementsByName
+                }
+            }
+        }
+
+        const byName = { ...componentsByName, [action.newName]: def };
+        const selectedComponent = state.selection.component == action.oldName
+            ? action.newName
+            : action.oldName;
+
+        return {
+            ...state,
+            data: {
+                ...state.data,
+                components: { ...state.data.components, all, byName }
+            },
+            selection: {
+                ...state.selection,
+                component: selectedComponent
+            }
+        }
     }
 
 

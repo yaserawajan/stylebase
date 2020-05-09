@@ -1,23 +1,23 @@
 import * as React from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
-import { ViewLayerSpecs } from "./uiShell/Layout";
-import { Viewport } from "./viewport/Viewport";
-import { ElementId } from "./viewport/viewElementIdentification";
-import { selectionChanged, DocEditorState } from "./patterns/docEditor/docEditorState";
-import { useZoomState, useHoverState, selectIde } from "./core/uiState/ideState";
-import { useDocSelectionState, useDocEditorState } from "./patterns/docEditor/docEditorHooks";
-import { DocSelection, DocState } from "./core/doc/docModels";
+import { ViewLayerSpecs } from "../uiShell/Layout";
+import { Viewport } from "../viewport/Viewport";
+import { ElementId } from "../viewport/viewElementIdentification";
+import { selectionChanged, DocEditorState } from "../patterns/docEditor/docEditorState";
+import { useZoomState, useHoverState, selectIde } from "./uiState/ideState";
+import { useDocSelectionState, useDocEditorState } from "../patterns/docEditor/docEditorHooks";
+import { DocSelection, DocState } from "./doc/docModels";
 import { AppElement } from "./AppElement";
-import { useComponentFactory } from "./core/doc/docLibHooks";
+import { useComponentFactory } from "./doc/docLibHooks";
 import { AppOutlines } from "./AppOutlines";
 
 
-interface Props {
+interface Props extends DocSelection {
     rect: ViewLayerSpecs
 }
  
-export const AppDocumentView:React.SFC<Props> = ({ rect }) => {
+export const AppDocumentView:React.SFC<Props> = ({ rect, component, elements }) => {
 
     const { dragItem, dropLocation } = useSelector((s:any) => ({ 
         dropLocation: selectIde(s).dropLocation,
@@ -26,7 +26,7 @@ export const AppDocumentView:React.SFC<Props> = ({ rect }) => {
 
     const [zoom, setZoom] = useZoomState();
     const [hoveredElement, setHoveredElement] = useHoverState();
-    const selection = useDocSelectionState<DocSelection>();
+    // const selection = useDocSelectionState<DocSelection>();
     const rootElement = useDocEditorState((editor: DocEditorState<DocState,DocSelection>) => {
         const compName = editor.present.selection.component;
         if (!compName) return undefined;
@@ -54,15 +54,15 @@ export const AppDocumentView:React.SFC<Props> = ({ rect }) => {
                     dragItem={dragItem}
                     dropLocation={dropLocation}
                     rootElement={rootElement}
-                    selectedElements={selection.elements} 
-                    component={selection.component} />
+                    selectedElements={elements} 
+                    component={component} />
             )}
             onZoomChange={setZoom}>
 
             {rootElement
 
                 ? <AppElement 
-                    component={selection.component}
+                    component={component}
                     elementId={rootElement} 
                     componentFactory={componentFactory}
                     onHover={setHoveredElement}

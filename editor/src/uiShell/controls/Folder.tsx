@@ -6,6 +6,7 @@ interface Props {
     style?: React.CSSProperties
     className?: string
     toggled?: boolean
+    marked?: boolean
     title: string
     renderSummary?: (toggled:boolean) => React.ReactNode
     onToggle?: () => void
@@ -18,13 +19,13 @@ export const Folder:React.SFC<Props> = (props) => {
     }
 
     return (
-        <div onClick={handleClick} className={classes("row edge-bottom", props.className)}>
+        <div onClick={handleClick} className={classes("folder row edge-bottom", props.className)}>
             <div key="toggler" className="icon">
                 <IconLA 
                     icon="angle-right" 
                     className={classes("animate", props.toggled && "rotate-90-cw")} />
             </div>
-            <div key="title" className="text">{props.title}</div>
+            <div key="title" className="text" style={{ fontWeight: props.marked? "bold" : "normal" }}>{props.title}</div>
             <div key="s1" className="stretch" />
             <div key="summary" className="summary">
                 {props.renderSummary && props.renderSummary(props.toggled)}

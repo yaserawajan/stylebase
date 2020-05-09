@@ -11,7 +11,7 @@ import { enableBatching } from "redux-batched-actions";
 import { createIdeReducer, IDE } from "./core/uiState/ideState";
 import { createEditorReducer } from "./patterns/docEditor/docEditorState";
 import { DocState, DocSelection, DocAction } from "./core/doc/docModels";
-import { App } from "./App";
+import { App } from "./core/App";
 import { createDefaultTemplate } from "./boxes/templates/defaultTemplate";
 import { defaultSelector } from "./core/doc/docDefaultSelector";
 import { docUpdateReducer } from "./core/doc/docUpdateReducer";
@@ -21,6 +21,7 @@ import { importDocState } from "./core/doc/docImportUtils";
 import { DOC_LIB, createDocLibReducer } from "./core/doc/docLibReducer";
 import { boxLibEditorManifest } from "./boxes/boxLibEditorManifest";
 import { createPropEditorFactory } from "./core/doc/propEditorUtils";
+import { COMPONENT_EDITOR_TAB_KEY, componentEditorTabs } from "./core/constants";
 
 const libs = { "boxes": boxLibManifest };
 const editorLibs = { "boxes": boxLibEditorManifest };
@@ -31,8 +32,8 @@ const store = createStore(enableBatching(combineReducers({
     
     [IDE]: createIdeReducer({
         "right": "componentEditor",
-        "componentEditMode": "design",
-        "editMode": "elements"
+        [COMPONENT_EDITOR_TAB_KEY]: componentEditorTabs.add,
+        
     }),
     
     [DOC_EDITOR]: createEditorReducer<DocState,DocAction,DocSelection>({

@@ -66,10 +66,11 @@ export const Viewport:React.SFC<Props> = ({
         })
         setState(stateOld => ({ 
             ...stateOld, 
-            rects: { 
-                ...stateOld.rects, 
-                ...rectMap 
-            }
+            rects: rectMap
+            // rects: { 
+            //     ...stateOld.rects, 
+            //     ...rectMap 
+            // }
         }));
     }
 

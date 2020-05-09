@@ -1,11 +1,12 @@
 import * as React from "react";
 
-import { Layout } from "./uiShell/Layout";
+import { Layout } from "../uiShell/Layout";
 import { ComponentEditorPanel } from "./ComponentEditorPanel";
-import { useActivePanelState } from "./core/uiState/ideState";
+import { useActivePanelState } from "./uiState/ideState";
 import { AppDocumentView } from "./AppDocumentView";
-import { PropEditorFactory } from "./core/doc/docModels";
+import { PropEditorFactory, DocSelection } from "./doc/docModels";
 import { AppToolbarEdit } from "./AppToolbarEdit";
+import { useDocSelectionState } from "../patterns/docEditor/docEditorHooks";
 
 interface Props {
     propEditorFactory: PropEditorFactory
@@ -17,7 +18,7 @@ export const App:React.SFC<Props> = (props) => {
 
     const [rightPanel, setRightPanel] = useActivePanelState("right");
 
-
+    const { component, elements } = useDocSelectionState<DocSelection>();
 
     return (
         <Layout 
@@ -36,7 +37,7 @@ export const App:React.SFC<Props> = (props) => {
                     case "componentEditor": return (
                             <ComponentEditorPanel 
                                 propEditorFactory={props.propEditorFactory} 
-                                component="Component1" style={rect} />
+                                component={component} style={rect} />
                         );
                     default: return <div style={rect} />;
                 }
@@ -47,11 +48,11 @@ export const App:React.SFC<Props> = (props) => {
                     <>
                         <div key="d1" className="stretch" />
                         <div key="d2" className="divider" />
-                        <AppToolbarEdit />
+                        <AppToolbarEdit component={component} elements={elements} />
                     </>
                 )}
 
-            renderView={(_, rect) => (<AppDocumentView key="adv" rect={rect} />)}
+            renderView={(_, rect) => (<AppDocumentView key="adv" rect={rect} component={component} elements={elements} />)}
 
             onLeftPanelSelection={setLeftPanel}
             onRightPanelSelection={setRightPanel} />

@@ -1,26 +1,64 @@
 @editor-z-index: 1000;
 
+@indent: 0.3em;
+
+.row() {
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-start;
+    flex-wrap: nowrap; 
+    position: relative;
+
+    &.fluid {
+        flex-wrap: wrap;
+    }
+
+    &-indent-1 {
+
+        padding: 0 12.5px;
+        
+    }
+
+    &-indent-2 {
+        padding: 0 12.5px;
+    }
+
+
+}
+
 
 .text-icon-container(@marginAround) {
 
     display: flex;
+    
+    align-items: center;
     flex-direction: row;
     flex-wrap: nowrap;
     overflow: hidden;
     text-overflow: clip;
 
+    & > * {
+        vertical-align: middle;
+    }
+
     & > .icon {
         display: flex;
         flex-direction: row;
         justify-content: center;
+        align-items: center;
     }
 
     & > .text {
         display: inherit;
-        
         overflow: hidden;
-        text-overflow: clip;
+        text-overflow: ellipsis;
         white-space: nowrap;
+    }
+
+    & > .icon + .text {
+        margin-left: 0.2em;
     }
 
     & > .icon:only-child {
@@ -31,4 +69,27 @@
     & > .text:only-child {
         margin-left: 0;
     }
+}
+
+.layout-form() {
+    padding: 10px 20px;
+
+    & > * {
+        width: 100%;
+    }
+
+    & .row, &.row {
+        justify-content: space-between;
+
+
+
+        & > .size-half {
+            flex: 0 0 48%;
+        }
+
+        & > .size-full {
+            flex: 0 0 100%;
+        }
+    }
+
 }

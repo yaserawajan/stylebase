@@ -1,0 +1,27 @@
+@import "../mixins/all.less";
+
+.title {
+    // padding: 0 0.2em;
+    
+    & > .text {
+        font-weight: bold;
+    }
+
+    &.secondary > .text {
+        font-weight: 300;
+    }
+
+    & > .icon > i {
+        font-size: 0.4em;
+    } 
+
+    .text-icon-container(0.4em);
+
+    // &:first-child {
+    //     padding-left: 0.3em;
+    // }
+
+    // &:last-child {
+    //     padding-right: 0.3em;
+    // }
+}

@@ -2,17 +2,17 @@ import * as React from "react";
 import { IconLA } from "./IconLA";
 import { classes } from "../utils";
 import { Wheel, WheelItem } from "./Wheel";
+import { InputArea } from "./InputArea";
 
 interface Props {
     style?: React.CSSProperties
     className?: string
-    label: string
     value: string
     allValues: string[]
     onChange?: (value: string) => void
 }
 
-export const DropDownList:React.SFC<Props> = (props) => {
+export const SelectionCarousel:React.SFC<Props> = (props) => {
 
     const handlePrevious = React.useCallback((e: React.MouseEvent) => {
         e.stopPropagation();
@@ -29,20 +29,18 @@ export const DropDownList:React.SFC<Props> = (props) => {
     }, [props.value, props.allValues]);
 
     return (
-        <div style={props.style} className={classes("drop-down-list row", props.className)} >
-        
+        <div style={props.style} className={classes("selection-carousel row", props.className)} >
             <div key="prev" className="icon"><IconLA onClick={handlePrevious} icon="angle-left" /></div>
-
             <Wheel orientation="x" value={props.value} className="stretch">
                 {props.allValues.map(v => (
                     <WheelItem name={v} key={v}>
-                        <div key="v" className="text text-center">{v}</div>
+                        <div key="v" 
+                            className="text text-center" 
+                            style={{ transform: "scale(1.6)", pointerEvents: "none" }}>{v}</div>
                     </WheelItem>
                 ))}
             </Wheel>
-
             <div key="next" className="icon"><IconLA onClick={handleNext} size="fa-lx" icon="angle-right" /></div>
-            
         </div>
     );
 }

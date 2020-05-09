@@ -10,26 +10,21 @@ interface Props {
     style?: React.CSSProperties
     className?: string
 
-    name: string
     disabled?: boolean
     label?: string
     icon?: string
     toggled?: boolean
     selected?: boolean
-    onClick?: (name: string) => void
+    onClick?: () => void
 }
 
 export const MenuItem:React.SFC<Props> = (props) => {
 
-    const handleClick = () => {
-        
-        if (props.onClick) props.onClick(props.name);
-    }
-
+    
     return (
-        <div key={props.name} 
+        <div 
             style={props.style}
-            onClick={handleClick} 
+            onClick={props.onClick} 
             className={classes("menu-item", props.toggled && "toggled", props.selected && "selected", props.className)}>
 
             {props.icon

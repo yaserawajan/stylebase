@@ -197,12 +197,21 @@ export type ElementUpdateAction = {
     props: ElementProps
 }
 
+export type ComponentRenameAction = {
+    type: "COMPONENT_RENAME",
+    oldName: string,
+    newName: string
+}
+
 export type DocActionSet = {
     type: "ACTION_SET"
     actions: DocAction[]
 }
 
-export type DocAction = ElementAddAction | ElementMoveAction | ElementRemoveAction | ElementUpdateAction | DocActionSet
+export type DocAction = 
+    ElementAddAction | ElementMoveAction | ElementRemoveAction | ElementUpdateAction
+    | ComponentRenameAction
+    | DocActionSet
 
 export type PropEditorRenderProps = {
     renderPropEditor: PropEditorFactory 

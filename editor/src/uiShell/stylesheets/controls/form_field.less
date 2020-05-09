@@ -2,28 +2,59 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    padding: 0 0.3em;
-}
-
-
-.form-field.one-line {
-    flex-direction: row;
-    justify-content: space-around;
+    // padding: 0 0.3em 0 0.3em;
+    position: relative;
     
+
+    & > .label {
+        line-height: 0.8em;
+        
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        text-align: left;
+    }
+
+    &.error > .label {
+        color: red;
+    }
+
+    & > .label > span {
+        display: inline;
+        vertical-align: middle;
+        font-size: 0.3em;
+        font-weight: 300;
+    }
+    
+    & > .body {
+        margin-top: 0.7em;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+
+        & > :only-child {
+            width: 100%;
+        }
+    }
+
+
+
+    &.one-line {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    &.one-line > .label {
+        margin-bottom: 0;
+        text-align: initial;
+    }
+    
+    &.assigned > .label {
+        font-weight: bold;
+    }
+    
+
 }
 
-.form-field > .title {
-    font-weight: 300;
-    font-variant: small-caps;
-    // opacity: 0.7;
-    text-align: center;
-}
 
-.form-field.one-line > .title {
-    margin-bottom: 0;
-    text-align: initial;
-}
-
-.form-field.assigned > .title {
-    font-weight: bold;
-}

@@ -8,22 +8,37 @@
     position: relative;
     line-height: 0.7em;
     margin-bottom: 0.15em;
+
+    &:focus-within {
+        box-shadow: 0 0 5px rgb(121, 146, 179);
+    }
+
+    & .icon {
+        display: flex;
+        width: 0.7em;
+        align-items: center;
+        justify-content: center;
+    }
+
+    & .icon > i {
+        font-size: 0.4em;
+    }
+
+    & > .row + .row {
+        background-color: 0 -1px 0 0 #ddd;
+    }
+
+    & > .row:first-child > :first-child { border-top-left-radius: 3px; }
+    & > .row:first-child > :last-child { border-top-right-radius: 3px; }
+    & > .row:last-child > :first-child { border-bottom-left-radius: 3px; }
+    & > .row:last-child > :last-child { border-bottom-right-radius: 3px; }
+
+    & > :only-child {
+        flex: 1 1 auto;
+        border-radius: 3px;
+    }
+
 }
 
-.input-area > .row + .row {
-    background-color: 0 -1px 0 0 #ddd;
-}
 
-.input-area:focus-within {
-    box-shadow: 0 0 5px rgb(121, 146, 179);
-}
 
-.input-area > .row:first-child > :first-child { border-top-left-radius: 3px; }
-.input-area > .row:first-child > :last-child { border-top-right-radius: 3px; }
-.input-area > .row:last-child > :first-child { border-bottom-left-radius: 3px; }
-.input-area > .row:last-child > :last-child { border-bottom-right-radius: 3px; }
-
-.input-area > :only-child {
-    flex: 1 1 auto;
-    border-radius: 3px;
-}

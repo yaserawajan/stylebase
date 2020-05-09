@@ -1,7 +1,7 @@
 import { OptionState, OptionChangedAction, optionReducer, optionChanged } from "./optionState";
 import { ToggleState, ToggledAction, toggleReducer } from "./toggleState";
 import { useSelector, useDispatch } from "react-redux";
-import { Draggable } from "../../draggables";
+import { Draggable } from "../draggables";
  
 type DropLocation = {
     actionType: string

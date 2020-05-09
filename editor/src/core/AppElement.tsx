@@ -2,17 +2,17 @@ import * as React from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import {  batchActions } from "redux-batched-actions";
 
-import { ComponentFactory, DocAction, ElementAddAction, ElementLocation, ElementMoveAction, PropMetadata } from "./core/doc/docModels";
-import { useDocElementState } from "./core/doc/docHooks";
-import { ViewElement } from "./viewport/ViewElement";
-import { useDraggableAsset } from "./core/uiState/useDraggableAsset";
-import { useViewDropTarget } from "./core/uiState/useViewDropTarget";
-
-import { dragEnd } from "./core/uiState/ideState";
-import { actionUpdate } from "./patterns/docEditor/docEditorState";
-import { optionChanged } from "./core/uiState/optionState";
-import { selectComponentMetadata } from "./core/doc/docLibSelectors";
+import { ComponentFactory, DocAction, ElementAddAction, ElementLocation, ElementMoveAction, PropMetadata } from "./doc/docModels";
+import { useDocElementState } from "./doc/docHooks";
+import { ViewElement } from "../viewport/ViewElement";
+import { useDraggableAsset } from "./uiState/useDraggableAsset";
+import { useViewDropTarget } from "./uiState/useViewDropTarget";
+import { dragEnd } from "./uiState/ideState";
+import { actionUpdate } from "../patterns/docEditor/docEditorState";
+import { optionChanged } from "./uiState/optionState";
+import { selectComponentMetadata } from "./doc/docLibSelectors";
 import { ErrorShield } from "./ErrorShield";
+import { COMPONENT_EDITOR_TAB_KEY, componentEditorTabs } from "./constants";
  
 const combineRefs = (...refs:any[]) => (value:any) => {
     refs.forEach(ref => { 
@@ -67,9 +67,7 @@ export const AppElement = (props:Props) => {
             
             }
 
-            // TODO Fix wheel layout bug when too many items are added 
             // TODO React-DnD drag-drop latency
-            // TODO style hover drag action types
             // TODO prevent drag-drop item in self or in child
 
             if ("children" in propTypes) return "in";
@@ -124,7 +122,10 @@ export const AppElement = (props:Props) => {
                 } as ElementAddAction
             }
 
-            dispatch(batchActions([actionUpdate(docAction), optionChanged("editMode", "edit", false)]));
+            dispatch(batchActions([
+                actionUpdate(docAction), 
+                optionChanged(COMPONENT_EDITOR_TAB_KEY, componentEditorTabs.adjust, false)
+            ]));
 
             
         }

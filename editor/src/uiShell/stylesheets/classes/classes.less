@@ -2,30 +2,20 @@
 
 .animate { .animate() }
 
-.caption {
-    font-weight: 300;
-    font-variant: small-caps;
-}
-
 .interactive {
     cursor: pointer;
     
 }
 
 
-.row {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: flex-start;
-    flex-wrap: nowrap; 
-    position: relative;
 
-    &.fluid {
-        flex-wrap: wrap;
-    }
+.row {
+    .row();
 }
 
+.layout-form {
+    .layout-form();
+}
 
 .column {
     display: flex;
@@ -95,22 +85,11 @@
 
 
 .text {
-    font-size: 0.3em;
-    
-}
-
-.icon {
-    
+    font-size: 0.3em;   
 }
 
 .icon > i {
     font-size: 0.4em;
-}
-
-.subtext {
-    font-size: 0.4em;
-    height: 1.7em;
-    line-height: 2em;
 }
 
 .bg-dotted {

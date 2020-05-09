@@ -1,10 +1,11 @@
 import * as React from "react";
 
-import { SearchField } from "./uiShell/controls/SearchField";
-import { ComponentUri } from "./core/doc/docModels";
+import { SearchField } from "../uiShell/controls/SearchField";
+import { ComponentUri } from "./doc/docModels";
 import { ComponentCard } from "./ComponentCard";
-import { useDocLibState } from "./core/doc/docLibHooks";
-import { PanelBody } from "./uiShell/panel/PanelBody";
+import { useDocLibState } from "./doc/docLibHooks";
+import { PanelBody } from "../uiShell/panel/PanelBody";
+import { Title } from "../uiShell/controls/Title";
 
 interface Props {
     
@@ -18,6 +19,9 @@ export const ElementInsertSection:React.SFC<Props> = (props) => {
 
     return (
         <>
+            <div key="l3" className="scale-2 row-indent-2 palette-3">
+                <Title>Assets</Title>
+            </div>
             <div key="search" className="scale-3 row palette-4">
                 <SearchField 
                     className="stretch"

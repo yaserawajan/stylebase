@@ -2,10 +2,10 @@ import "./component_card.less";
 
 import * as React from "react";
 
-import { classes } from "./uiShell/utils";
+import { classes } from "../uiShell/utils";
 import { ErrorShield } from "./ErrorShield";
-import { ComponentUri, PropsMap } from "./core/doc/docModels";
-import { useDraggableAsset } from "./core/uiState/useDraggableAsset";
+import { ComponentUri, PropsMap } from "./doc/docModels";
+import { useDraggableAsset } from "./uiState/useDraggableAsset";
 
 interface Props {
     style?: React.CSSProperties

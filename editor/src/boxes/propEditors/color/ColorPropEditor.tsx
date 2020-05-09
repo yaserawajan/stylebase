@@ -20,7 +20,8 @@ export const ColorPropEditor:React.FC<PropEditorRenderProps> = (props) => {
                 <ColorSwatch color={props.value} style={{ 
                     borderRadius: "50%",
                     transform: "scale(0.7)", 
-                    width: 30,
+                    width: "1em",
+                    height: "1em",
                     border: "1px solid white" 
                 }} />
             )} 

@@ -76,7 +76,13 @@ export const selectionChanged = <TSelection>(selection: Partial<TSelection>):Doc
     selection
 })
 
+export const actionUndo = ():DocUndoAction => ({
+    type: "DOC_EDITOR/UNDO"
+});
 
+export const actionRedo = ():DocRedoAction => ({
+    type: "DOC_EDITOR/REDO"
+});
 
 export type DocSnapshot<TDoc,TSelection> = {
     data: TDoc
@@ -174,7 +180,8 @@ export const createEditorReducer =
                 ...state,
                 present: newSnapshot,
                 past: [state.present, ...state.past],
-                future: newFuture
+                future: newFuture,
+                preview: newSnapshot.data
             }
         }
 

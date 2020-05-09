@@ -22,11 +22,12 @@ export const PropFolder:React.SFC<Props> = (props) => {
                     title={humanizeIdentifier(props.name)} 
                     toggled={isExpanded()}
                     onToggle={toggleExpand}
+                    marked={props.assigned}
                     renderSummary={(t) => (props.assigned && props.renderSummary({ isToggled: t }))} />
             )}>
 
             <div className={classes("column", props.indent && "pdl-5")}>
-                <div className={props.indent && "column edge-left"}>
+                <div className={props.indent && "column"}>
                     {props.children}
                 </div>
             </div>

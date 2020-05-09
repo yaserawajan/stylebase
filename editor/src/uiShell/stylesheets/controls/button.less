@@ -2,33 +2,62 @@
 
 @radius: 0.06em;
 
-.button {
+button.button {
+    .interactive();
 
+    color: white;
+
+    //background-color: #7fa544;
+    //#7fa544
+    background-color: #666;
+
+    box-shadow: 0 1px 0 0 #777;
+    
+    //#bbc5a9;
+
+    padding: 0 0.4em;
+     
     border-radius: @radius;
-
-    cursor: pointer;
+    outline: none;
+    font-size: 1em;
+    
+    border: none;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-around;
     line-height: 0.7em;
     margin-bottom: 0.15em;
-    padding-right: 0.2em;
+    
+    &.disabled {
+        opacity: 0.6;
+    }
 
     & > .icon {
-        width: 0.6em;
+        width: auto;
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
     & > .icon > i {
-        font-size: 0.4em;
+        font-size: 0.35em;
     }
 
     & > .text {
-        font-size: 0.25em;
+        font-size: 0.26em;
         
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        letter-spacing: 1px;
+        text-transform: uppercase;
     }
+
+    & > .icon + .text {
+        margin-left: 0.2em;
+    }
+
 
 }
 
