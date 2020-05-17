@@ -3,10 +3,13 @@ import * as React from "react";
 import { Layout } from "../uiShell/Layout";
 import { ComponentEditorPanel } from "./ComponentEditorPanel";
 import { useActivePanelState } from "./uiState/ideState";
-import { AppDocumentView } from "./AppDocumentView";
+import { ComponentView } from "./ComponentView";
 import { PropEditorFactory, DocSelection } from "./doc/docModels";
 import { AppToolbarEdit } from "./AppToolbarEdit";
 import { useDocSelectionState } from "../patterns/docEditor/docEditorHooks";
+import { DocumentEditorPanel } from "./DocumentEditorPanel";
+import { Title } from "../uiShell/controls/Title";
+import { Divider, Stretcher } from "../uiShell/controls";
 
 interface Props {
     propEditorFactory: PropEditorFactory
@@ -31,28 +34,31 @@ export const App:React.SFC<Props> = (props) => {
                 "docNavigator": { icon: "bars", label: "Document Navigator" },
                 "componentEditor": { icon: "microchip", label: "Component Editor" }
             }}
-            renderPanel={(panelName, rect) => {
+            renderPanel={(panelName, specs) => {
                 switch (panelName) {
-                    case "docNavigator": return <div style={rect} />;
+
+                    case "docNavigator": return <DocumentEditorPanel documentName="Unnamed Document" style={specs.style} />;
+
                     case "componentEditor": return (
                             <ComponentEditorPanel 
                                 propEditorFactory={props.propEditorFactory} 
-                                component={component} style={rect} />
+                                component={component} style={specs.style} />
                         );
-                    default: return <div style={rect} />;
+
+                    default: return <div style={specs} />;
                 }
             }}
-            renderLogo={() => <span style={{ marginLeft: 10, fontSize: "0.3em", display: "block" }}>S T Y L E B A S E</span>}
+            renderLogo={() => <Title>S T Y L E B A S E</Title>}
             renderToolbarElements={
                 () => (
                     <>
-                        <div key="d1" className="stretch" />
-                        <div key="d2" className="divider" />
+                        <Stretcher />
+                        <Divider />
                         <AppToolbarEdit component={component} elements={elements} />
                     </>
                 )}
 
-            renderView={(_, rect) => (<AppDocumentView key="adv" rect={rect} component={component} elements={elements} />)}
+            renderView={(_, rect) => (<ComponentView key="adv" rect={rect} component={component} elements={elements} />)}
 
             onLeftPanelSelection={setLeftPanel}
             onRightPanelSelection={setRightPanel} />

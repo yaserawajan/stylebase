@@ -1,5 +1,6 @@
 import * as React from "react";
 import { InputIcon } from "../../../uiShell/controls/InputIcon";
+import { Row } from "../../../uiShell/layouts";
 
 interface Props {
     pageSize: number
@@ -18,12 +19,12 @@ export const Paginator:React.SFC<Props> = ({ pageSize, total, offset, onOffsetCh
     const lastPageOffset = Math.floor(total / pageSize) * pageSize;
 
     return (
-        <div className="row">
+        <Row>
             <InputIcon onClick={changeHandler(0)} key="first" icon="angle-double-left" disabled={offset < 1} />
             <InputIcon onClick={changeHandler(offset - pageSize)} key="prev" icon="angle-left" disabled={offset < 1} />
             <div style={{ fontSize: 12 }} className="stretch text-center">{from} - {to}</div>
             <InputIcon onClick={changeHandler(offset + pageSize)} key="next" icon="angle-right" disabled={to == total} />
             <InputIcon onClick={changeHandler(lastPageOffset)} key="last" icon="angle-double-right" disabled={to == total} />
-        </div>
+        </Row>
     )
 }

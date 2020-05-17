@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Panel } from "../uiShell/panel/Panel";
+import { Panel } from "../uiShell/controls/Panel";
 import { useActivePanelState } from "./uiState/ideState";
 import { ComponentViewEditorSection } from "./ComponentViewEditorSection";
 import { ComponentMetadataSection } from "./metadata/ComponentMetadataSection";
@@ -9,11 +9,14 @@ import { Title } from "../uiShell/controls/Title";
 import { ElementListSection } from "./ElementListSection";
 import { ElementInsertSection } from "./ElementInsertSection";
 import { COMPONENT_EDITOR_TAB_KEY, componentEditorTabs } from "./constants";
+import { Block } from "../uiShell/Block";
+import { Stretcher } from "../uiShell/controls";
 
 
 
 interface Props {
     component: string
+    className?: string
     style: React.CSSProperties
     propEditorFactory: PropEditorFactory
 }
@@ -28,15 +31,15 @@ export const ComponentEditorPanel:React.SFC<Props> = (props) => {
         }
 
     return (
-        <Panel key="cvep" style={props.style}>
+        <Panel style={props.style} appearFrom="right">
 
-            <div className="palette-3 dark scale-1 row-indent-1 edge-bottom" key="l1">
+            <Block key="title" palette="dark-grey-3" scale={1}>
 
-                <Title icon="microchip">{props.component}</Title>
+                <Title icon="microchip" level="h1">{props.component}</Title>
 
-            </div>
+            </Block>
 
-            <div key="menu" className="palette-4 dark scale-2 row">
+            <Block key="menu" scale={2} palette="dark-grey-4">
 
                 <MenuItem 
                     key={componentEditorTabs.add}
@@ -58,7 +61,9 @@ export const ComponentEditorPanel:React.SFC<Props> = (props) => {
                     selected={componentEditMode == componentEditorTabs.metadata}
                     onClick={editModeSetter(componentEditorTabs.metadata)} label="Metadata" icon="list" />
 
-            </div>
+                <Stretcher />
+
+            </Block>
             
             {(componentEditMode == componentEditorTabs.add) && <ElementInsertSection />}
 

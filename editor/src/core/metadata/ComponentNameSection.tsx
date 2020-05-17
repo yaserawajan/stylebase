@@ -3,13 +3,13 @@ import { FormField } from "../../uiShell/controls/FormField";
 import { Title } from "../../uiShell/controls/Title";
 import { Button } from "../../uiShell/controls/Button";
 import { ComponentNameEditor } from "./ComponentNameEditor";
-import { Modal } from "../../uiShell/controls/Modal";
 import { useSelector, useDispatch } from "react-redux";
 import { actionUpdate } from "../../patterns/docEditor/docEditorState";
 import { docComponentRename } from "../doc/docActions";
 import { useDocEditorState } from "../../patterns/docEditor/docEditorHooks";
-import { selectPreviewState } from "../../patterns/docEditor/docEditorSelectors";
 import { DocState } from "../doc/docModels";
+import { Block } from "../../uiShell/Block";
+import { Stretcher } from "../../uiShell/controls";
 
 interface Props {
     value: string
@@ -54,8 +54,10 @@ export const ComponentNameSection:React.FC<Props> = ({ value }) => {
             return;
         }
 
-        // update document
-        dispatch(actionUpdate(docComponentRename(value, newValue)));
+        if (oldValue !== newValue) {
+            // update document
+            dispatch(actionUpdate(docComponentRename(value, newValue)));
+        }
 
         // close modal
         setState({ ...state, toggled: false });
@@ -63,16 +65,18 @@ export const ComponentNameSection:React.FC<Props> = ({ value }) => {
 
     return (
         <>
-            <div className="row scale-3 palette-5 layout-form">
-
-                <FormField name="Component Name" style={{ width: "100%" }}>
+            <Block scale={3} palette="light-grey-5" indent={[1, 2]}>
+            
+                <FormField name="Name">
                     <Title>{value}</Title>
-                    <div className="stretch" />
-                    <Button icon="pen" label="Change" onClick={handleEdit} />
                 </FormField>
 
-            </div>
+                <Stretcher />
 
+                <Button icon="pen" label="Change" onClick={handleEdit} />
+
+            </Block>
+            
             {state.toggled && 
                 <ComponentNameEditor 
                     error={state.error}

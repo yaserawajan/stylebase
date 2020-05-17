@@ -1,9 +1,9 @@
 
 import * as React from "react";
-import { TreeItem } from "../uiState/Tree";
-import { classes } from "../../uiShell/utils";
+import { useTreeItemState } from "../uiState/Tree";
 import { humanizeIdentifier } from "./commonPropTypes/utils";
 import { Folder } from "../../uiShell/controls/Folder";
+import { Col } from "../../uiShell/layouts";
 
 interface Props {
     name: string
@@ -12,26 +12,20 @@ interface Props {
     indent?: boolean
 }
  
-export const PropFolder:React.SFC<Props> = (props) => {
+export const PropFolder:React.SFC<Props> = ({ name, renderSummary, assigned, children }) => {
+
+    const { expanded, toggleExpand, renderChildren } = useTreeItemState({ name });
 
     return (
-        <TreeItem 
-            name={props.name}
-            renderItem={({ isExpanded, toggleExpand }) => (
-                <Folder  
-                    title={humanizeIdentifier(props.name)} 
-                    toggled={isExpanded()}
-                    onToggle={toggleExpand}
-                    marked={props.assigned}
-                    renderSummary={(t) => (props.assigned && props.renderSummary({ isToggled: t }))} />
-            )}>
+        <Folder  
+            title={humanizeIdentifier(name)} 
+            toggled={expanded}
+            onToggle={toggleExpand}
+            marked={assigned}
+            renderSummary={(t) => (assigned && renderSummary({ isToggled: t }))}>
 
-            <div className={classes("column", props.indent && "pdl-5")}>
-                <div className={props.indent && "column"}>
-                    {props.children}
-                </div>
-            </div>
+            {expanded && <Col>{renderChildren(children)}</Col>}
 
-        </TreeItem>
+        </Folder>
     );
-}
+} 

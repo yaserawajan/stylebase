@@ -144,9 +144,7 @@ export type ComponentState = {
     defaultProps: PropsMap
     rootElement: string
     elements: EntitySet<ElementDesc>
-    namedCounters: { 
-        [type: string]: number 
-    }
+    
 }
 
 export type DocState = {
@@ -197,6 +195,11 @@ export type ElementUpdateAction = {
     props: ElementProps
 }
 
+export type ComponentAddAction = {
+    type: "COMPONENT_ADD"
+    name: string
+}
+
 export type ComponentRenameAction = {
     type: "COMPONENT_RENAME",
     oldName: string,
@@ -209,9 +212,9 @@ export type DocActionSet = {
 }
 
 export type DocAction = 
-    ElementAddAction | ElementMoveAction | ElementRemoveAction | ElementUpdateAction
-    | ComponentRenameAction
-    | DocActionSet
+    ElementAddAction | ElementMoveAction | ElementRemoveAction | ElementUpdateAction |
+    ComponentAddAction | ComponentRenameAction |
+    DocActionSet;
 
 export type PropEditorRenderProps = {
     renderPropEditor: PropEditorFactory 

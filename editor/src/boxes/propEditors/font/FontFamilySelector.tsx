@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import { classes } from "../../../uiShell/utils";
 import { FontFamily } from "../../types";
 import { InputIcon } from "../../../uiShell/controls/InputIcon";
 import { InputArea } from "../../../uiShell/controls/InputArea";
 import { FontSwatch } from "./FontSwatch";
 import { FontFamilyExplorer } from "./FontFamilyExplorer";
-import { IconLA } from "../../../uiShell/controls/IconLA";
+import { Row } from "../../../uiShell/layouts";
+import { FolderHandleIcon } from "../../../uiShell/controls/FolderHandleIcon";
 
 interface Props {
     className?: string
@@ -28,9 +28,10 @@ export const FontFamilySelector:React.SFC<Props> = (props) => {
     return (
         <InputArea className={props.className} style={props.style} tabIndex={0}>
 
-            <div className="row" onClick={handleClick}>
+            <Row onClick={handleClick} key="header">
 
                 <FontSwatch 
+                    style={{ padding: "0 0.2em" }}
                     weight={400}
                     letterSpacing={0} 
                     italic={false} 
@@ -38,18 +39,17 @@ export const FontFamilySelector:React.SFC<Props> = (props) => {
                     family={props.value} className="stretch" />
 
                 <InputIcon>
-                    <IconLA
-                        icon="angle-right" 
-                        className={classes("rotatable", toggled && "rotate-90-cw")} />
+                    <FolderHandleIcon toggled={toggled} />
                 </InputIcon>
-            </div>
+                
+            </Row>
 
             {toggled &&
-                <div className="row">
+                <Row key="body">
                     
                     <FontFamilyExplorer className="stretch" value={props.value} onChange={props.onChange} />
                     
-                </div>
+                </Row>
             }
 
         </InputArea>

@@ -1,0 +1,500 @@
+@import "./mixins.less";
+@import "./atoms.less";
+
+.indentable() {
+    &.ind {
+        &.ind-top-0 { padding-top: 0 }
+        &.ind-top-1 { padding-top: @space-1 }
+        &.ind-top-2 { padding-top: @space-2 }
+
+        &.ind-right-0 { padding-right: 0 }
+        &.ind-right-1 { padding-right: @space-1 }
+        &.ind-right-2 { padding-right: @space-2 }
+
+        &.ind-bottom-0 { padding-bottom: 0 }
+        &.ind-bottom-1 { padding-bottom: @space-1 }
+        &.ind-bottom-2 { padding-bottom: @space-2 }
+
+        &.ind-left-0 { padding-left: 0 }
+        &.ind-left-1 { padding-left: @space-1 }
+        &.ind-left-2 { padding-left: @space-2 }
+    }
+}
+
+.palette-setter() {
+
+    // .palette-dark(primary, white, rgb(121, 146, 179));
+    // .palette-dark(success, white, #7fa544);
+    // .palette-dark(warning, white, #bf8022);
+    // @danger: red;
+    
+    .palette-dark(dark-grey-1, white, #333);
+    .palette-dark(dark-grey-2, white, #444);
+    .palette-dark(dark-grey-3, white, #555);
+    .palette-dark(dark-grey-4, white, #666);
+    .palette-dark(dark-grey-5, white, #777);
+    
+    .palette-light(light-grey-1, #333, #aaa);
+    .palette-light(light-grey-2, #333, #bbb);
+    .palette-light(light-grey-3, #333, #ccc);
+    .palette-light(light-grey-4, #333, #ddd);
+    .palette-light(light-grey-5, #333, #eee);
+
+} 
+
+.block-indented() {
+    .block:not(.ind) > &:first-child { margin-left: @space-1 }
+    .block:not(.ind) > &:last-child { margin-right: @space-1 }
+
+    & + .divider {
+        margin-left: @space-1;
+    }
+
+    .divider + & {
+        margin-left: @space-1;
+    }
+}
+
+.bg-dotted {
+    .bg-dotted();
+}
+
+.bg-white {
+    background-color: white !important;
+}
+
+.bg-checkers { .bg-checkers(); }
+
+.scroll-area {
+    &.y {
+        overflow-y: scroll;
+    }
+
+    &.x {
+        overflow-x: scroll;
+    }
+}
+
+.row {
+    .row();
+}
+
+.column {
+    .column();
+    & > * + * {
+        margin-top: @space-stroke;
+    }
+}
+
+.fluid {
+    .fluid(@space-1);
+}
+
+.stretch { flex: 1 1 auto; }
+
+.text-center { 
+    text-align: center; 
+
+    & > .text > span {
+        text-align: center 
+    }
+    
+}
+
+
+.folder-handle-icon {
+    .animate();
+    transform-origin: 50% 50%;
+
+    &.toggled {
+        transform: rotate(90deg);
+    }
+}
+
+.divider { 
+    flex: 0 0 @space-stroke; 
+    align-self: stretch;
+    border-style: solid; 
+    border-color: var(--divider-color);
+    border-width: (@space-stroke / 2); 
+}
+
+.layout-root {
+    .palette-setter();
+    .user-select(none);
+    font-size: @h-1;
+    line-height: 1em;
+    position: fixed;
+    z-index: @z-2;
+    border-style: solid;
+    border-width: 0;
+    border-color: var(--block-edge-color);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    overflow: hidden;
+      
+    &.top-side { border-bottom-width: @space-stroke; } 
+    &.right-side { border-left-width: @space-stroke; }
+    &.bottom-side { border-top-width: @space-stroke; }
+    &.left-side { border-right-width: @space-stroke; }
+
+    & > :only-child { 
+        width: 100%; 
+        flex: 1 1 auto; 
+        overflow: hidden 
+    }
+}
+
+.block {
+    .palette-setter();
+    .row();
+    .indentable();
+    position: relative;
+    line-height: 1em;
+    min-height: 1em;
+    box-shadow: 0 1px 0 0 var(--block-edge-color);
+
+    &.scale-1 { font-size: @h-1;  }
+    &.scale-2 { font-size: @h-2; }
+    &.scale-3 { font-size: @h-3;  }
+    &.scale-4 { font-size: @h-4;  }
+
+    & > :only-child { width: 100% }
+
+    & .icon { align-items: center; }
+
+    & .icon > i { font-size: @icon-size; }
+
+    & .text > span { font-size: @text-size; display: block; }
+
+    & .h1 > .text > span { font-size: (@text-size * 1.1) }
+    & .h2 > .text > span { font-weight: bold }
+    
+}
+
+
+.caption {
+    .block-indented();
+    .icon-text-container();
+
+    & > .text {
+        flex: 1 1 auto;
+    }
+
+    & > .icon + .text {
+        margin-left: @icon-text-spacing;
+    }
+}
+
+.folder-caption {
+    .block-indented();
+    .icon-text-container();
+    .faux-control();
+    .with-toggle-marker(var(--marker-line));
+
+    & > .icon + .text {
+        margin-left: @icon-text-spacing;
+    }
+}
+
+.button {
+    .icon-text-container();
+    .block-indented();
+    .appearance();
+    background-color: var(--button-bg);
+    box-shadow: 0 @space-stroke 0 0 var(--button-edge);
+    color: inherit;
+    font-size: inherit;
+    padding: 0 ((@control-height - @icon-size) / 2);
+    line-height: @control-height;
+    margin: ((1em - @control-height) / 2) 0;
+    border-radius: @border-radius;
+
+    &:disabled {
+        opacity: 0.6;
+        
+    }
+
+    &-group {
+        .block-indented();
+        display: flex;
+        flex-direction: inherit;
+        align-items: inherit;
+
+        & > * {
+            border-radius: 0;
+        }
+    
+        & > * + * {
+            margin-left: 1px
+        }
+    
+        & > :first-child {
+            border-top-left-radius: @border-radius;
+            border-bottom-left-radius: @border-radius;
+        }
+    
+        & > :last-child {
+            border-top-right-radius: @border-radius;
+            border-bottom-right-radius: @border-radius;
+        }
+    }
+
+    & > .text > span {
+        // for some reason, Roboto font is not respecting line-height in button :s
+        font-family: sans-serif;
+    }
+
+    & > .icon + .text {
+        margin-left: @icon-text-spacing;
+    }
+
+    & > .icon:first-child:not(:last-child), .text:first-child {
+        margin-left: ((@control-height - @icon-size) / 2);
+    }
+
+    & > .text {
+        margin-right: ((@control-height - @icon-size) / 2);
+    }
+}
+
+
+.menu-item {
+    .icon-text-container();
+    .faux-control();
+    .with-toggle-marker(var(--marker-line));
+    position: relative;
+    padding: 0 ((1em - @icon-size) / 2);
+
+    & > .icon {
+        .animate();
+        margin-right: 0;
+        margin-left: 0;
+    }
+
+    & > .text {
+        .animate();
+        opacity: 0;
+        max-width: 0;
+        margin-right: 0;
+    }
+
+    & > input:checked ~ .icon, & > input:focus ~ .icon {
+        margin-left: ((1em - @icon-size) / 3);
+        margin-right: @icon-text-spacing;
+    } 
+
+    & > input:checked ~ .text, & > input:focus ~ .text {
+        max-width: 350px;
+        opacity: 1;
+        margin-right: ((1em - @icon-size) / 3);
+    }
+}
+
+.form-field {
+    .block-indented();
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    position: relative;
+
+    & > .label {
+        line-height: 0.8em;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        text-align: left;
+    }
+
+    &.error > .label {
+        color: @danger;
+    }
+
+    & > .label > span {
+        display: inline;
+        vertical-align: middle;
+        font-size: 0.28em;
+        font-weight: 300;
+    }
+    
+    & > .body {
+        margin-top: 0.7em;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+
+        & > :only-child {
+            width: 100%;
+        }
+    }
+
+    &.one-line {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    &.one-line > .label {
+        margin-bottom: 0;
+        text-align: initial;
+    }
+    
+    &.assigned > .label {
+        font-weight: bold;
+    }
+}
+
+.input-area {
+    background-color: white;
+    box-shadow: 0 @space-stroke 0 0 #ccc;
+    border-radius: @border-radius;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    line-height: @control-height;
+    margin: ((1em - @control-height) / 2) 0;
+
+    &:focus-within {
+        box-shadow: 0 0 5px rgb(121, 146, 179);
+    }
+
+    & .icon {
+        display: flex;
+        width: @control-height;
+        align-items: center;
+        justify-content: center;
+    }
+
+    & .icon > i {
+        font-size: @icon-size;
+    }
+
+    & > .row + .row {
+        background-color: 0 @space-stroke 0 0 #ddd;
+    }
+
+    & > .row:first-child > :first-child { border-top-left-radius: @border-radius; }
+    & > .row:first-child > :last-child { border-top-right-radius: @border-radius; }
+    & > .row:last-child > :first-child { border-bottom-left-radius: @border-radius; }
+    & > .row:last-child > :last-child { border-bottom-right-radius: @border-radius; }
+
+    & > :only-child {
+        flex: 1 1 auto;
+        border-radius: @border-radius;
+    }
+
+}
+
+.input {
+    font-size: @text-size;
+    font-weight: 400;
+    background: none;
+    border: none;
+    outline: none;
+    padding: 0 0.8em;
+    
+    &.error {
+        color: red;
+    }
+}
+
+.selection-carousel {
+    display: flex;
+    flex-direction: row;
+
+    & > .icon {
+        display: flex;
+        width: 1em;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.modal {
+    .user-select(none);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: @z-2;
+
+    & > .dialog {
+        background-color: white;
+        box-shadow: 0 0 15px 3px rgb(121, 146, 179);
+        
+        max-height: 70%;
+        min-width: 30%;
+        max-width: 70%;
+        margin-bottom: 10%;
+
+        & > .title { }
+
+        & > .body {
+            overflow-y: scroll;
+        }
+    }
+}
+
+.avatar {
+    .bg-checkers();
+    .block-indented();
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-bottom: ((1em - @control-height) / 2);
+    width: @control-height;
+    min-height: @control-height;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    
+    & > :only-child {
+        background-clip: padding-box;
+        border-top-left-radius: inherit;
+        border-top-right-radius: inherit;
+        border-bottom-left-radius: inherit;
+        border-bottom-right-radius: inherit;
+    }
+}
+
+.search-field {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    padding: 0 @space-1;
+
+
+    & > input {
+        order: 2;
+        font-size: @text-size;
+        border: none;
+        outline: none;
+        background: none;
+        flex: 1 1 auto;
+        display: flex;
+        padding: 0 0 0 0.4em;
+    }
+
+    & .search-field-icon {
+        opacity: 0.5;
+        order: 1;
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    & .search-field-icon > i {
+        font-size: @icon-size;
+        
+    }
+}

@@ -24,6 +24,10 @@ textarea {
   font-size: 0.3em; /* 1 */
   line-height: inherit; /* 1 */
   margin: 0; /* 2 */
+  outline: none;
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
 body {
@@ -32,6 +36,8 @@ body {
     overflow: auto;
     padding: 0;
     height: 100%; 
+    // -webkit-font-smoothing: antialiased;
+    // -moz-osx-font-smoothing: grayscale;
 }
 
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,700,700i&display=swap');
@@ -53,22 +59,25 @@ body {
     line-height: inherit;
 }
 
-@import "./containers/navbar.less";
-@import "./containers/panel.less";
-@import "./containers/toolbar.less";
+// @import "./containers/navbar.less";
+// @import "./containers/panel.less";
+// @import "./containers/toolbar.less";
 
-@import "./controls/title.less";
-@import "./controls/button.less";
-@import "./controls/form_field.less";
-@import "./controls/input.less";
-@import "./controls/input_area.less";
-@import "./controls/menu_item.less";
-@import "./controls/navbar_item.less";
-@import "./controls/search_field.less";
-@import "./controls/wheel.less";
-@import "./controls/folder.less";
-@import "./controls/selection_carousel.less";
-@import "./controls/text.less";
-@import "./controls/modal.less";
+// @import "./controls/title.less";
+// @import "./controls/button.less";
+// @import "./controls/form_field.less";
+// @import "./controls/input.less";
+// @import "./controls/input_area.less";
+// @import "./controls/menu_item.less";
+// @import "./controls/navbar_item.less";
+// @import "./controls/search_field.less";
+// @import "./controls/wheel.less";
+// @import "./controls/folder.less";
+// @import "./controls/selection_carousel.less";
+// @import "./controls/text.less";
+// @import "./controls/modal.less";
 
-@import "./classes/classes.less";
+// @import "./classes/classes.less";
+
+@import "./components.less";
+

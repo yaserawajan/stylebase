@@ -21,7 +21,7 @@ export const FormField:React.SFC<Props> = (props) => {
         props.className);
 
     return (
-        <div className={classList} style={props.style}>
+        <label className={classList} style={props.style}>
             <div className="label">
                 {
                     props.errorMessage 
@@ -30,7 +30,7 @@ export const FormField:React.SFC<Props> = (props) => {
                 }
             </div>
             <div className="body">{props.children}</div>
-        </div>
+        </label>
     );
 }
 

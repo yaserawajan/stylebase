@@ -1,6 +1,9 @@
 import * as React from "react";
-import { classes } from "../utils";
-import { IconLA } from "./IconLA";
+
+import { Block } from "../Block";
+import { FolderTitle } from "./FolderTitle";
+import { Col } from "../layouts";
+import { Stretcher } from ".";
 
 interface Props {
     style?: React.CSSProperties
@@ -19,17 +22,18 @@ export const Folder:React.SFC<Props> = (props) => {
     }
 
     return (
-        <div onClick={handleClick} className={classes("folder row edge-bottom", props.className)}>
-            <div key="toggler" className="icon">
-                <IconLA 
-                    icon="angle-right" 
-                    className={classes("animate", props.toggled && "rotate-90-cw")} />
-            </div>
-            <div key="title" className="text" style={{ fontWeight: props.marked? "bold" : "normal" }}>{props.title}</div>
-            <div key="s1" className="stretch" />
-            <div key="summary" className="summary">
+        <Col>
+            <Block key="header" onClick={handleClick} className={props.className} style={props.style}>
+                <FolderTitle toggled={props.toggled} onToggle={handleClick}>{props.title}</FolderTitle>
+                <Stretcher />
                 {props.renderSummary && props.renderSummary(props.toggled)}
-            </div>
-        </div>  
+            </Block>
+
+            {props.toggled && 
+                <Block key="body" indent={[0, 1]}>
+                    {props.children}
+                </Block>
+            }
+        </Col>  
     )
 }

@@ -6,6 +6,7 @@ import { FontFamily } from "../../types";
 import { FontSwatch } from "./FontSwatch";
 import { classes } from "../../../uiShell/utils";
 import { findFonts } from "../../webFontUtils";
+import { Col } from "../../../uiShell/layouts";
 
 interface Props {
     style?: React.CSSProperties
@@ -37,7 +38,7 @@ export const FontFamilyExplorer:React.FC<Props> = (props) => {
     const selectHandler = (value: FontFamily) => () => props.onChange(value);
 
     return (
-        <div className={classes("column", props.className)} style={props.style}>
+        <Col className={props.className} style={props.style}>
             
             <Input 
                 key="filter"
@@ -71,6 +72,6 @@ export const FontFamilyExplorer:React.FC<Props> = (props) => {
                     className={classes(areEqual(props.value, i) && "selected" )} />)}
 
             
-        </div>
+        </Col>
     );
 }

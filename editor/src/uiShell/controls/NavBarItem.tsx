@@ -5,30 +5,36 @@ import { IconLA } from "./IconLA";
 import { classes } from "../utils";
 
 interface Props {
+    className?: string
+    style?: React.CSSProperties
     name: string
     disabled?: boolean
     label: string
     icon?: string
     toggled?: boolean
     selected?: boolean
-    onClick?: (name: string) => void
+    onClick?: () => void
 }
 
 export const NavBarItem:React.SFC<Props> = (props) => {
 
-    const handleClick = () => {
-        
-        if (props.onClick) props.onClick(props.name);
-    }
-
     return (
-        <div key={props.name} 
-            onClick={handleClick} 
-            className={classes("navbar-item", props.toggled && "toggled", props.selected && "selected")}>
+        <label 
+            style={props.style}
+            
+            className={classes("menu-item", props.toggled && "toggled", props.selected && "selected", props.className)}>
 
-            {props.icon && <div className="icon"><IconLA icon={props.icon} /></div>}
+            <input type="checkbox" tabIndex={0} checked={props.selected} onChange={props.onClick} />
 
-            <div className="text">{props.label}</div>
-        </div>
+            {props.icon
+                ? <div className="icon"><IconLA icon={props.icon} /></div> 
+                : null
+            }
+            {props.label
+                ? <div className="text"><span>{props.label}</span></div>
+                : null}
+
+            <div className="marker" />
+        </label>
     );
 }

@@ -44,29 +44,50 @@ export const Tree:React.SFC<TreeProps> = (props) => {
     return <treeContext.Provider value={ctx}>{props.children}</treeContext.Provider>;
 }
 
-export const TreeItem:React.SFC<TreeItemProps> = (props) => {
-
+export const useTreeItemState = (props: { name: string }) => {
     const { expansionMap, toggleExpand, pathBase } = React.useContext(treeContext);
-
     const path = pathBase? "" + pathBase + "." + props.name : props.name;
-
     const cChild:TreeContext = {
             expansionMap,
             toggleExpand,
             pathBase: path
         }
 
-    const renderProps:RenderProps = {
-            isExpanded: () => expansionMap[path],
-            toggleExpand: () => toggleExpand(path)
+    return {
+            expanded: !!(expansionMap[path]),
+            toggleExpand: () => toggleExpand(path), 
+            renderChildren: (children?: React.ReactNode):React.ReactNode => (
+                <treeContext.Provider key={props.name} value={cChild}>
+                    {children}
+                </treeContext.Provider>
+            )
         }
-
-    return (
-        <>
-            {props.renderItem(renderProps)}
-            {renderProps.isExpanded() && <treeContext.Provider key={props.name} value={cChild}>
-                {props.children}
-            </treeContext.Provider>}
-        </>
-    );
 }
+
+// export const TreeItem:React.SFC<TreeItemProps> = (props) => {
+
+//     const { expansionMap, toggleExpand, pathBase } = React.useContext(treeContext);
+
+
+//     const path = pathBase? "" + pathBase + "." + props.name : props.name;
+
+//     const cChild:TreeContext = {
+//             expansionMap,
+//             toggleExpand,
+//             pathBase: path
+//         }
+
+//     const renderProps:RenderProps = {
+//             isExpanded: () => expansionMap[path],
+//             toggleExpand: () => toggleExpand(path)
+//         }
+
+//     return (
+//         <>
+//             {props.renderItem(renderProps)}
+//             {renderProps.isExpanded() && <treeContext.Provider key={props.name} value={cChild}>
+//                 {props.children}
+//             </treeContext.Provider>}
+//         </>
+//     );
+// }

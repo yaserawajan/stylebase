@@ -4,7 +4,8 @@ import {
     ElementProps, 
     ElementLocation, 
     DocAction, 
-    ComponentRenameAction} from "./docModels"
+    ComponentRenameAction,
+    ComponentAddAction} from "./docModels"
 
 export const docActionSet = (actions:DocAction[]):DocActionSet => ({
     type: "ACTION_SET",
@@ -44,6 +45,11 @@ export const docElementRemove = (component: string, elementId: string):ElementRe
     type: "ELEMENT_REMOVE",
     component,
     elementId
+})
+
+export const docComponentAdd = (name: string):ComponentAddAction => ({
+    type: "COMPONENT_ADD",
+    name
 })
 
 export const docComponentRename = (oldName: string, newName: string):ComponentRenameAction => ({

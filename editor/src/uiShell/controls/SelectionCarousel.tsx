@@ -29,14 +29,14 @@ export const SelectionCarousel:React.SFC<Props> = (props) => {
     }, [props.value, props.allValues]);
 
     return (
-        <div style={props.style} className={classes("selection-carousel row", props.className)} >
+        <div style={props.style} className={classes("selection-carousel", props.className)} >
             <div key="prev" className="icon"><IconLA onClick={handlePrevious} icon="angle-left" /></div>
             <Wheel orientation="x" value={props.value} className="stretch">
                 {props.allValues.map(v => (
                     <WheelItem name={v} key={v}>
                         <div key="v" 
                             className="text text-center" 
-                            style={{ transform: "scale(1.6)", pointerEvents: "none" }}>{v}</div>
+                            style={{ transform: "scale(1.6)", pointerEvents: "none" }}><span>{v}</span></div>
                     </WheelItem>
                 ))}
             </Wheel>

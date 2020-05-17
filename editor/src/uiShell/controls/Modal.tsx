@@ -1,6 +1,8 @@
 import * as React from "react";
 import ReactDOM = require("react-dom");
 import { Title } from "./Title";
+import { Block } from "../Block";
+import { Col } from "../layouts";
 
 interface Props {
     title?: string
@@ -18,10 +20,10 @@ export const Modal:React.SFC<Props> = (props) => {
 
     return ReactDOM.createPortal(
         <div ref={ref} className="modal" onClick={handleClick}>
-            <div className="dialog">
-                {props.title && <div className="title scale-2 row row-indent-2 palette-3 dark"><Title>{props.title}</Title></div>}
-                <div className="body scale-3 row">{props.children}</div>
-            </div>
+            <Col className="dialog">
+                {props.title && <Block palette="dark-grey-3" scale={2}><Title>{props.title}</Title></Block>}
+                <Col className="body">{props.children}</Col>
+            </Col>
         </div>, 
         document.getElementById("root_modal")
     )

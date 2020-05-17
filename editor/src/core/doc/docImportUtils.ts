@@ -18,8 +18,7 @@ export const importDocState = (doc: DocFormat):DocState => {
             elements: {
                 all: Object.keys(c.elements),    
                 byName: c.elements
-            },
-            namedCounters: { }
+            }
         }
     }
 

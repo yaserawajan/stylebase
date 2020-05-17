@@ -1,5 +1,5 @@
 
-import { DocFormat } from "../../core/doc/docModels";
+import { DocFormat, ComponentMetadata } from "../../core/doc/docModels";
 import { LIB_NAME } from "../constants";
 
 const docInit:DocFormat = {
@@ -53,5 +53,18 @@ const docInit:DocFormat = {
     }
 }
 
+export const componentWithRoot:ComponentMetadata = {
+    propTypes: { },
+    defaultProps: { },
+    rootElement: "root",
+    elements: {
+        "root": {
+            type: { component: "Box", lib: LIB_NAME },
+            props: {
+                children: [ ]
+            }
+        }
+    }
+}
 
 export const createDefaultTemplate = () => docInit;

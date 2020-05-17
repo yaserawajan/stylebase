@@ -11,6 +11,8 @@ interface Props {
     label: string
     icon?: string
     
+    compact?: boolean
+
     onClick?: () => void
 }
 
@@ -21,9 +23,12 @@ export const Button:React.SFC<Props> = (props) => {
             disabled={props.disabled}
             onClick={props.onClick} 
             style={props.style} 
-            className={classes("button", props.disabled && "disabled", props.className)}>
+            className={classes("button", 
+                props.disabled && "disabled", 
+                props.compact && "compact",
+                props.className)}>
             {props.icon? <div className="icon"><IconLA icon={props.icon} /></div> : null}
-            <div className="text">{props.label}</div>
+            {props.compact ? null : <div className="text"><span>{props.label}</span></div>}
         </button>
     );
 }

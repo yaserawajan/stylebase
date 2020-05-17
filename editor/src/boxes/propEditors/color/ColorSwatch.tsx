@@ -1,8 +1,7 @@
-import "./color_swatch.less";
 
 import * as React from "react";
 
-import { classes } from "../../../uiShell/utils";
+import { Avatar } from "../../../uiShell/controls";
 
 
 interface Props {
@@ -14,14 +13,18 @@ interface Props {
 export const ColorSwatch:React.FC<Props> = ({ color, children, className, style }) => {
 
     return (
-        <div className={classes("color-swatch", className)} style={style}>
+        <Avatar className={className} style={style}>
 
-            <div className="inner" style={{ backgroundColor: color? `rgba(${color.r},${color.g},${color.b}, ${color.a})` : undefined }}>
+            <div style={{ 
+                width: "100%", height: "100%", 
+                position: "absolute", 
+                backgroundColor: color? `rgba(${color.r},${color.g},${color.b}, ${color.a})` : undefined 
+            }}>
 
                 {children}
 
             </div>
             
-        </div>
+        </Avatar>
     );
 }

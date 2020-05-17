@@ -2,19 +2,17 @@ import * as React from "react";
 import { IconLA } from "./IconLA";
 import { classes } from "../utils";
 
-interface Props {
-    className?: string
-    style?: React.CSSProperties
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
     icon?: string
-    secondary?: boolean
+    level?: "h1" | "h2" | "normal"
 }
 
-export const Title:React.SFC<Props> = ({ className, style, icon, secondary, children }) => {
+export const Title:React.SFC<Props> = ({ className, icon, level = "normal", children, ...rest }) => {
 
     return (
-        <div style={style} className={classes("title", secondary && "secondary", className)}>
+        <div {...rest} className={classes("caption", level, className)}>
             {icon && <div className="icon"><IconLA icon={icon} /></div>}
-            <div className="text">{children}</div>
+            <div className="text"><span>{children}</span></div>
         </div>
     );
 }

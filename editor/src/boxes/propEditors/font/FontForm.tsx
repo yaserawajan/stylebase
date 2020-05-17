@@ -6,6 +6,8 @@ import { NumberInput } from "../../../uiShell/controls/NumberInput";
 import { InputArea } from "../../../uiShell/controls/InputArea";
 import { InputIcon } from "../../../uiShell/controls/InputIcon";
 import { FontFamilySelector } from "./FontFamilySelector";
+import { Block } from "../../../uiShell/Block";
+import { Fluid, Row } from "../../../uiShell/layouts";
 
 interface Props {
     value: BoxFont
@@ -23,10 +25,9 @@ export const FontForm:React.FC<Props> = (props) => {
         }, [props.value]);
 
     return (
-        <div className="column">
-            <div className="row">
-
-                <FormField key="size" name="size" className="stretch">
+        <Block>
+            <Fluid>
+                <FormField key="size" name="size" className="occupy-half">
                     <InputArea>
                         <NumberInput
                             onChange={changeHandler("size")}
@@ -35,7 +36,7 @@ export const FontForm:React.FC<Props> = (props) => {
                     </InputArea>
                 </FormField>
 
-                <FormField key="spacing" name="spacing" className="stretch">
+                <FormField key="spacing" name="spacing" className="occupy-half">
                     <InputArea>
                         <NumberInput
                             onChange={changeHandler("letterSpacing")}
@@ -44,13 +45,9 @@ export const FontForm:React.FC<Props> = (props) => {
                     </InputArea>
                 </FormField>
 
-            </div>
-
-            <div className="row">
-
-                <FormField key="weight" name="weight / style" className="stretch">
+                <FormField key="weight" name="weight / style" className="occupy-all">
                     <InputArea>
-                        <div className="row">
+                        <Row>
                             <NumberInput
                                 className="stretch"
                                 onChange={changeHandler("weight")}
@@ -61,17 +58,14 @@ export const FontForm:React.FC<Props> = (props) => {
                                 step={100}
                                 stepExclusive />
                             <InputIcon icon="italic" />
-                        </div>
+                        </Row>
                     </InputArea>
                 </FormField>
 
-                
-            </div>
-
-            <FormField key="family" name="family">
-                <FontFamilySelector value={props.value.family} onChange={changeHandler("family")} />
-            </FormField>
-            
-        </div>
+                <FormField key="family" name="family" className="occupy-all">
+                    <FontFamilySelector value={props.value.family} onChange={changeHandler("family")} />
+                </FormField>
+            </Fluid>
+        </Block>
     )
 }

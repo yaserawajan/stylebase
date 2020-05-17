@@ -1,31 +1,16 @@
-.component-card {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    padding: 20px 40px;
-}
-
-.component-card > .title {
-    text-align: center;
-    font-size: 12px;
-    margin-top: 10px;
-    order: 2;
-    position: relative;
-}
-
-.component-card > .subtitle {
-    text-align: center;
-    display: none;
-}
-
-.component-card > .container {
-    order: 1;
-    overflow: hidden;
-    max-width: 100%;
-    cursor: pointer;
-}
 
 
-.component-card > .container > * {
-    pointer-events: none;
+.component-card { 
+    
+    & > .container {
+        overflow: hidden;
+        max-width: 100%;
+        cursor: pointer;
+        
+    }
+
+    & > .container > * {
+        pointer-events: none;
+    }
+
 }

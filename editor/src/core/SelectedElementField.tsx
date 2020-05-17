@@ -24,7 +24,6 @@ export const SelectedElementField:React.SFC<Props> = ({ className, value, onChan
         return (
             <FormField name="Selected Element(s)" className={className}>
                     <SelectionCarousel
-                        
                         key="elementSel"
                         allValues={allElements}
                         value={value[0]}

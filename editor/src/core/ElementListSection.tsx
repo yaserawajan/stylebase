@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Title } from "../uiShell/controls/Title";
+import { Block } from "../uiShell/Block";
 
 interface Props {
 
@@ -8,8 +9,8 @@ interface Props {
 export const ElementListSection:React.SFC<Props> = (props) => {
 
     return (
-        <div className="scale-2 palette-3 row-indent-2">
-            <Title>Elements</Title>
-        </div>
+        <Block scale={2} palette="light-grey-3">
+            <Title level="h2">Elements</Title>
+        </Block>
     );
 }

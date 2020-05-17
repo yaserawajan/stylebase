@@ -8,18 +8,19 @@ import { DndProvider } from "react-dnd";
 import Html5Backend from "react-dnd-html5-backend";
 import { enableBatching } from "redux-batched-actions";
 
+import { createDefaultTemplate, componentWithRoot } from "./boxes/templates/defaultTemplate";
+import { boxLibManifest } from "./boxes/boxLibManifest";
+import { boxLibEditorManifest } from "./boxes/boxLibEditorManifest";
+
 import { createIdeReducer, IDE } from "./core/uiState/ideState";
 import { createEditorReducer } from "./patterns/docEditor/docEditorState";
 import { DocState, DocSelection, DocAction } from "./core/doc/docModels";
 import { App } from "./core/App";
-import { createDefaultTemplate } from "./boxes/templates/defaultTemplate";
 import { defaultSelector } from "./core/doc/docDefaultSelector";
-import { docUpdateReducer } from "./core/doc/docUpdateReducer";
+import { createDocUpdateReducer } from "./core/doc/docUpdateReducer";
 import { DOC_EDITOR } from "./patterns/docEditor/docEditorSelectors";
-import { boxLibManifest } from "./boxes/boxLibManifest";
 import { importDocState } from "./core/doc/docImportUtils";
 import { DOC_LIB, createDocLibReducer } from "./core/doc/docLibReducer";
-import { boxLibEditorManifest } from "./boxes/boxLibEditorManifest";
 import { createPropEditorFactory } from "./core/doc/propEditorUtils";
 import { COMPONENT_EDITOR_TAB_KEY, componentEditorTabs } from "./core/constants";
 
@@ -39,7 +40,7 @@ const store = createStore(enableBatching(combineReducers({
     [DOC_EDITOR]: createEditorReducer<DocState,DocAction,DocSelection>({
         defaultDoc: () => importDocState(createDefaultTemplate()),
         defaultSelection: defaultSelector,
-        updateReducer: docUpdateReducer
+        updateReducer: createDocUpdateReducer(componentWithRoot)
     }) 
 }))); 
 

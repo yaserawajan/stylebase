@@ -1,7 +1,8 @@
 import { DocSnapshot } from "../../patterns/docEditor/docEditorState";
-import { DocState, DocSelection, DocAction, ComponentState, ElementLocation, ElementDesc, ComponentUri } from "./docModels";
+import { DocState, DocSelection, DocAction, ComponentState, ElementLocation, ElementDesc, ComponentUri, ComponentMetadata } from "./docModels";
 import { entitySetUpdate, entitySetAdd } from "../../patterns/entitySet/entitySetUtils";
 import { EntitySet } from "../../patterns/entitySet/entitySetModels";
+import { newId } from "./newId";
 
 const findAncestors = (state: ComponentState, el: string):string[] => {
     const elements = state.elements;
@@ -119,245 +120,250 @@ const removeElement = (componentState: ComponentState, id: string):ComponentStat
     };
 }
 
-const createId = (componentState: ComponentState, type: ComponentUri):[string,ComponentState] => {
-    const newCount = (componentState.namedCounters[type.component] || 0) + 1;
-    const newId = `${type.component.toLocaleLowerCase()}-${newCount}`;
-    return [ 
-        newId,
-        {
-            ...componentState,
-            namedCounters: {
-                ...componentState.namedCounters,
-                [type.component]: newCount
-            }
-        } 
-    ]
-}
+export const createDocUpdateReducer = (componentWithRoot: ComponentMetadata) => {
 
-export const docUpdateReducer = (state:DocSnapshot<DocState, DocSelection>, action: DocAction)
-    : DocSnapshot<DocState, DocSelection> => {
-
-    if (action.type == "ACTION_SET") {
-        let newState = state;
-        action.actions.forEach(a => {
-            newState = docUpdateReducer(newState, a);
-        })
-        return newState;
-    }
-
-    if (action.type == "ELEMENT_UPDATE") {
-        
-        const componentState = state.data.components.byName[action.component];
-        const oldProps = componentState.elements.byName[action.elementId].props;
-        return {
-            ...state,
-            data: {
-                ...state.data,
-                components: {
-                    ...state.data.components,
-                    byName: {
-                        ...state.data.components.byName,
-                        [action.component]: {
-                            ...componentState,
-                            elements: entitySetUpdate(componentState.elements, 
-                                action.elementId, 
-                                { 
-                                    props: {
-                                        ...oldProps,
-                                        ...action.props
-                                    }
-                                })
-                        }
-                    }
-                }
-            }
+    const componentStateZero:ComponentState = {
+        defaultProps: componentWithRoot.defaultProps,
+        rootElement: componentWithRoot.rootElement,
+        elements: {
+            all: Object.keys(componentWithRoot.elements),
+            byName: componentWithRoot.elements
+        },
+        propTypes: {
+            all: Object.keys(componentWithRoot.propTypes),
+            byName: componentWithRoot.propTypes
         }
     }
 
-    if (action.type == "ELEMENT_ADD") {
-        
-        const [ newId, componentState ] = createId(state.data.components.byName[action.location.component], action.elementType);
+    const reducer = (state:DocSnapshot<DocState, DocSelection>, action: DocAction): DocSnapshot<DocState, DocSelection> => {
 
-        const components = entitySetUpdate(
-                state.data.components, 
-                action.location.component, 
-                addElement(componentState, newId, { type: action.elementType, props: action.props }, action.location));
-
-        return {
-            ...state,
-            data: {
-                ...state.data,
-                components,
-                imports: purgeImports(components) 
-            },
-            selection: {
-                ...state.selection,
-                component: action.location.component,
-                elements: [ newId ]
-            }
-        }
-    }
-
-    if (action.type == "ELEMENT_MOVE") {
-        
-        const sameComponent = action.fromComponent == action.location.component
- 
-        const componentFromOld = state.data.components.byName[action.fromComponent]
-        const componentFrom = removeElement(componentFromOld, action.fromElementId);
-        
-        const element = componentFromOld.elements.byName[action.fromElementId];
-
-
-        const componentToOld_ = sameComponent
-            ? componentFrom
-            : state.data.components.byName[action.location.component];
-        const [ newId, componentToOld ] = sameComponent
-            ? [ action.fromElementId, componentToOld_ ]
-            : createId(componentToOld_, element.type);
-        
-        
-        const componentTo = addElement(componentToOld, newId, element, action.location);
-        
-        return {
-            ...state,
-            data: {
-                ...state.data,
-                components: {
-                    ...state.data.components,
-                    byName: {
-                        ...state.data.components.byName,
-                        [action.fromComponent]: componentFrom,
-                        [action.location.component]: componentTo
-                    }
-                }
-            }
+        if (action.type == "ACTION_SET") {
+            let newState = state;
+            action.actions.forEach(a => {
+                newState = reducer(newState, a);
+            })
+            return newState;
         }
 
-        //const newId = action.fromComponent == action.location.component? action.fromElementId : 
-
-        // return {
-        //     ...state,
-        //     data: {
-        //         ...state.data,
-        //         components: {
-        //             ...state.data.components,
-        //             byName
-        //         }
-        //     },
-        //     selection: {
-        //         ...state.selection,
-        //         component: action.location.component,
-        //         elements: [ action.fromElementId ]
-        //     }
-        // }
-    }
-
-    if (action.type == "ELEMENT_REMOVE") {
-        const compState = state.data.components.byName[action.component];
-        const elTree = findDescendents(compState, action.elementId);
-
-        if (elTree.length < 1) return state;
-
-        const [ parent, ...ancestors ] = findAncestors(compState, action.elementId);
-        
-        let byName:any = {}
-        for (const kEl in compState.elements.byName) {
-            if (elTree.indexOf(kEl) === -1) {
-                const elData = compState.elements.byName[kEl];
-                if (parent == kEl) {
-                    byName[kEl] = {
-                        ...elData,
-                        props: {
-                            ...elData.props,
-                            children: elData.props.children.filter((c:string) => c != action.elementId)
-                        }
-                    }
-                }
-                else {
-                    byName[kEl] = elData;
-                }
-                
-            }
-        }
-
-        return {
-            ...state,
-            selection: {
-                ...state.selection,
-                elements: [ parent ]
-            },
-            data: {
-                ...state.data,
-                components: {
-                    ...state.data.components,
-                    byName: {
-                        ...state.data.components.byName,
-                        [action.component]: {
-                            ...compState,
-                            elements: {
-                                all: Object.keys(byName),
-                                byName
+        if (action.type == "ELEMENT_UPDATE") {
+            
+            const componentState = state.data.components.byName[action.component];
+            const oldProps = componentState.elements.byName[action.elementId].props;
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    components: {
+                        ...state.data.components,
+                        byName: {
+                            ...state.data.components.byName,
+                            [action.component]: {
+                                ...componentState,
+                                elements: entitySetUpdate(componentState.elements, 
+                                    action.elementId, 
+                                    { 
+                                        props: {
+                                            ...oldProps,
+                                            ...action.props
+                                        }
+                                    })
                             }
                         }
                     }
                 }
             }
         }
-    }
 
-    if (action.type == "COMPONENT_RENAME") {
+        if (action.type == "ELEMENT_ADD") {
+            
+            const componentState = state.data.components.byName[action.location.component];
 
-        const all = state.data.components.all.map(n => 
-            n == action.oldName 
-                ? action.newName 
-                : action.oldName);
+            const idPrefix = action.elementType.component;
+            const generatedId = newId(idPrefix, componentState.elements.all);
 
-        const { [action.oldName]: def, ...componentsByNameOld } = state.data.components.byName;
+            const components = entitySetUpdate(
+                    state.data.components, 
+                    action.location.component, 
+                    addElement(componentState, generatedId, { type: action.elementType, props: action.props }, action.location));
 
-        let componentsByName:any = {};
-        for (const k in componentsByNameOld) {
-            const c = componentsByNameOld[k];
-            let elementsByName:any = {}
-            for (const kEl in c.elements.byName) {
-                const el = c.elements.byName[kEl];
-                if (!el.type.lib && el.type.component == action.oldName) {
-                    elementsByName[kEl] = {
-                        ...el,
-                        type: { component: action.newName }
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    components,
+                    imports: purgeImports(components) 
+                },
+                selection: {
+                    ...state.selection,
+                    component: action.location.component,
+                    elements: [ generatedId ]
+                }
+            }
+        }
+
+        if (action.type == "ELEMENT_MOVE") {
+            
+            const sameComponent = action.fromComponent == action.location.component
+    
+            const componentFromOld = state.data.components.byName[action.fromComponent]
+            const componentFrom = removeElement(componentFromOld, action.fromElementId);
+            
+            const element = componentFromOld.elements.byName[action.fromElementId];
+
+
+            const componentToOld = sameComponent
+                ? componentFrom
+                : state.data.components.byName[action.location.component];
+            
+            const id = sameComponent
+                ? action.fromElementId
+                : newId(element.type.component, componentToOld.elements.all)
+
+            const componentTo = addElement(componentToOld, id, element, action.location);
+            
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    components: {
+                        ...state.data.components,
+                        byName: {
+                            ...state.data.components.byName,
+                            [action.fromComponent]: componentFrom,
+                            [action.location.component]: componentTo
+                        }
                     }
                 }
-                else {
-                    elementsByName[kEl] = el;
+            }
+
+        }
+
+        if (action.type == "ELEMENT_REMOVE") {
+            const compState = state.data.components.byName[action.component];
+            const elTree = findDescendents(compState, action.elementId);
+
+            if (elTree.length < 1) return state;
+
+            const [ parent, ..._ ] = findAncestors(compState, action.elementId);
+            
+            let byName:any = {}
+            for (const kEl in compState.elements.byName) {
+                if (elTree.indexOf(kEl) === -1) {
+                    const elData = compState.elements.byName[kEl];
+                    if (parent == kEl) {
+                        byName[kEl] = {
+                            ...elData,
+                            props: {
+                                ...elData.props,
+                                children: elData.props.children.filter((c:string) => c != action.elementId)
+                            }
+                        }
+                    }
+                    else {
+                        byName[kEl] = elData;
+                    }
+                    
                 }
             }
-            componentsByName[k] = {
-                ...c,
-                elements: {
-                    ...c.elements,
-                    byName: elementsByName
+
+            return {
+                ...state,
+                selection: {
+                    ...state.selection,
+                    elements: [ parent ]
+                },
+                data: {
+                    ...state.data,
+                    components: {
+                        ...state.data.components,
+                        byName: {
+                            ...state.data.components.byName,
+                            [action.component]: {
+                                ...compState,
+                                elements: {
+                                    all: Object.keys(byName),
+                                    byName
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
 
-        const byName = { ...componentsByName, [action.newName]: def };
-        const selectedComponent = state.selection.component == action.oldName
-            ? action.newName
-            : action.oldName;
+        if (action.type == "COMPONENT_ADD") {
+            
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    components: entitySetAdd(state.data.components, action.name, componentStateZero)
+                },
+                selection: {
+                    component: action.name,
+                    elements: [ componentStateZero.rootElement ]
+                }
+            }
 
-        return {
-            ...state,
-            data: {
-                ...state.data,
-                components: { ...state.data.components, all, byName }
-            },
-            selection: {
-                ...state.selection,
-                component: selectedComponent
+        }
+
+        if (action.type == "COMPONENT_RENAME") {
+
+            const all = state.data.components.all.map(n => 
+                n == action.oldName 
+                    ? action.newName 
+                    : n);
+                
+            const { [action.oldName]: def, ...componentsByNameOld } = state.data.components.byName;
+
+            let componentsByName:any = {};
+            for (const k in componentsByNameOld) {
+                const c = componentsByNameOld[k];
+                let elementsByName:any = {}
+                for (const kEl in c.elements.byName) {
+                    const el = c.elements.byName[kEl];
+                    if (!el.type.lib && el.type.component == action.oldName) {
+                        elementsByName[kEl] = {
+                            ...el,
+                            type: { component: action.newName }
+                        }
+                    }
+                    else {
+                        elementsByName[kEl] = el;
+                    }
+                }
+                componentsByName[k] = {
+                    ...c,
+                    elements: {
+                        ...c.elements,
+                        byName: elementsByName
+                    }
+                }
+            }
+
+            const byName = { ...componentsByName, [action.newName]: def };
+            const selectedComponent = state.selection.component == action.oldName
+                ? action.newName
+                : action.oldName;
+
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    components: { ...state.data.components, all, byName }
+                },
+                selection: {
+                    ...state.selection,
+                    component: selectedComponent
+                }
             }
         }
+
+
+
+        return state;
     }
 
+    return reducer;
 
-
-    return state;
 }

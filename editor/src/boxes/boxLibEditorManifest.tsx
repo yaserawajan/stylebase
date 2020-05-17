@@ -16,7 +16,7 @@ export const boxLibEditorManifest:ComponentLibEditorManifest = {
 
         Box: () => <Box style={{
                         border: "2px solid #333",
-                        minHeight: 30,
+                        height: 30,
                         width: "100%",
                         backgroundColor: "white"
                     }} />,
@@ -26,7 +26,8 @@ export const boxLibEditorManifest:ComponentLibEditorManifest = {
                         fontFamily: "monospace",
                         fontSize: 20,
                         width: "100%",
-                        lineHeight: "30px",
+                        height: 30,
+                        lineHeight: "28px",
                         textAlign: "center"
                     }}>TEXT</div>
     },

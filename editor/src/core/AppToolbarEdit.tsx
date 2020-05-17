@@ -1,10 +1,12 @@
 import * as React from "react";
+import { shallowEqual, useDispatch } from "react-redux";
+
 import { Button } from "../uiShell/controls/Button";
 import { useDocEditorState } from "../patterns/docEditor/docEditorHooks";
 import { DocSelection, DocState } from "./doc/docModels";
-import { shallowEqual, useDispatch } from "react-redux";
 import { actionUndo, actionRedo, actionUpdate } from "../patterns/docEditor/docEditorState";
 import { docElementRemove, docActionSet } from "./doc/docActions";
+import { ButtonGroup } from "../uiShell/controls";
 
 interface Props extends DocSelection {
 
@@ -36,13 +38,13 @@ export const AppToolbarEdit:React.FC<Props> = ({ component, elements }) => {
                 .map(el => docElementRemove(component, el)))));
 
     return (
-        <div className="group">
-            <Button key="undo" label="Undo" icon="undo" disabled={!editor.canUndo} onClick={handleUndo} />
-            <Button key="redo" label="Redo" icon="redo" disabled={!editor.canRedo} onClick={handleRedo} />
-            <Button key="cut" label="Cut" icon="cut" disabled />
-            <Button key="copy" label="Copy" icon="copy" disabled />
-            <Button key="paste" label="Paste" icon="paste" disabled />
-            <Button key="delete" label="Delete" icon="trash" disabled={!canDelete} onClick={handleDelete} />
-        </div>
+        <ButtonGroup>
+            <Button compact key="undo" label="Undo" icon="undo" disabled={!editor.canUndo} onClick={handleUndo} />
+            <Button compact key="redo" label="Redo" icon="redo" disabled={!editor.canRedo} onClick={handleRedo} />
+            <Button compact key="cut" label="Cut" icon="cut" disabled />
+            <Button compact key="copy" label="Copy" icon="copy" disabled />
+            <Button compact key="paste" label="Paste" icon="paste" disabled />
+            <Button compact key="delete" label="Delete" icon="trash" disabled={!canDelete} onClick={handleDelete} />
+        </ButtonGroup>
     )
 }

@@ -8,8 +8,8 @@ import { Tree } from "./uiState/Tree";
 import { PropEditorFactory } from "./doc/docModels";
 import { docElementUpdate, docActionSet } from "./doc/docActions";
 import { actionUpdate } from "../patterns/docEditor/docEditorState";
-import { PanelBody } from "../uiShell/panel/PanelBody";
-import { Title } from "../uiShell/controls/Title";
+import { Block } from "../uiShell/Block";
+import { Col } from "../uiShell/layouts";
 
 interface Props {
     renderPropEditor: PropEditorFactory
@@ -37,23 +37,26 @@ export const ElementUpdateSection:React.SFC<Props> = (props) => {
     }, [props.component, props.elementIds, element]);
 
     return (
-        <PanelBody key="body" className="column separator scale-4 palette-4">
-            <Tree name={element.type.component} key={props.component + "/" + props.elementIds[0]}>
+        
+        <Block palette="light-grey-4" scale={3}>
+            <Col>
+                <Tree name={element.type.component} key={props.component + "/" + props.elementIds[0]}>
 
-                {Object.keys(propTypes).map(propName => (
-                    (propName != "children") && <PropEditor 
-                        key={propName} 
-                        compact={false}
-                        path={ [ props.component, propName ] }
-                        propType={propTypes[propName]}
-                        propName={propName}
-                        onChange={handleChange}
-                        value={element.props[propName]}
-                        defaultValue={defaultProps[propName]}
-                        renderPropEditor={props.renderPropEditor} />
-                ))}
-                
-            </Tree>
-        </PanelBody>
+                    {Object.keys(propTypes).map(propName => (
+                        (propName != "children") && <PropEditor 
+                            key={propName} 
+                            compact={false}
+                            path={ [ props.component, propName ] }
+                            propType={propTypes[propName]}
+                            propName={propName}
+                            onChange={handleChange}
+                            value={element.props[propName]}
+                            defaultValue={defaultProps[propName]}
+                            renderPropEditor={props.renderPropEditor} />
+                    ))}
+                    
+                </Tree>
+            </Col>
+        </Block>
     );
 }

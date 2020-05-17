@@ -1,9 +1,9 @@
 import * as React from "react";
 
 import { BoxFont } from "../../types";
-import { classes } from "../../../uiShell/utils";
 import { toCssFont } from "../../cssUtils";
 import { getFontProvider } from "../../webFontUtils";
+import { Title } from "../../../uiShell/controls/Title";
 
 type Props = Omit<BoxFont, "size"> & {
     style?: React.CSSProperties
@@ -25,13 +25,12 @@ export const FontSwatch:React.SFC<Props> = ({ onClick, style:passedStyle, classN
 
     const style = {
         ...passedStyle,
-        ...genStyle,
-        padding: "0 10px"
+        ...genStyle
     }
 
     return (
-        <div onClick={onClick} className={classes("text", className)} style={style}>
+        <Title onClick={onClick} className={className} style={style}>
             {font.family.name}
-        </div>
+        </Title>
     );
 }
