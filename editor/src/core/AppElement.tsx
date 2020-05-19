@@ -133,6 +133,7 @@ export const AppElement = (props:Props) => {
 
     const { children = [], ...otherProps } = element.props;
     const C = props.componentFactory(element.type) as any;
+    
     return (
         <ViewElement  
             elementId={props.elementId} 
@@ -157,5 +158,5 @@ export const AppElement = (props:Props) => {
                 </ErrorShield>
             )}
         </ViewElement>
-        );
+    );
 }

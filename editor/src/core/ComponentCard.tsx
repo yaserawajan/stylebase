@@ -12,7 +12,6 @@ import { Title } from "../uiShell/controls/Title";
 interface Props {
     style?: React.CSSProperties
     className?: string
-    renderComponent: (componentUri: ComponentUri) => JSX.Element
     componentUri: ComponentUri
     defaultProps: PropsMap
 }

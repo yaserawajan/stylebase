@@ -1,6 +1,5 @@
 import * as React from "react";
-import { ElementId, setElementId } from "./viewElementIdentification";
-import { XYCoord, useDrag } from "react-dnd";
+import { ElementId, setElementId, elementIdFromDom } from "./viewElementIdentification";
 
 export type ViewElementContext = {
     ref: React.Ref<HTMLElement>
@@ -21,6 +20,8 @@ export const ViewElement:React.FunctionComponent<Props> = ({ children, elementId
     
     const handleMouseOver = (id: ElementId) => 
         (e: MouseEvent) => {
+            //e.stopPropagation();
+            //console.log(("dataset" in e.target) && elementIdFromDom(e.target));
             if (e.target !== ref.current) return;
             if (onHover) onHover(id);
         }
@@ -72,7 +73,7 @@ export const ViewElement:React.FunctionComponent<Props> = ({ children, elementId
             dom.removeEventListener("mousedown", down);
             dom.removeEventListener("mouseup", up);
         }
-    }, [elementId, mute]);
+    }, [elementId, mute, ref.current]);
 
     return children({ ref, elementId });
 }

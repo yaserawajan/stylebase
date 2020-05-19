@@ -1,22 +1,31 @@
 import * as React from "react";
-import { useDocEditorState } from "../../patterns/docEditor/docEditorHooks";
-import { DocState, ComponentFactory } from "./docModels";
-import { DocEditorState } from "../../patterns/docEditor/docEditorState";
+import { ComponentFactory, PropsMap } from "./docModels";
+import { useDocElementState } from "./docHooks";
+import { inlineComponentContext } from "./inlineComponentContext";
 
-interface Props {
-
+interface NamedElementProps {
+    elementId: string
 }
 
-export const createInlineComponent = (componentFactory: ComponentFactory, component: string) => {
+const NamedElement = React.forwardRef<any,NamedElementProps>((props, ref) => {
+    const { component, componentFactory } = React.useContext(inlineComponentContext);
+    const element = useDocElementState(component, props.elementId);
+    const { children = [], ...otherProps } = element.props;
+    const C = componentFactory(element.type) as any;
+    return <C {...otherProps} 
+                ref={ref} 
+                children={children.map((child:string) => (
+                    <NamedElement key={child} elementId={child} />
+                ))} />
+});
 
-    const NamedElement:React.FC<Props> = (props) => {
+export const createInlineComponent = (componentFactory: ComponentFactory, component: string, rootElement: string) => {
+    return React.forwardRef<any, PropsMap>((props, ref) => {
         
-        const data = useDocEditorState((s:DocEditorState<DocState,any>) => s.present.data.components.byName[component]);
-        const rootElement = data.rootElement;
-
-
-        return <div />
-    }
-
-    return NamedElement;
+        return (
+            <inlineComponentContext.Provider value={{ params: props, componentFactory, component }}>
+                <NamedElement ref={ref} elementId={rootElement} />
+            </inlineComponentContext.Provider>
+        );
+    });
 }

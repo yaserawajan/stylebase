@@ -52,10 +52,10 @@ export const ElementInsertSection:React.SFC<Props> = (props) => {
                         const editorExt = editorExtensions.byName[libName];
                         return (
                             <Col key={libName}>
-                                <Block scale={4} palette="light-grey-4" indent={[0, 2]}>
+                                <Block key="t" scale={4} palette="light-grey-4" indent={[0, 2]}>
                                     <Title level="h2">{libName}</Title>
                                 </Block>
-                                <Block indent={[1, 2]} scale={4} palette="light-grey-5" className="bg-dotted">
+                                <Block key="b" indent={[1, 2]} scale={4} palette="light-grey-5" className="bg-dotted">
                                     <Fluid>
                                         {Object.keys(lib.components).map(compName => {
                                             const uri = { lib: libName, component: compName };
@@ -65,8 +65,7 @@ export const ElementInsertSection:React.SFC<Props> = (props) => {
                                                     key={compName} 
                                                     className="occupy-half"
                                                     defaultProps={{}}
-                                                    componentUri={uri}
-                                                    renderComponent={component}>
+                                                    componentUri={uri}>
                                                         {component(uri)}
                                                 </ComponentCard>
                                             );
@@ -83,11 +82,18 @@ export const ElementInsertSection:React.SFC<Props> = (props) => {
                         <Title level="h2">From Project</Title>
                     </Block>
                     {components.all.map(c => {
-
+                        const uri = { component: c };
                         
-
-
-
+                        return (
+                            <Block key={c} indent={[1, 2]} scale={4} palette="light-grey-5" className="bg-dotted">
+                                <ComponentCard 
+                                    className="occupy-half"
+                                    defaultProps={{}}
+                                    componentUri={uri}>
+                                        <Title>{c}</Title>
+                                </ComponentCard>
+                            </Block>
+                        );
                     })}
                 </Col>
             </ScrollArea>
