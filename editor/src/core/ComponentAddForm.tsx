@@ -17,7 +17,7 @@ interface State {
     remount: boolean
 }
 
-interface Props {
+interface Props { 
     onCancel: () => void
     onSuccess: (componentName: string) => void
 }

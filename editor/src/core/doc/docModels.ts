@@ -14,7 +14,7 @@ export type MapDataType = {
         [propName: string]: MapPropDesc
     }
 }
-
+   
 export type ArrayDataType = {
     type: "array"
     itemType: PropMetadata

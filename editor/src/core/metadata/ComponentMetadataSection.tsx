@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { Title } from "../../uiShell/controls/Title";
-import { ComponentsParamsEditor } from "./ComponentParamsEditor";
+import { ComponentsParamsSection } from "./ComponentParamsSection";
 import { ComponentNameSection } from "./ComponentNameSection";
 import { Block } from "../../uiShell/Block";
 
@@ -21,7 +21,7 @@ export const ComponentMetadataSection:React.SFC<Props> = (props) => {
 
             <ComponentNameSection value={props.componentName} />
 
-            <ComponentsParamsEditor value={{}} />
+            <ComponentsParamsSection value={{}} />
         </>
     );
 }
