@@ -14,9 +14,11 @@ interface Props extends DocSelection {
 
 export const AppToolbarEdit:React.FC<Props> = ({ component, elements }) => {
 
+    
     const editor = useDocEditorState<DocState,DocSelection>(s => {
-        
-        const rootElement = s.present.data.components.byName[component].rootElement;
+        const c = s.present.data.components.byName[component];
+        if (!c) return { canUndo: false, canRedo: false, rootElement: "" }; 
+        const rootElement = c.rootElement;
         return {
             canUndo: s.past.length > 0,
             canRedo: s.future.length > 0,

@@ -46,6 +46,10 @@ const store = createStore(enableBatching(combineReducers({
 
 const propEditorFactory = createPropEditorFactory(libs, [ boxLibEditorManifest ]);
 
+window.onbeforeunload = function() {
+    return "Are you sure you want to leave your changes unsaved?";
+};
+
 ReactDOM.render(
     <Provider store={store}>
         <DndProvider backend={Html5Backend}>

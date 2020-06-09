@@ -13,7 +13,7 @@ interface Props {
     
     compact?: boolean
 
-    onClick?: () => void
+    onClick?: (e:any) => void
 }
 
 export const Button:React.SFC<Props> = (props) => {

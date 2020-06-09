@@ -37,7 +37,7 @@ export const App:React.SFC<Props> = (props) => {
             renderPanel={(panelName, specs) => {
                 switch (panelName) {
 
-                    case "docNavigator": return <DocumentEditorPanel documentName="Unnamed Document" style={specs.style} />;
+                    case "docNavigator": return <DocumentEditorPanel documentName="Document" style={specs.style} />;
 
                     case "componentEditor": return (
                             <ComponentEditorPanel 

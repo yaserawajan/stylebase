@@ -29,7 +29,9 @@ export const ComponentView:React.SFC<Props> = ({ rect, component, elements }) =>
     const rootElement = useDocEditorState((editor: DocEditorState<DocState,DocSelection>) => {
         const compName = editor.present.selection.component;
         if (!compName) return undefined;
-        return editor.preview.components.byName[compName].rootElement;
+        const c = editor.preview.components.byName[compName];
+        if (!c) return undefined;
+        return c.rootElement;
     });
     const componentFactory = useComponentFactory();
     const dispatch = useDispatch();

@@ -359,7 +359,39 @@ export const createDocUpdateReducer = (componentWithRoot: ComponentMetadata) => 
             }
         }
 
+        if (action.type == "COMPONENT_PARAM_ADD") {
+            const componentState = state.data.components.byName[action.component];
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    components: {
+                        ...state.data.components,
+                        byName: {
+                            ...state.data.components.byName,
+                            [action.component]: {
+                                ...componentState,
+                                defaultProps: {
+                                    ...componentState.defaultProps,
+                                    [action.paramName]: action.defaultValue
+                                },
+                                propTypes: entitySetAdd(componentState.propTypes, action.paramName, action.paramType)
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
+        if (action.type == "COMPONENT_PARAM_UPDATE") {
+            const componentState = state.data.components.byName[action.component];
+
+        }
+
+        if (action.type == "COMPONENT_PARAM_REMOVE") {
+            const componentState = state.data.components.byName[action.component];
+
+        }
 
         return state;
     }

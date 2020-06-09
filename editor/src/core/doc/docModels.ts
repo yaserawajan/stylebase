@@ -206,6 +206,30 @@ export type ComponentRenameAction = {
     newName: string
 }
 
+export type ComponentParamAddAction = {
+    type: "COMPONENT_PARAM_ADD",
+    component: string
+    paramType: PropMetadata
+    paramName: string
+    defaultValue: any
+    required: boolean
+}
+
+export type ComponentParamUpdateAction = {
+    type: "COMPONENT_PARAM_UPDATE",
+    component: string
+    paramName: string
+    paramType: PropMetadata
+    defaultValue: any
+    required: boolean
+}
+
+export type ComponentParamRemoveAction = {
+    type: "COMPONENT_PARAM_REMOVE",
+    component: string
+    paramName: string
+}
+
 export type DocActionSet = {
     type: "ACTION_SET"
     actions: DocAction[]
@@ -214,6 +238,7 @@ export type DocActionSet = {
 export type DocAction = 
     ElementAddAction | ElementMoveAction | ElementRemoveAction | ElementUpdateAction |
     ComponentAddAction | ComponentRenameAction |
+    ComponentParamAddAction | ComponentParamUpdateAction | ComponentParamRemoveAction | 
     DocActionSet;
 
 export type PropEditorRenderProps = {

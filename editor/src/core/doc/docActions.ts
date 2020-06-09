@@ -5,7 +5,11 @@ import {
     ElementLocation, 
     DocAction, 
     ComponentRenameAction,
-    ComponentAddAction} from "./docModels"
+    ComponentAddAction,
+    ComponentParamAddAction,
+    ComponentParamUpdateAction,
+    ComponentParamRemoveAction,
+    PropMetadata} from "./docModels"
 
 export const docActionSet = (actions:DocAction[]):DocActionSet => ({
     type: "ACTION_SET",
@@ -56,4 +60,28 @@ export const docComponentRename = (oldName: string, newName: string):ComponentRe
     type: "COMPONENT_RENAME",
     oldName,
     newName
+})
+
+export const componentParamAdd = (component:string, paramName: string, paramType: PropMetadata, required: boolean, defaultValue: any):ComponentParamAddAction => ({
+    type: "COMPONENT_PARAM_ADD",
+    component,
+    paramType,
+    paramName,
+    required,
+    defaultValue
+})
+
+export const componentParamUpdate = (component:string, paramName: string, paramType: PropMetadata, required: boolean, defaultValue: any):ComponentParamUpdateAction => ({
+    type: "COMPONENT_PARAM_UPDATE",
+    component,
+    paramType,
+    paramName,
+    required,
+    defaultValue
+})
+
+export const componentParamRemove = (component:string, paramName: string):ComponentParamRemoveAction => ({
+    type: "COMPONENT_PARAM_REMOVE",
+    component,
+    paramName
 })

@@ -6,7 +6,7 @@ import { InputArea } from "../../uiShell/controls/InputArea";
 import { Input } from "../../uiShell/controls/Input";
 
 interface Props {
-
+    //onSubmit?: ()
 }
 
 interface State {
@@ -25,7 +25,7 @@ export const ComponentParamForm:React.SFC<Props> = (props) => {
     const setType = (value: string) => setState(s => ({ ...s, type: value }));
 
     return (
-        <ModalForm title="Component Parameter">
+        <ModalForm title="Component Parameter" >
             
             <Fluid>
                 <FormField name="Name" className="occupy-half" key="name">
