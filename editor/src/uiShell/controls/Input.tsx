@@ -3,29 +3,33 @@
 import * as React from "react";
 import { classes } from "../utils";
 
-interface Props {
-    style?: React.CSSProperties
-    className?: string
+interface Props 
+    extends Omit<
+        React.DetailedHTMLProps<
+            React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "onChange"> {
     value: string
-    placeholder?: string
-    onChange: (value:string) => void
+    onChange?: (value:string) => void
 }
  
-export const Input = React.forwardRef((props: Props, ref) => {
+export const Input = React.forwardRef(({ 
+    className, 
+    value = "", 
+    onChange, 
+    ...props 
+}: Props, ref) => {
 
     const handleChange = (e:any) => {
-        props.onChange(e.target.value);
+        onChange(e.target.value);
     }
 
     return (
         <input 
+            {...props}
             ref={ref as any}
-            className={classes("input", props.className)} 
-            style={props.style}
-            placeholder={props.placeholder} 
+            className={classes("input", className)} 
             size={1} 
             type="text" 
-            value={props.value || ""} 
+            value={value}
             onChange={handleChange} />
     );
 });

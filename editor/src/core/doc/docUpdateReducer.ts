@@ -365,27 +365,28 @@ export const createDocUpdateReducer = (componentWithRoot: ComponentMetadata) => 
                 ...state,
                 data: {
                     ...state.data,
-                    components: {
-                        ...state.data.components,
-                        byName: {
-                            ...state.data.components.byName,
-                            [action.component]: {
-                                ...componentState,
-                                defaultProps: {
-                                    ...componentState.defaultProps,
-                                    [action.paramName]: action.defaultValue
-                                },
-                                propTypes: entitySetAdd(componentState.propTypes, action.paramName, action.paramType)
-                            }
-                        }
-                    }
+                    components: entitySetUpdate(state.data.components, action.component, {
+                        defaultProps: {
+                            ...componentState.defaultProps,
+                            [action.paramName]: action.defaultValue
+                        },
+                        propTypes: entitySetAdd(componentState.propTypes, action.paramName, action.paramType)
+                    })
                 }
             }
         }
 
         if (action.type == "COMPONENT_PARAM_UPDATE") {
             const componentState = state.data.components.byName[action.component];
-
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    components: entitySetUpdate(state.data.components, action.component, {
+                        propTypes: entitySetUpdate(componentState.propTypes, action.paramName, action.paramType)
+                    })
+                }
+            }
         }
 
         if (action.type == "COMPONENT_PARAM_REMOVE") {

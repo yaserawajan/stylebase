@@ -219,9 +219,9 @@ export type ComponentParamUpdateAction = {
     type: "COMPONENT_PARAM_UPDATE",
     component: string
     paramName: string
-    paramType: PropMetadata
-    defaultValue: any
-    required: boolean
+    paramType?: PropMetadata
+    //defaultValue: any
+    required?: boolean
 }
 
 export type ComponentParamRemoveAction = {

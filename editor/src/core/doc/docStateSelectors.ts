@@ -1,6 +1,7 @@
 
 import { selectPreviewState, selectPresentState } from "../../patterns/docEditor/docEditorSelectors";
 import { DocState, ElementDesc } from "./docModels";
+import { selectDocLibState } from "./docLibSelectors";
 
 
 const noElement = {}
@@ -24,3 +25,11 @@ export const selectDocElement = (component: string, id:string) =>
         return noElement;
     }
 
+const builtInDataTypes = ["media", "elementRef", "entityRef", "text", "number", "map", "array", "boolean", "any"]; // ... 
+export const selectDataTypes = () =>
+    (s:any):string[] => {   
+        const doc = selectPresentState<DocState>(s);
+        const docLibs = selectDocLibState(s);
+        const typeArrays = doc.imports.map(i => Object.keys(docLibs.libs.byName[i].types).map(k => `${i}:${k}`));
+        return [].concat.apply(builtInDataTypes, typeArrays);
+    }

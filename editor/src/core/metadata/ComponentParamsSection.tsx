@@ -1,16 +1,19 @@
 import * as React from "react";
-import { PropMapMetadata } from "../doc/docModels";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
+
 import { Title } from "../../uiShell/controls/Title";
 import { Button } from "../../uiShell/controls/Button";
 import { Block } from "../../uiShell/Block";
 import { Col, Row, Fluid } from "../../uiShell/layouts";
-import { Stretcher } from "../../uiShell/controls";
 import { FormField } from "../../uiShell/controls/FormField";
 import { Input } from "../../uiShell/controls/Input";
 import { InputArea } from "../../uiShell/controls/InputArea";
-import { useDispatch } from "react-redux";
 import { actionUpdate } from "../../patterns/docEditor/docEditorState";
-import { componentParamAdd } from "../doc/docActions";
+import { componentParamAdd, componentParamRemove, componentParamUpdate } from "../doc/docActions";
+import { ComponentParamItem } from "./ComponentParamItem";
+import { selectComponentMetadata } from "../doc/docLibSelectors";
+import { PropMetadata } from "../doc/docModels";
+import { QuickAddForm } from "../../uiShell/controls/QuickAddForm";
 
 interface State {
     paramNameError?: string
@@ -19,32 +22,38 @@ interface State {
 
 interface Props {
     component: string
-    value: PropMapMetadata
+    //params: PropMapMetadata
 }
 
-export const ComponentsParamsSection:React.SFC<Props> = ({ component, value }) => {
-
-    const [{ newParamName, paramNameError }, setState] = React.useState<State>({ newParamName: "" });
+export const ComponentParamsSection:React.SFC<Props> = ({ component }) => {
+    const { propTypes } = useSelector(s => selectComponentMetadata(s, { component }), shallowEqual);
+    
     const dispatch = useDispatch();
 
-    const params = Object.keys(value).map(k => ({ name: k, paramType: value[k] }));
+    const params = Object.keys(propTypes).map(k => ({ name: k, paramType: propTypes[k] }));
 
-    const handleChange = (paramName: string) => {
-
-        let error:string = undefined;
+    const validateNewName = (paramName: string) => {
         if (!(/^[$A-Z_a-z][0-9A-Z_a-z$]*$/.test(paramName))) {
-            error = "Invalid name";
+            return false;
         }
-        else if (Object.keys(value).indexOf(paramName) !== -1) {
-            error = "Duplicate name";
+        else if (Object.keys(propTypes).indexOf(paramName) !== -1) {
+            return false;
         }
-        
-        setState(s => ({ ...s, newParamName: paramName, paramNameError: error }));
+
+        return true;
+    } 
+
+    const handleParamChange = (name: string, value: PropMetadata) => {
+        dispatch(actionUpdate(componentParamUpdate(component, name, value, false)));
     }
 
-    const handleAdd = () => {
-        dispatch(actionUpdate(componentParamAdd(component, newParamName, { type: "text" }, false, "")));
-        setState(s => ({ ...s, newParamName: "", paramNameError: undefined }));
+    const handleParamRemove = (name: string) => {
+        dispatch(actionUpdate(componentParamRemove(component, name)));
+    }
+
+    const handleAdd = (name: string) => {
+        const action = actionUpdate(componentParamAdd(component, name, { type: "text" }, false, ""));
+        dispatch(action);
     }
 
     return (
@@ -61,27 +70,22 @@ export const ComponentsParamsSection:React.SFC<Props> = ({ component, value }) =
                         </Row>
                     }
 
-                    {Object.keys(value).map(paramName => {
-                        const param = value[paramName];
+                    {Object.keys(propTypes).map(paramName => {
+                        const param = propTypes[paramName];
                         return (
-                            <Row key={paramName}>
-                                <Title>{paramName}</Title>
-                                <Stretcher />
-                                <Title>{param.type}</Title>
-                            </Row>
-                        )
+                            <ComponentParamItem 
+                                key={paramName} 
+                                name={paramName} 
+                                data={param}
+                                onChange={handleParamChange}
+                                onRemove={handleParamRemove} />)
                     })}
 
-                    <Fluid key="__footer">
-                        <FormField name="New Parameter" className="stretch">
-                            <InputArea>
-                                <Input value={newParamName} onChange={handleChange} placeholder="Enter Name ..." />
-                            </InputArea>
-                        </FormField>
-                        <Button icon="plus" label="Add" 
-                            disabled={newParamName.length < 1 || !!paramNameError} 
-                            onClick={handleAdd} />
-                    </Fluid>
+                    <QuickAddForm 
+                        title="Add Parameter" 
+                        onAdd={handleAdd} 
+                        validator={validateNewName} />
+
                 </Col>
             </Block>
         </>

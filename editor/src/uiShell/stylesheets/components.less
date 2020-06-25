@@ -498,3 +498,73 @@
         
     }
 }
+
+
+
+
+  
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 0.7em;
+    height: 0.4em;
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+
+    & + .caption {
+        margin-left: 0.05;
+    }
+
+    & input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+  
+    & .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .3s;
+        transition: .3s;
+    }
+  
+    & .slider:before {
+        position: absolute;
+        content: "";
+        height: 0.3em;
+        width: 0.3em;
+        left: 0.05em;
+        bottom: 0.05em;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+  
+    & input:checked + .slider {
+        background-color: #2196F3;
+    }
+  
+    & input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+  
+    & input:checked + .slider:before {
+        -webkit-transform: translateX(0.3em);
+        -ms-transform: translateX(0.3em);
+        transform: translateX(0.3em);
+    }
+  
+    /* Rounded sliders */
+    & .slider.round {
+        border-radius: 0.2em;
+    }
+    
+    & .slider.round:before {
+        border-radius: 50%;
+    }
+}

@@ -11,6 +11,8 @@ interface Props {
     className?: string
     tabIndex?: number
     onClick?: () => void
+    //onFocus?: () => void
+    //onBlur?: () => void
 }
 
 export const InputArea:React.SFC<Props> = React.forwardRef<any, Props>((props, ref) => {
@@ -19,9 +21,10 @@ export const InputArea:React.SFC<Props> = React.forwardRef<any, Props>((props, r
 
     return (
         <div ref={ref} 
-            tabIndex={props.tabIndex} 
+             
             className={classes(nested ?  "row" : "input-area", props.className)} 
-            style={props.style} 
+            style={props.style}
+            
             onClick={props.onClick}>
 
             <parentHood.Provider value={{ nested: true }}>

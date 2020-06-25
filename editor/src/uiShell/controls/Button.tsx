@@ -4,31 +4,23 @@ import * as React from "react";
 import { IconLA } from "./IconLA";
 import { classes } from "../utils";
 
-interface Props {
-    style?: React.CSSProperties
-    className?: string
-    disabled?: boolean
+interface Props extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
     label: string
     icon?: string
-    
     compact?: boolean
-
-    onClick?: (e:any) => void
 }
 
-export const Button:React.SFC<Props> = (props) => {
+export const Button:React.SFC<Props> = ({ children, icon, label, className, compact, ...props}) => {
 
     return (
         <button 
-            disabled={props.disabled}
-            onClick={props.onClick} 
-            style={props.style} 
+            {...props} 
             className={classes("button", 
                 props.disabled && "disabled", 
-                props.compact && "compact",
-                props.className)}>
-            {props.icon? <div className="icon"><IconLA icon={props.icon} /></div> : null}
-            {props.compact ? null : <div className="text"><span>{props.label}</span></div>}
+                compact && "compact",
+                className)}>
+            {icon? <div className="icon"><IconLA icon={icon} /></div> : null}
+            {compact ? null : <div className="text"><span>{label}</span></div>}
         </button>
     );
 }

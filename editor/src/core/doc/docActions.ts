@@ -71,13 +71,12 @@ export const componentParamAdd = (component:string, paramName: string, paramType
     defaultValue
 })
 
-export const componentParamUpdate = (component:string, paramName: string, paramType: PropMetadata, required: boolean, defaultValue: any):ComponentParamUpdateAction => ({
+export const componentParamUpdate = (component:string, paramName: string, paramType?: PropMetadata, required?: boolean):ComponentParamUpdateAction => ({
     type: "COMPONENT_PARAM_UPDATE",
     component,
     paramType,
     paramName,
-    required,
-    defaultValue
+    required
 })
 
 export const componentParamRemove = (component:string, paramName: string):ComponentParamRemoveAction => ({

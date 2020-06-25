@@ -8,10 +8,10 @@ import { Stretcher } from "../../uiShell/controls";
 import { useComponentRename } from "../uiState/useComponentRename";
 
 interface Props {
-    value: string
+    component: string
 }
 
-export const ComponentNameSection:React.FC<Props> = ({ value }) => {
+export const ComponentNameSection:React.FC<Props> = ({ component: value }) => {
 
     const { toggled, error, remount, handleCancel, handleEdit, handleSubmit } = useComponentRename(value);
 
