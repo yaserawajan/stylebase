@@ -1,86 +1,11 @@
 
 
-export type AnyDataType = {
-    type: "any"
-}
-
-export type MapPropDesc = PropMetadata & {
-    required?: boolean
-}
-
-export type MapDataType = {
-    type: "map"
-    properties: {
-        [propName: string]: MapPropDesc
-    }
-}
-   
-export type ArrayDataType = {
-    type: "array"
-    itemType: PropMetadata
-}
-
-export type TextDataType = {
-    type: "text"
-
-}
-
-export type BooleanDataType = {
-    type: "boolean"
-
-}
-
-export type NumberDataType = {
-    type: "number"
-    min?: number
-    max?: number
-    step?: number
-    stepExclusive?: boolean
-    precision?: number
-}
- 
-export type MediaDataType = {
-    type: "media"
-}
-
-export type ElementRefDataType = {
-    type: "elementRef"
-}
-
-export type EntityRefDataType = {
-    type: "entityRef"
-    dataSourceUri?: string
-    inlineData?: any[]
-}
-
-export type PropMetadata = 
-    AnyDataType | 
-    MapDataType | 
-    ArrayDataType |  
-    BooleanDataType |
-    TextDataType |
-    NumberDataType |
-    MediaDataType |
-    EntityRefDataType |
-    ElementRefDataType | { type: string, lib: string };
-
-export type PropMapMetadata = {
-    [propName:string]: MapPropDesc
-}
-
 export type ComponentStateMapMetadata = {
     [state:string]: (props:any) => boolean
 }
 
 export type PropsMap = {
     [name:string]: any
-}
-
-export type PropValues  = {
-    all: PropsMap,
-    byState: {
-        [state: string]: PropsMap
-    }
 }
 
 export type ElementDesc = {
@@ -123,6 +48,7 @@ export type DocFormat = {
 
 
 import { EntitySet } from "../../patterns/entitySet/entitySetModels"
+import { PropMapMetadata, PropMetadata } from "./dataTypes/models"
 
 export type DocSelection = {
     component: string

@@ -1,4 +1,4 @@
-import { PropMapMetadata } from "../../core/doc/docModels";
+import { PropMapMetadata } from "../../core/doc/dataTypes/models";
 import { LIB_NAME } from "../constants";
 
 export const textPropTypes:PropMapMetadata = {

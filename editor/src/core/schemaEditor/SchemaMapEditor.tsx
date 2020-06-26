@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Row, Col } from "../../uiShell/layouts";
-import { MapPropDesc, PropMetadata, MapDataType } from "../doc/docModels";
+import { MapPropDesc, PropMetadata, MapDataType } from "../doc/dataTypes/models";
 import { Title } from "../../uiShell/controls/Title";
 import { Stretcher, Divider } from "../../uiShell/controls";
 import { Block } from "../../uiShell/Block";

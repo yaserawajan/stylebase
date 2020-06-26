@@ -1,6 +1,7 @@
 import * as React from "react";
 
-import { PropEditorRenderProps, MapDataType } from "../../doc/docModels";
+import { PropEditorRenderProps } from "../../doc/docModels";
+import { MapDataType } from "../../doc/dataTypes/models";
 import { PropEditor } from "../PropEditor";
 import { PropFolder } from "../PropFolder";
 

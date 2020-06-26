@@ -1,4 +1,5 @@
-import { PropsMap, PropMapMetadata, ComponentUri, PropMetadata, PropEditorFactory } from "./docModels"
+import { PropsMap, ComponentUri, PropEditorFactory } from "./docModels"
+import { PropMapMetadata, PropMetadata } from "./dataTypes/models"
 import { EntitySet } from "../../patterns/entitySet/entitySetModels"
 
 

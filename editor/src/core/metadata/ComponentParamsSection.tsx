@@ -12,7 +12,7 @@ import { actionUpdate } from "../../patterns/docEditor/docEditorState";
 import { componentParamAdd, componentParamRemove, componentParamUpdate } from "../doc/docActions";
 import { ComponentParamItem } from "./ComponentParamItem";
 import { selectComponentMetadata } from "../doc/docLibSelectors";
-import { PropMetadata } from "../doc/docModels";
+import { PropMetadata } from "../doc/dataTypes/models";
 import { QuickAddForm } from "../../uiShell/controls/QuickAddForm";
 
 interface State {

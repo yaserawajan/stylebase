@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PropMetadata, MapDataType, ArrayDataType } from "../doc/docModels";
+import { PropMetadata, MapDataType, ArrayDataType } from "../doc/dataTypes/models";
 import { Col } from "../../uiShell/layouts";
 import { Block } from "../../uiShell/Block";
 import { FolderTitle } from "../../uiShell/controls/FolderTitle";

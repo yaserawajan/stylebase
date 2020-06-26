@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PropMetadata, MapDataType } from "../doc/docModels";
+import { PropMetadata, MapDataType } from "../doc/dataTypes/models";
 import { Fluid, Col } from "../../uiShell/layouts";
 import { FormField } from "../../uiShell/controls/FormField";
 import { InputArea } from "../../uiShell/controls/InputArea";

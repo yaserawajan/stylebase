@@ -1,6 +1,6 @@
-# Project Title
+# STYLEBASE
 
-One Paragraph of project description goes here
+An alternative low-code visual component platform.
 
 ## Getting Started
 

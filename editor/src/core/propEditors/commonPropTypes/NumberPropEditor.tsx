@@ -1,6 +1,7 @@
 import * as React from "react";
 
-import { PropEditorRenderProps, NumberDataType } from "../../doc/docModels";
+import { PropEditorRenderProps } from "../../doc/docModels";
+import { NumberDataType } from "../../doc/dataTypes/models";
 import { InputArea } from "../../../uiShell/controls/InputArea";
 import { NumberInput } from "../../../uiShell/controls/NumberInput";
 import { FormField } from "../../../uiShell/controls/FormField";

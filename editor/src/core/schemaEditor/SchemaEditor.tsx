@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PropMetadata, MapDataType, ArrayDataType } from "../doc/docModels";
+import { PropMetadata, MapDataType, ArrayDataType } from "../doc/dataTypes/models";
 import { Row, Col } from "../../uiShell/layouts";
 import { SchemaTreeView } from "./SchemaTreeView";
 import { SchemaNodeEditor } from "./SchemaNodeEditor";

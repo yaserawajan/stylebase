@@ -3,7 +3,7 @@ import { ModalForm } from "../ModalForm";
 import { Fluid } from "../../uiShell/layouts";
 import { FormField } from "../../uiShell/controls/FormField";
 import { InputArea } from "../../uiShell/controls/InputArea";
-import { PropMetadata } from "../doc/docModels";
+import { PropMetadata } from "../doc/dataTypes/models";
 import { DropDownList } from "../../uiShell/controls/dropDownList/DropDownList";
 import { selectDataTypes } from "../doc/docStateSelectors";
 import { useSelector } from "react-redux";

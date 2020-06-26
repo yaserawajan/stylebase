@@ -8,8 +8,8 @@ import {
     ComponentAddAction,
     ComponentParamAddAction,
     ComponentParamUpdateAction,
-    ComponentParamRemoveAction,
-    PropMetadata} from "./docModels"
+    ComponentParamRemoveAction} from "./docModels"
+import { PropMetadata } from "./dataTypes/models"
 
 export const docActionSet = (actions:DocAction[]):DocActionSet => ({
     type: "ACTION_SET",

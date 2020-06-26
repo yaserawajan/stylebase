@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PropMetadata } from "../doc/docModels";
+import { PropMetadata } from "../doc/dataTypes/models";
 import { Row } from "../../uiShell/layouts";
 import { Title } from "../../uiShell/controls/Title";
 import { Stretcher, Divider, ButtonGroup } from "../../uiShell/controls";

@@ -1,4 +1,4 @@
-import { PropMetadata, ArrayDataType, MapDataType } from "../doc/docModels";
+import { PropMetadata, ArrayDataType, MapDataType } from "../doc/dataTypes/models";
 
 export const isArray = (value: PropMetadata) => value.type == "array";
 
