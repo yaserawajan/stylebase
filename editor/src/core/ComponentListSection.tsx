@@ -3,10 +3,10 @@ import { useDispatch } from "react-redux";
 
 import { MenuItem } from "../uiShell/controls/MenuItem";
 import { useDocEditorState } from "../patterns/docEditor/docEditorHooks";
-import { DocState, ComponentState, DocSelection } from "./doc/docModels";
+import { DocState, ComponentState, DocSelection } from "./doc/state/stateModels";
 import { EntitySet } from "../patterns/entitySet/entitySetModels";
 import { actionUpdate, selectionChanged, DocEditorState } from "../patterns/docEditor/docEditorState";
-import { docComponentAdd } from "./doc/docActions";
+import { docComponentAdd } from "./doc/state/actions";
 import { Title } from "../uiShell/controls/Title";
 import { ScrollArea } from "../uiShell/controls/ScrollArea";
 import { Block } from "../uiShell/Block";

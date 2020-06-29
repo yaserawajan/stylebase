@@ -5,7 +5,7 @@ import { SchemaTreeView } from "./SchemaTreeView";
 import { SchemaNodeEditor } from "./SchemaNodeEditor";
 import { SchemaPath } from "./SchemaPath";
 import { useSelector } from "react-redux";
-import { selectDataTypes } from "../doc/docStateSelectors";
+import { selectDataTypes } from "../doc/state/stateSelectors";
 import { replaceNode, selectValue } from "./utils";
 
 interface State {

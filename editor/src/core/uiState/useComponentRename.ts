@@ -1,10 +1,10 @@
 import React = require("react");
 
 import { useDocEditorState } from "../../patterns/docEditor/docEditorHooks";
-import { DocState } from "../doc/docModels";
+import { DocState } from "../doc/state/stateModels";
 import { useDispatch } from "react-redux";
 import { actionUpdate } from "../../patterns/docEditor/docEditorState";
-import { docComponentRename } from "../doc/docActions";
+import { docComponentRename } from "../doc/state/actions";
 
 interface State {
     toggled: boolean

@@ -19,7 +19,7 @@ const evaluationMap:EvaluatorMap = {
     const: ctx => ctx.expression.value,
     index: null,
     key: null,
-    param: null,
+    param: ({ expression, scopeVars }) => scopeVars[expression.name],
     switch: null
 }
 

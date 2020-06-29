@@ -1,4 +1,5 @@
-import { ComponentUri, DocAction, PropsMap } from "./doc/docModels";
+import { ComponentUri, PropsMap } from "./doc/docModels";
+import { DocAction } from "./doc/state/actionModels";
 
 export type ComponentDraggable = {
     type: "component"

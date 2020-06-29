@@ -1,7 +1,8 @@
 import * as React from "react";
 
 import { selectDocLibState } from "./docLibSelectors";
-import { ComponentUri, ComponentFactory, DocState, DocSelection } from "./docModels";
+import { ComponentUri, ComponentFactory } from "./docModels";
+import { DocState, DocSelection } from "./state/stateModels";
 import { useSelector, shallowEqual } from "react-redux";
 import { DocLibState } from "./docLibModels";
 import { createInlineComponent } from "./InlineComponent";

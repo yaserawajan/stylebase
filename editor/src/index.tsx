@@ -14,10 +14,11 @@ import { boxLibEditorManifest } from "./boxes/boxLibEditorManifest";
 
 import { createIdeReducer, IDE } from "./core/uiState/ideState";
 import { createEditorReducer } from "./patterns/docEditor/docEditorState";
-import { DocState, DocSelection, DocAction } from "./core/doc/docModels";
+import { DocState, DocSelection } from "./core/doc/state/stateModels";
+import { DocAction } from "./core/doc/state/actionModels";
 import { App } from "./core/App";
-import { defaultSelector } from "./core/doc/docDefaultSelector";
-import { createDocUpdateReducer } from "./core/doc/docUpdateReducer";
+import { defaultSelector } from "./core/doc/state/docDefaultSelector";
+import { createDocUpdateReducer } from "./core/doc/state/stateReducer";
 import { DOC_EDITOR } from "./patterns/docEditor/docEditorSelectors";
 import { importDocState } from "./core/doc/docImportUtils";
 import { DOC_LIB, createDocLibReducer } from "./core/doc/docLibReducer";

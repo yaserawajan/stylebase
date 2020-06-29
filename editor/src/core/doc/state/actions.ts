@@ -1,15 +1,19 @@
 import { 
-    ElementAddAction, ElementUpdateAction, ElementMoveAction, ElementRemoveAction, DocActionSet,
     ComponentUri, 
-    ElementProps, 
-    ElementLocation, 
-    DocAction, 
+    PropsMap } from "../docModels"
+import {
+    ElementAddAction, ElementUpdateAction, ElementMoveAction, ElementRemoveAction, DocActionSet,
+
+
+    ElementLocation,
+    DocAction,
     ComponentRenameAction,
     ComponentAddAction,
     ComponentParamAddAction,
     ComponentParamUpdateAction,
-    ComponentParamRemoveAction} from "./docModels"
-import { PropMetadata } from "./dataTypes/models"
+    ComponentParamRemoveAction
+} from "./actionModels"
+import { PropMetadata } from "../dataTypes/models"
 
 export const docActionSet = (actions:DocAction[]):DocActionSet => ({
     type: "ACTION_SET",
@@ -18,7 +22,7 @@ export const docActionSet = (actions:DocAction[]):DocActionSet => ({
 
 export const docElementAdd = (
     elementType: ComponentUri, 
-    props: ElementProps, 
+    props: PropsMap, 
     location: ElementLocation,
     ):ElementAddAction => ({
         type: "ELEMENT_ADD",
@@ -27,7 +31,7 @@ export const docElementAdd = (
         location
     })
 
-export const docElementUpdate = (component: string, elementId: string, props: ElementProps):ElementUpdateAction => ({
+export const docElementUpdate = (component: string, elementId: string, props: PropsMap):ElementUpdateAction => ({
         type: "ELEMENT_UPDATE",
         component,
         elementId,

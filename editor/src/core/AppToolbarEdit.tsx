@@ -3,9 +3,9 @@ import { shallowEqual, useDispatch } from "react-redux";
 
 import { Button } from "../uiShell/controls/Button";
 import { useDocEditorState } from "../patterns/docEditor/docEditorHooks";
-import { DocSelection, DocState } from "./doc/docModels";
+import { DocSelection, DocState } from "./doc/state/stateModels";
 import { actionUndo, actionRedo, actionUpdate } from "../patterns/docEditor/docEditorState";
-import { docElementRemove, docActionSet } from "./doc/docActions";
+import { docElementRemove, docActionSet } from "./doc/state/actions";
 import { ButtonGroup } from "../uiShell/controls";
 
 interface Props extends DocSelection {

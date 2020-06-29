@@ -1,7 +1,9 @@
-import { DocSnapshot } from "../../patterns/docEditor/docEditorState";
-import { DocState, DocSelection, DocAction, ComponentState, ElementLocation, ElementDesc, ComponentUri, ComponentMetadata } from "./docModels";
-import { entitySetUpdate, entitySetAdd } from "../../patterns/entitySet/entitySetUtils";
-import { EntitySet } from "../../patterns/entitySet/entitySetModels";
+import { DocSnapshot } from "../../../patterns/docEditor/docEditorState";
+import { ElementDesc, ComponentUri, ComponentMetadata } from "../docModels";
+import { DocState, DocSelection, ComponentState } from "./stateModels";
+import { DocAction, ElementLocation } from "./actionModels";
+import { entitySetUpdate, entitySetAdd } from "../../../patterns/entitySet/entitySetUtils";
+import { EntitySet } from "../../../patterns/entitySet/entitySetModels";
 import { newId } from "./newId";
 
 const findAncestors = (state: ComponentState, el: string):string[] => {

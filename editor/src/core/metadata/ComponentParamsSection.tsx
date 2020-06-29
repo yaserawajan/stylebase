@@ -9,7 +9,7 @@ import { FormField } from "../../uiShell/controls/FormField";
 import { Input } from "../../uiShell/controls/Input";
 import { InputArea } from "../../uiShell/controls/InputArea";
 import { actionUpdate } from "../../patterns/docEditor/docEditorState";
-import { componentParamAdd, componentParamRemove, componentParamUpdate } from "../doc/docActions";
+import { componentParamAdd, componentParamRemove, componentParamUpdate } from "../doc/state/actions";
 import { ComponentParamItem } from "./ComponentParamItem";
 import { selectComponentMetadata } from "../doc/docLibSelectors";
 import { PropMetadata } from "../doc/dataTypes/models";

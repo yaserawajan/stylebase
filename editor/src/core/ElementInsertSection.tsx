@@ -1,7 +1,8 @@
 import * as React from "react";
 
 import { SearchField } from "../uiShell/controls/SearchField";
-import { ComponentUri, DocState, DocSelection } from "./doc/docModels";
+import { ComponentUri } from "./doc/docModels";
+import { DocState, DocSelection } from "./doc/state/stateModels";
 import { ComponentCard } from "./ComponentCard";
 import { Title } from "../uiShell/controls/Title";
 import { ScrollArea } from "../uiShell/controls/ScrollArea";

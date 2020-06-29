@@ -1,4 +1,5 @@
-import { DocFormat, DocState, ComponentState, ComponentMetadata } from "./docModels";
+import { DocFormat, ComponentMetadata } from "./docModels";
+import { DocState, ComponentState } from "./state/stateModels";
 
 const exportComponent = (componentState: ComponentState):ComponentMetadata => {
     return {

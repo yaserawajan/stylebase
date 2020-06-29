@@ -1,5 +1,6 @@
 import * as React from "react";
-import { DocFormat, DocState, DocSelection } from "../doc/docModels";
+import { DocFormat } from "../doc/docModels";
+import { DocState, DocSelection } from "../doc/state/stateModels";
 import { Modal } from "../../uiShell/controls/Modal";
 import { Block } from "../../uiShell/Block";
 import { useDocEditorState } from "../../patterns/docEditor/docEditorHooks";

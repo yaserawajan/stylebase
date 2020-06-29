@@ -2,7 +2,8 @@ import * as React from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import {  batchActions } from "redux-batched-actions";
 
-import { ComponentFactory, DocAction, ElementAddAction, ElementLocation, ElementMoveAction } from "./doc/docModels";
+import { ComponentFactory } from "./doc/docModels";
+import { DocAction, ElementAddAction, ElementLocation, ElementMoveAction } from "./doc/state/actionModels";
 import { PropMetadata } from "./doc/dataTypes/models";
 import { useDocElementState } from "./doc/docHooks";
 import { ViewElement } from "../viewport/ViewElement";

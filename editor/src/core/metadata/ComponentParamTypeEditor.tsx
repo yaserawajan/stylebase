@@ -1,15 +1,6 @@
 import * as React from "react";
 import { ModalForm } from "../ModalForm";
-import { Fluid } from "../../uiShell/layouts";
-import { FormField } from "../../uiShell/controls/FormField";
-import { InputArea } from "../../uiShell/controls/InputArea";
 import { PropMetadata } from "../doc/dataTypes/models";
-import { DropDownList } from "../../uiShell/controls/dropDownList/DropDownList";
-import { selectDataTypes } from "../doc/docStateSelectors";
-import { useSelector } from "react-redux";
-import { DropDownListItem } from "../../uiShell/controls/dropDownList/DropDownListItem";
-import { Block } from "../../uiShell/Block";
-import { Title } from "../../uiShell/controls/Title";
 import { SchemaEditor } from "../schemaEditor/SchemaEditor";
 
 interface Props {

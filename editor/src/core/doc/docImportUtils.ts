@@ -1,4 +1,5 @@
-import { DocFormat, DocState, ComponentState } from "./docModels";
+import { DocFormat } from "./docModels";
+import { DocState, ComponentState } from "./state/stateModels";
 
 
 

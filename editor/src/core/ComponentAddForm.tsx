@@ -1,15 +1,15 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import { actionUpdate } from "../patterns/docEditor/docEditorState";
-import { docComponentAdd } from "./doc/docActions";
+import { docComponentAdd } from "./doc/state/actions";
 import { ModalForm } from "./ModalForm";
 import { Fluid } from "../uiShell/layouts";
 import { FormField } from "../uiShell/controls/FormField";
 import { InputArea } from "../uiShell/controls/InputArea";
 import { Input } from "../uiShell/controls/Input";
-import { newId } from "./doc/newId";
+import { newId } from "./doc/state/newId";
 import { useDocEditorState } from "../patterns/docEditor/docEditorHooks";
-import { DocState } from "./doc/docModels";
+import { DocState } from "./doc/state/stateModels";
 
 interface State {
     valueEntered: string

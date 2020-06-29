@@ -1,4 +1,4 @@
-import { DocState, DocSelection } from "./docModels";
+import { DocState, DocSelection } from "./stateModels";
 
 export const defaultSelector = (doc:DocState):DocSelection => {
 

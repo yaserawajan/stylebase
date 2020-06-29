@@ -6,7 +6,7 @@ import { selectComponentMetadata } from "./doc/docLibSelectors";
 import { PropEditor } from "./propEditors/PropEditor";
 import { Tree } from "./uiState/Tree";
 import { PropEditorFactory } from "./doc/docModels";
-import { docElementUpdate, docActionSet } from "./doc/docActions";
+import { docElementUpdate, docActionSet } from "./doc/state/actions";
 import { actionUpdate } from "../patterns/docEditor/docEditorState";
 import { Block } from "../uiShell/Block";
 import { Col } from "../uiShell/layouts";

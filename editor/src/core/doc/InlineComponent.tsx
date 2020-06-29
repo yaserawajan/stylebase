@@ -1,7 +1,18 @@
 import * as React from "react";
 import { ComponentFactory, PropsMap } from "./docModels";
 import { useDocElementState } from "./docHooks";
-import { inlineComponentContext } from "./inlineComponentContext";
+
+type InlineComponentContext = {
+    params: PropsMap
+    componentFactory: ComponentFactory
+    component: string
+}
+
+export const inlineComponentContext = React.createContext<InlineComponentContext>({ 
+    component: null,
+    params: { }, 
+    componentFactory: () => null 
+})
 
 interface NamedElementProps {
     elementId: string

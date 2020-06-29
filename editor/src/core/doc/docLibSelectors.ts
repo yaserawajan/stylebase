@@ -1,7 +1,8 @@
 
 import { DocLibState } from "./docLibModels"
 import { DOC_LIB } from "./docLibReducer"
-import { ComponentUri, DocState } from "./docModels";
+import { ComponentUri } from "./docModels";
+import { DocState } from "./state/stateModels";
 import { selectPresentState } from "../../patterns/docEditor/docEditorSelectors";
 
 

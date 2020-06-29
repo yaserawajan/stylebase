@@ -1,7 +1,9 @@
 
-import { selectPreviewState, selectPresentState } from "../../patterns/docEditor/docEditorSelectors";
-import { DocState, ElementDesc } from "./docModels";
-import { selectDocLibState } from "./docLibSelectors";
+import { selectPreviewState, selectPresentState } from "../../../patterns/docEditor/docEditorSelectors";
+import { ElementDesc } from "../docModels";
+import { DocState } from "./stateModels";
+import { selectDocLibState } from "../docLibSelectors";
+import { builtInDataTypes } from "../dataTypes";
 
 
 const noElement = {}
@@ -11,8 +13,7 @@ export const selectDocElement = (component: string, id:string) =>
 
         const preview = selectPreviewState<DocState>(s);
         const present = selectPresentState<DocState>(s);
-        //const metadata = 
-
+        
         const c = preview.components.byName[component];
         if (!c) return noElement;
         
@@ -25,7 +26,7 @@ export const selectDocElement = (component: string, id:string) =>
         return noElement;
     }
 
-const builtInDataTypes = ["media", "elementRef", "entityRef", "text", "number", "map", "array", "boolean", "any"]; // ... 
+
 export const selectDataTypes = () =>
     (s:any):string[] => {   
         const doc = selectPresentState<DocState>(s);
