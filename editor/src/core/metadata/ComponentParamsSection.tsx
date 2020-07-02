@@ -2,7 +2,6 @@ import * as React from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
 import { Title } from "../../uiShell/controls/Title";
-import { Button } from "../../uiShell/controls/Button";
 import { Block } from "../../uiShell/Block";
 import { Col, Row, Fluid } from "../../uiShell/layouts";
 import { FormField } from "../../uiShell/controls/FormField";
@@ -15,10 +14,6 @@ import { selectComponentMetadata } from "../doc/docLibSelectors";
 import { PropMetadata } from "../doc/dataTypes/models";
 import { QuickAddForm } from "../../uiShell/controls/QuickAddForm";
 
-interface State {
-    paramNameError?: string
-    newParamName: string
-}
 
 interface Props {
     component: string
@@ -57,11 +52,7 @@ export const ComponentParamsSection:React.SFC<Props> = ({ component }) => {
     }
 
     return (
-        <>
-            <Block scale={3} palette="light-grey-4" key="title">
-                <Title level="h2">Parameters</Title>
-            </Block>
-
+        
             <Block scale={3} palette="light-grey-5" key="body" indent={[0, 2]}>
                 <Col>
                     {(params.length < 1) && 
@@ -88,6 +79,6 @@ export const ComponentParamsSection:React.SFC<Props> = ({ component }) => {
 
                 </Col>
             </Block>
-        </>
+        
     )
 }

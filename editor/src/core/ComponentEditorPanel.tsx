@@ -2,7 +2,6 @@ import * as React from "react";
 import { Panel } from "../uiShell/controls/Panel";
 import { useActivePanelState } from "./uiState/ideState";
 import { ComponentViewEditorSection } from "./ComponentViewEditorSection";
-import { ComponentMetadataSection } from "./metadata/ComponentMetadataSection";
 import { PropEditorFactory } from "./doc/docModels";
 import { MenuItem } from "../uiShell/controls/MenuItem";
 import { Title } from "../uiShell/controls/Title";
@@ -56,11 +55,6 @@ export const ComponentEditorPanel:React.SFC<Props> = (props) => {
                     onClick={editModeSetter(componentEditorTabs.elements)}
                     selected={componentEditMode == componentEditorTabs.elements} label="Elements" icon="sitemap" />
 
-                <MenuItem 
-                    key={componentEditorTabs.metadata} 
-                    selected={componentEditMode == componentEditorTabs.metadata}
-                    onClick={editModeSetter(componentEditorTabs.metadata)} label="Metadata" icon="list" />
-
                 <Stretcher />
 
             </Block>
@@ -71,8 +65,7 @@ export const ComponentEditorPanel:React.SFC<Props> = (props) => {
             
             {(componentEditMode == componentEditorTabs.elements) && <ElementListSection />}
 
-            {(componentEditMode == componentEditorTabs.metadata) && <ComponentMetadataSection componentName={props.component} /> }
-
+            
             
  
         </Panel>

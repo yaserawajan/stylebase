@@ -1,4 +1,3 @@
-import "./component_card.less";
 
 import * as React from "react";
 
@@ -7,7 +6,6 @@ import { ErrorShield } from "./ErrorShield";
 import { ComponentUri, PropsMap } from "./doc/docModels";
 import { useDraggableAsset } from "./uiState/useDraggableAsset";
 import { Col } from "../uiShell/layouts";
-import { Title } from "../uiShell/controls/Title";
 
 interface Props {
     style?: React.CSSProperties
@@ -22,12 +20,12 @@ export const ComponentCard:React.SFC<Props> = (props) => {
     return (
         
             <Col className={classes("component-card", props.className)} style={props.style}>
-                <div ref={drag} key="container" className="container">
+                <div ref={drag} key="container" className="thumbnail">
                     <ErrorShield message="Component Card Error">
                         {props.children}
                     </ErrorShield>
                 </div>
-                <Title key="label" className="text-center">{props.componentUri.component}</Title>
+                
             </Col>
         
     );

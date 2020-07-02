@@ -7,6 +7,7 @@ import { useComponentRename } from "./uiState/useComponentRename";
 import { ComponentNameEditor } from "./metadata/ComponentNameEditor";
 import { Col } from "../uiShell/layouts";
 import { ComponentParamsDataSource } from "./ComponentParamsDataSource";
+import { ComponentParamsSection } from "./metadata/ComponentParamsSection";
 
 interface Props {
     name: string
@@ -44,7 +45,7 @@ export const ComponentListItem:React.FC<Props> = ({ name, selected, onSelect }) 
                     }
                 </Block>
 
-                {selected && <ComponentParamsDataSource component={name} />}
+                {selected && <ComponentParamsSection component={name} />}
 
             </Col>
 

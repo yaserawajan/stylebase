@@ -5,6 +5,7 @@ import { Title } from "../../uiShell/controls/Title";
 import { Stretcher, Divider, ButtonGroup } from "../../uiShell/controls";
 import { Button } from "../../uiShell/controls/Button";
 import { ComponentParamTypeEditor } from "./ComponentParamTypeEditor";
+import { DraggableParam } from "../DraggableParam";
 
 interface Props {
     name: string
@@ -51,6 +52,8 @@ export const ComponentParamItem:React.FC<Props> = (props) => {
                 <Button key="edit" label="Edit" icon="pen" compact onClick={handleEdit} />
                 <Button key="delete" label="Delete" icon="trash" compact onClick={handleRemove} />
             </ButtonGroup>
+            <Divider />
+            <DraggableParam name={props.name} type={props.data} />
 
             {editToggled &&
                 <ComponentParamTypeEditor 

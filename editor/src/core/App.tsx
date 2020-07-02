@@ -15,7 +15,7 @@ import { Divider, Stretcher } from "../uiShell/controls";
 interface Props {
     propEditorFactory: PropEditorFactory
 }   
-
+ 
 export const App:React.SFC<Props> = (props) => {
 
     const [leftPanel, setLeftPanel] = useActivePanelState("left");

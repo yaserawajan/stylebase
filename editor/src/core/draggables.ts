@@ -13,7 +13,13 @@ export type ElementDraggable = {
     id: string
 }
 
+export type ParamDraggable = {
+    type: "param"
+    component: string
+    propName: string
+}
+
 export type DragActionFactory = (item:Draggable, component: string, elementId: string) => DocAction
 
-export type Draggable = ComponentDraggable | ElementDraggable;
+export type Draggable = ComponentDraggable | ElementDraggable | ParamDraggable;
 

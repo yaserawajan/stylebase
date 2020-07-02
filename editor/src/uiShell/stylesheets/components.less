@@ -568,3 +568,13 @@
         border-radius: 50%;
     }
 }
+
+.thumbnail {
+    overflow: hidden;
+    max-width: 100%;
+    cursor: pointer;
+
+    & > * {
+        pointer-events: none;
+    }
+}
