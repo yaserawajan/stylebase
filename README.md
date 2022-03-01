@@ -1,6 +1,6 @@
 # STYLEBASE
 
-An alternative low-code visual component platform.
+GUI platform to generate stateless functional React components.
 
 ## Getting Started
 
